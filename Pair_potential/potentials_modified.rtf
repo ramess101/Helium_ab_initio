@@ -1,0 +1,765 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil Lucida Console;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\tx960\tx1920\tx2880\tx3840\tx4800\tx5760\tx6720\tx7680\tx8640\tx9600\tx10560\tx11520\tx12480\tx13440\tx14400\tx15360\tx16320\tx17280\tx18240\tx19200\tx20160\tx21120\tx22080\tx23040\tx24000\tx24960\tx25920\tx26880\tx27840\tx28800\tx29760\tx30720\f0\fs20 module potentials\par
+implicit none\par
+integer,parameter :: prec = selected_real_kind(P=15)\par
+real(prec),parameter :: ZERO = 0._prec\par
+\par
+private\par
+public V_BO,V_AD,V_REL,V_QED,V,V_diff\par
+public mu2V_NA,mu2Wr,mu2Wv,diff_mu2Wv\par
+public sigma_BO,sigma_AD,sigma_REL,sigma_QED,sigma\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_BO = 3\par
+integer,parameter :: I0_BO = -1, I1_BO = 2\par
+integer,parameter :: N0_BO =  6, N1_BO = 16\par
+\par
+real(prec),parameter :: a_BO(M_BO) = &\par
+     (/&\par
+     2.19076900924970_prec,&\par
+     3.91558362097102_prec,&\par
+     8.87314362466591_prec &\par
+     /)\par
+real(prec),parameter :: P_BO(I0_BO:I1_BO,M_BO) = reshape(source=&\par
+     (/&\par
+      2.69150966652494e1_prec,&\par
+      1.74015968871153e1_prec,&\par
+     -3.26566208189471e0_prec,&\par
+      1.46700433938961e-1_prec,&\par
+     -2.62457650950449e2_prec,&\par
+      4.57300508401525e2_prec,&\par
+      6.66624947516144e2_prec,&\par
+     -1.01541164656195e2_prec,&\par
+      2.39542554285199e2_prec,&\par
+      6.73223355754347e2_prec,&\par
+      8.62651807552327e2_prec,&\par
+      7.86212667513655e2_prec &\par
+     /),&\par
+     shape=(/I1_BO-I0_BO+1,M_BO/))\par
+\par
+real(prec),parameter :: zeta_BO = &\par
+     4.45565354034820_prec\par
+real(prec),parameter :: C_BO(N0_BO:N1_BO) = &\par
+     (/&\par
+       1.460977837725_prec,&\par
+       ZERO,&\par
+      14.11785737_prec,&\par
+       ZERO,&\par
+     183.691075_prec,&\par
+     -76.72571_prec,&\par
+       3.372e3_prec,&\par
+   -3808.3254_prec,&\par
+       8.534e4_prec,&\par
+      -1.707e5_prec,&\par
+       2.86e6_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_AD = 3\par
+integer,parameter :: I0_AD = 0, I1_AD = 2\par
+integer,parameter :: N0_AD = 6, N1_AD = 10\par
+\par
+real(prec),parameter :: a_AD(M_AD) = &\par
+     (/&\par
+     2.75067513975782_prec,&\par
+     5.36085266623527_prec,&\par
+     7.13731208196370_prec &\par
+     /)\par
+real(prec),parameter :: P_AD(I0_AD:I1_AD,M_AD) = reshape(source=&\par
+     (/&\par
+      1.60034916931265e-2_prec,&\par
+     -5.17915211148225e-3_prec,&\par
+      3.20021447656502e-3_prec,&\par
+     -5.02322894521138e-1_prec,&\par
+     -5.28178298205425e-2_prec,&\par
+      2.93999790052146e-1_prec,&\par
+     -7.80222735840106e-2_prec,&\par
+      1.83457620987126e0_prec,&\par
+      9.46016993696249e-1_prec &\par
+     /),&\par
+     shape=(/I1_AD-I0_AD+1,M_AD/))\par
+\par
+real(prec),parameter :: zeta_AD = &\par
+     4.80971750762740_prec\par
+real(prec),parameter :: C_AD(N0_AD:N1_AD) = &\par
+     (/&\par
+     1.1445e-3_prec,&\par
+     ZERO,&\par
+     6.519e-3_prec,&\par
+     ZERO,&\par
+     6.68e-2_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_REL = 3\par
+integer,parameter :: I0_REL = 0, I1_REL = 2\par
+integer,parameter :: N0_REL = 4, N1_REL = 8\par
+\par
+real(prec),parameter :: a_REL(M_REL) = &\par
+     (/&\par
+     2.55442787544336_prec,&\par
+     4.26822206589066_prec,&\par
+     6.31801545306225_prec &\par
+     /)\par
+real(prec),parameter :: P_REL(I0_REL:I1_REL,M_REL) = reshape(source=&\par
+     (/&\par
+      1.16259940182396e-2_prec,&\par
+     -7.00805799572921e-3_prec,&\par
+      7.83673396684808e-4_prec,&\par
+     -5.73711010584383e-1_prec,&\par
+      3.97167157865319e-1_prec,&\par
+     -1.10854901515699e-1_prec,&\par
+      6.22980694403664e-1_prec,&\par
+      4.87089036456869e-1_prec,&\par
+      6.81223617553767e-1_prec &\par
+     /),&\par
+     shape=(/I1_REL-I0_REL+1,M_REL/))\par
+\par
+real(prec),parameter :: zeta_REL = &\par
+     5.00212547573053_prec\par
+real(prec),parameter :: C_REL(N0_REL:N1_REL) = &\par
+     (/&\par
+     -3.5322e-5_prec,&\par
+      ZERO,&\par
+     -3.434e-4_prec,&\par
+      ZERO,&\par
+     -3.55798027534830e-3_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_QED = 2\par
+integer,parameter :: I0_QED = 0, I1_QED = 2\par
+integer,parameter :: N0_QED = 3, N1_QED = 6\par
+\par
+real(prec),parameter :: a_QED(M_QED) = &\par
+     (/&\par
+     2.71385934118196_prec,&\par
+     4.85539104988208_prec &\par
+     /)\par
+real(prec),parameter :: P_QED(I0_QED:I1_QED,M_QED) = reshape(source=&\par
+     (/&\par
+      1.34952154947189e-3_prec,&\par
+     -1.02362538302740e-3_prec,&\par
+      3.56862380020579e-4_prec,&\par
+     -1.96866479382540e-4_prec,&\par
+     -9.61841561868819e-4_prec,&\par
+     -1.08014679908054e-3_prec &\par
+     /),&\par
+     shape=(/I1_QED-I0_QED+1,M_QED/))\par
+\par
+real(prec),parameter :: zeta_QED = &\par
+     5.43735514285525_prec\par
+real(prec),parameter :: C_QED(N0_QED:N1_QED) = &\par
+     (/&\par
+     5.772353e-7_prec,&\par
+     ZERO,&\par
+     1.377841e-6_prec,&\par
+     7.61187886972970e-5_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_NA = 3\par
+integer,parameter :: I0_NA = 0, I1_NA = 2\par
+integer,parameter :: N0_NA = 6, N1_NA = 8\par
+\par
+real(prec),parameter :: a_NA(M_NA) = &\par
+     (/&\par
+     2.53831898631499_prec,&\par
+     2.67481454650236_prec,&\par
+     4.93815115302358_prec &\par
+     /)\par
+real(prec),parameter :: P_NA(I0_NA:I1_NA,M_NA) = reshape(source=&\par
+     (/&\par
+      1.47701736144261e2_prec,&\par
+     -2.58061851134832e2_prec,&\par
+     -1.11536126798668e2_prec,&\par
+      3.46349558392539e2_prec,&\par
+     -2.83069102118783e2_prec,&\par
+      3.33770327404411e2_prec,&\par
+      6.10470730307975e2_prec,&\par
+     -8.69955973665686e1_prec,&\par
+     -7.00699585484731e2_prec &\par
+     /),&\par
+     shape=(/I1_NA-I0_NA+1,M_NA/))\par
+\par
+real(prec),parameter :: zeta_NA = &\par
+     1.01792095068557_prec\par
+real(prec),parameter :: C_NA(N0_NA:N1_NA) = &\par
+     (/&\par
+     3.68e0_prec,&\par
+     ZERO,&\par
+     1.11e2_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_Wr = 2\par
+integer,parameter :: I0_Wr = 0, I1_Wr = 2\par
+integer,parameter :: N0_Wr = 8, N1_Wr = 8\par
+real(prec),parameter :: a_Wr(M_Wr) = &\par
+     (/&\par
+     2.54103162649609_prec,&\par
+     4.88260628664777_prec &\par
+     /)\par
+real(prec),parameter :: P_Wr(I0_Wr:I1_Wr,M_Wr) = reshape(source=&\par
+     (/&\par
+      5.14574051998990e1_prec,&\par
+     -3.77595327620630e1_prec,&\par
+     -2.30240580489152e-6_prec,&\par
+     -2.37370348095298e3_prec,&\par
+      2.69532593707433e3_prec,&\par
+     -1.37210463348773e3_prec &\par
+     /),&\par
+     shape=(/I1_Wr-I0_Wr+1,M_Wr/))\par
+\par
+real(prec),parameter :: zeta_Wr = &\par
+     3.37428444329544_prec\par
+real(prec),parameter :: C_Wr(N0_Wr:N1_Wr) = &\par
+     (/&\par
+     -2.49e1_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+integer,parameter :: M_Wv = 2\par
+integer,parameter :: I0_Wv = 0, I1_Wv = 3\par
+integer,parameter :: N0_Wv = 8, N1_Wv = 8\par
+real(prec),parameter :: a_Wv(M_Wv) = &\par
+     (/&\par
+     2.22718808355432_prec,&\par
+     5.19023925799186_prec &\par
+     /)\par
+real(prec),parameter :: P_Wv(I0_Wv:I1_Wv,M_Wv) = reshape(source=&\par
+     (/&\par
+      8.01042582721457e1_prec,&\par
+     -7.97402957505628e1_prec,&\par
+      3.16348688660220e1_prec,&\par
+     -2.80107566421106e0_prec,&\par
+     -1.81464982364927e3_prec,&\par
+      2.33555265113313e3_prec,&\par
+     -1.91611678345999e3_prec,&\par
+      5.32423263513008e2_prec &\par
+     /),&\par
+     shape=(/I1_Wv-I0_Wv+1,M_Wv/))\par
+\par
+real(prec),parameter :: zeta_Wv = &\par
+     3.18684428430590_prec\par
+real(prec),parameter :: C_Wv(N0_Wv:N1_Wv) = &\par
+     (/&\par
+     1.49e2_prec &\par
+     /)\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+! first  value - exponent\par
+! second value - coefficient\par
+\par
+integer,parameter :: nS_BO = 3\par
+real(prec),parameter :: aS_BO(2,0:nS_BO) = reshape(source=&\par
+     (/&\par
+     0.80740_prec , 1.2195e-6_prec ,&\par
+     1.2603_prec  , 2.6076e-5_prec ,&\par
+     0.13365_prec ,-1.6989e-7_prec ,&\par
+     0.057123_prec,-5.9399e-8_prec  &\par
+     /),&\par
+     shape=(/2,nS_BO+1/))\par
+\par
+integer,parameter :: nS_AD = 3\par
+real(prec),parameter :: aS_AD(2,0:nS_AD) = reshape(source=&\par
+     (/&\par
+     0.30940_prec , 7.5317e-12_prec,&\par
+     1.8485_prec  , 5.8720e-6_prec ,&\par
+     0.27382_prec , 4.8110e-8_prec ,&\par
+     0.047007_prec, 1.0593e-10_prec &\par
+     /),&\par
+     shape=(/2,nS_AD+1/))\par
+\par
+integer,parameter :: nS_REL = 4\par
+real(prec),parameter :: aS_REL(2,0:nS_REL) = reshape(source=&\par
+     (/&\par
+     0.20535_prec , 3.0628e-12_prec,&\par
+     1.6829_prec  , 2.3492e-7_prec ,&\par
+     0.42205_prec ,-1.2725e-6_prec ,&\par
+     0.39672_prec , 1.2107e-6_prec ,&\par
+     0.064498_prec, 3.8763e-10_prec &\par
+     /),&\par
+     shape=(/2,nS_REL+1/))\par
+\par
+integer,parameter :: nS_QED = 3\par
+real(prec),parameter :: aS_QED(2,0:nS_QED) = reshape(source=&\par
+     (/&\par
+     0.80740_prec , 3.3214e-7_prec ,&\par
+     0.50144_prec ,-1.0022e-7_prec ,&\par
+     0.16251_prec ,-6.5718e-8_prec ,&\par
+     0.062390_prec,-2.1856e-8_prec  &\par
+     /),&\par
+     shape=(/2,nS_QED+1/))\par
+\par
+!-------------------------------------------------------------------------------\par
+\par
+contains\par
+\par
+function V_BO(R)\par
+implicit none\par
+real(prec) :: V_BO\par
+real(prec),intent(in) :: R\par
+V_BO = 0._prec\par
+V_BO = V_BO + formShort(R,M_BO,I0_BO,I1_BO,a_BO,P_BO)\par
+V_BO = V_BO + formLong(R,0,N0_BO,N1_BO,zeta_BO,C_BO)\par
+end function V_BO\par
+\par
+function V_AD(R)\par
+implicit none\par
+real(prec) :: V_AD\par
+real(prec),intent(in) :: R\par
+V_AD = 0._prec\par
+V_AD = V_AD + formShort(R,M_AD,I0_AD,I1_AD,a_AD,P_AD)\par
+V_AD = V_AD + formLong(R,0,N0_AD,N1_AD,zeta_AD,C_AD)\par
+end function V_AD\par
+\par
+function V_REL(R)\par
+implicit none\par
+real(prec) :: V_REL\par
+real(prec),intent(in) :: R\par
+V_REL = 0._prec\par
+V_REL = V_REL + formShort(R,M_REL,I0_REL,I1_REL,a_REL,P_REL)\par
+V_REL = V_REL + formLong(R,0,N0_REL,N1_REL,zeta_REL,C_REL)\par
+end function V_REL\par
+\par
+function V_QED(R)\par
+implicit none\par
+real(prec) :: V_QED\par
+real(prec),intent(in) :: R\par
+V_QED = 0._prec\par
+V_QED = V_QED + formShort(R,M_QED,I0_QED,I1_QED,a_QED,P_QED)\par
+V_QED = V_QED + formLong(R,0,N0_QED,N1_QED,zeta_QED,C_QED)\par
+end function V_QED\par
+\par
+function V(R_temp,ret)\par
+implicit none\par
+real(prec) :: V\par
+real(prec),intent(in) :: R_temp\par
+logical,intent(in),optional :: ret\par
+logical :: do_ret\par
+real(prec) :: elms(4)\par
+real(prec) :: R\par
+R = R_temp / 0.529177249_prec\par
+do_ret = .false.\par
+if(present(ret)) do_ret = ret\par
+elms = 0._prec\par
+elms(1) = elms(1) + formShort(R,M_BO,I0_BO,I1_BO,a_BO,P_BO)\par
+elms(2) = elms(2) + formShort(R,M_AD,I0_AD,I1_AD,a_AD,P_AD)\par
+elms(3) = elms(3) + formShort(R,M_REL,I0_REL,I1_REL,a_REL,P_REL)\par
+elms(4) = elms(4) + formShort(R,M_QED,I0_QED,I1_QED,a_QED,P_QED)\par
+if(do_ret) then\par
+   elms(1) = elms(1) + formLong(R,1,N0_BO,N1_BO,zeta_BO,C_BO)\par
+   elms(2) = elms(2) + formLong(R,0,N0_AD,N1_AD,zeta_AD,C_AD)\par
+   elms(3) = elms(3) + formLong(R,2,N0_REL,N1_REL,zeta_REL,C_REL)\par
+   elms(4) = elms(4) + formLong(R,2,N0_QED,N1_QED,zeta_QED,C_QED)\par
+else\par
+   elms(1) = elms(1) + formLong(R,0,N0_BO,N1_BO,zeta_BO,C_BO)\par
+   elms(2) = elms(2) + formLong(R,0,N0_AD,N1_AD,zeta_AD,C_AD)\par
+   elms(3) = elms(3) + formLong(R,0,N0_REL,N1_REL,zeta_REL,C_REL)\par
+   elms(4) = elms(4) + formLong(R,0,N0_QED,N1_QED,zeta_QED,C_QED)\par
+endif\par
+V = sum(elms) * 315775.13_prec\par
+end function V\par
+\par
+! I added this function, meant to be the energy derivative.\par
+! It cannot handle a value of ret which does not equal 0,\par
+! but I allowed it to be passed for consistency and future\par
+! changes.\par
+function V_diff(R_temp, ret)\par
+implicit none\par
+real(prec) :: V_diff\par
+real(prec), intent(in) :: R_temp\par
+logical, intent(in), optional :: ret\par
+real(prec) :: elms(4)\par
+real(prec) :: R\par
+elms= 0._prec\par
+R = R_temp / 0.529177249_prec\par
+! Assumes ret is false for now\par
+elms(1) = elms(1) + diffShort(R,M_BO,I0_BO,I1_BO,a_BO,P_BO) \par
+elms(2) = elms(2) + diffShort(R,M_AD,I0_AD,I1_AD,a_AD,P_AD)\par
+elms(3) = elms(3) + diffShort(R,M_REL,I0_REL,I1_REL,a_REL,P_REL)\par
+elms(4) = elms(4) + diffShort(R,M_QED,I0_QED,I1_QED,a_QED,P_QED)\par
+elms(1) = elms(1) + diffLong(R,0,N0_BO,N1_BO,zeta_BO,C_BO)\par
+elms(2) = elms(2) + diffLong(R,0,N0_AD,N1_AD,zeta_AD,C_AD)\par
+elms(3) = elms(3) + diffLong(R,0,N0_REL,N1_REL,zeta_REL,C_REL)\par
+elms(4) = elms(4) + diffLong(R,0,N0_QED,N1_QED,zeta_QED,C_QED)\par
+V_diff = sum(elms)\par
+V_diff = V_diff * 315775.13_prec * 1.8897261254535_prec\par
+end function V_diff\par
+\par
+function mu2V_NA(R)\par
+implicit none\par
+real(prec) :: mu2V_NA\par
+real(prec),intent(in) :: R\par
+mu2V_NA = 0._prec\par
+mu2V_NA = mu2V_NA + formShort(R,M_NA,I0_NA,I1_NA,a_NA,P_NA)\par
+mu2V_NA = mu2V_NA + formLong(R,0,N0_NA,N1_NA,zeta_NA,C_NA)\par
+end function mu2V_NA\par
+\par
+function mu2Wr(R)\par
+implicit none\par
+real(prec) :: mu2Wr\par
+real(prec),intent(in) :: R\par
+mu2Wr = 0._prec\par
+mu2Wr = mu2Wr + formShort(R,M_Wr,I0_Wr,I1_Wr,a_Wr,P_Wr)\par
+mu2Wr = mu2Wr + formLong(R,0,N0_Wr,N1_Wr,zeta_Wr,C_Wr)\par
+end function mu2Wr\par
+\par
+function mu2Wv(R)\par
+implicit none\par
+real(prec) :: mu2Wv\par
+real(prec),intent(in) :: R\par
+mu2Wv = 0._prec\par
+mu2Wv = mu2Wv + formShort(R,M_Wv,I0_Wv,I1_Wv,a_Wv,P_Wv)\par
+mu2Wv = mu2Wv + formLong(R,0,N0_Wv,N1_Wv,zeta_Wv,C_Wv)\par
+end function mu2Wv\par
+\par
+function diff_mu2Wv(R)\par
+implicit none\par
+real(prec) :: diff_mu2Wv\par
+real(prec),intent(in) :: R\par
+diff_mu2Wv = 0._prec\par
+diff_mu2Wv = diff_mu2Wv + diffShort(R,M_Wv,I0_Wv,I1_Wv,a_Wv,P_Wv)\par
+diff_mu2Wv = diff_mu2Wv + diffLong(R,0,N0_Wv,N1_Wv,zeta_Wv,C_Wv)\par
+end function diff_mu2Wv\par
+\par
+function sigma_BO(R)\par
+implicit none\par
+real(prec) :: sigma_BO\par
+real(prec),intent(in) :: R\par
+sigma_BO = formSigma(R,nS_BO,aS_BO)\par
+end function sigma_BO\par
+\par
+function sigma_AD(R)\par
+implicit none\par
+real(prec) :: sigma_AD\par
+real(prec),intent(in) :: R\par
+sigma_AD = formSigma(R,nS_AD,aS_AD)\par
+end function sigma_AD\par
+\par
+function sigma_REL(R)\par
+implicit none\par
+real(prec) :: sigma_REL\par
+real(prec),intent(in) :: R\par
+sigma_REL = formSigma(R,nS_REL,aS_REL)\par
+end function sigma_REL\par
+\par
+function sigma_QED(R)\par
+implicit none\par
+real(prec) :: sigma_QED\par
+real(prec),intent(in) :: R\par
+sigma_QED = formSigma(R,nS_QED,aS_QED)\par
+end function sigma_QED\par
+\par
+function sigma(R)\par
+implicit none\par
+real(prec) :: sigma\par
+real(prec),intent(in) :: R\par
+real(prec) :: elms(4),maxelm\par
+elms(1) = formSigma(R,nS_BO,aS_BO)\par
+elms(2) = formSigma(R,nS_AD,aS_AD)\par
+elms(3) = formSigma(R,nS_REL,aS_REL)\par
+elms(4) = formSigma(R,nS_QED,aS_QED)\par
+maxelm = maxval(elms)\par
+sigma = sqrt(sum((elms*(1._prec/maxelm))**2))*maxelm\par
+end function sigma\par
+\par
+!-------------------------------------------------------------------------------\par
+!-------------------------------------------------------------------------------\par
+!-------------------------------------------------------------------------------\par
+\par
+function formShort(R,M,I0,I1,a,P)\par
+!short-range formula\par
+!\par
+! sum_\{k=1\}^\{M\} exp(-a(k) R) sum_\{i=I0\}^\{I1\} P(i,k) R^i\par
+!\par
+implicit none\par
+real(prec) :: formShort\par
+real(prec),intent(in) :: R\par
+integer,intent(in) :: M,I0,I1\par
+real(prec),intent(in) :: a(M)\par
+real(prec),intent(in) :: P(I0:I1,M)\par
+real(prec) :: term\par
+integer :: i,k\par
+formShort = 0._prec\par
+do k=1,M\par
+   term = P(I1,k)\par
+   do i=I1-1,I0,-1\par
+      term = term*R + P(i,k)\par
+   enddo\par
+   formShort = formShort + exp(-a(k)*R)*term\par
+enddo\par
+if(I0/=0) formShort = formShort*R**I0\par
+end function formShort\par
+\par
+function diffShort(R,M,I0,I1,a,P)\par
+!derivative of the short-range formula\par
+!\par
+! sum_\{k=1\}^\{M\} exp(-a(k) R) sum_\{i=I0\}^\{I1\} P(i,k) (i/R - a(k)) R^i\par
+!\par
+implicit none\par
+real(prec) :: diffShort\par
+real(prec),intent(in) :: R\par
+integer,intent(in) :: M,I0,I1\par
+real(prec),intent(in) :: a(M)\par
+real(prec),intent(in) :: P(I0:I1,M)\par
+real(prec) :: iR,term\par
+integer :: i,k\par
+iR = 1._prec/R\par
+diffShort = 0._prec\par
+do k=1,M\par
+   term = P(I1,k)*(I1*iR - a(k))\par
+   do i=I1-1,I0,-1\par
+      term = term*R + P(i,k)*(i*iR - a(k))\par
+   enddo\par
+   diffShort = diffShort + exp(-a(k)*R)*term\par
+enddo\par
+if(I0/=0) diffShort = diffShort*R**I0\par
+end function diffShort\par
+\par
+function formLong(R,ret_type,N0,N1,zeta,C)\par
+!long-range formula\par
+!\par
+! - sum_\{n=N0\}^\{N1\} C(n) dampTT(n,zeta R)/R^n\par
+!\par
+! damping of the leading term\par
+! ret_type = 0  ->   1     + shiftTT = dampTT (no retardation)\par
+! ret_type = 1  ->   retar + shiftTT          (BO [C6] potential)\par
+! ret_type = 2  ->   0     + shiftTT          (REL [C4] and QED [C3] potentials)\par
+!\par
+implicit none\par
+real(prec) :: formLong\par
+real(prec),intent(in) :: R\par
+integer,intent(in) :: ret_type,N0,N1\par
+real(prec),intent(in) :: zeta\par
+real(prec),intent(in) :: C(N0:N1)\par
+real(prec) :: iR,zetaR\par
+integer :: n\par
+iR = 1._prec/R\par
+zetaR = zeta*R\par
+if(N0<N1) then\par
+   formLong = - C(N1)*dampTT(N1,zetaR)\par
+   do n=N1-1,N0+1,-1\par
+      if(C(n)/=ZERO) then\par
+         formLong = formLong*iR - C(n)*dampTT(n,zetaR)\par
+      else\par
+         formLong = formLong*iR\par
+      endif\par
+   enddo\par
+else\par
+   formLong = 0._prec\par
+endif\par
+select case(ret_type)\par
+case(0)\par
+   formLong = formLong*iR - C(N0)*dampTT(N0,zetaR)\par
+case(1)\par
+   formLong = formLong*iR - C(N0)*(retar(R)+shftTT(N0,zetaR))\par
+case(2)\par
+   formLong = formLong*iR - C(N0)*shftTT(N0,zetaR)\par
+end select\par
+formLong = formLong*iR**N0\par
+end function formLong\par
+\par
+function diffLong(R,ret_type,N0,N1,zeta,C)\par
+!derivative of the long-range formula\par
+!\par
+! + sum_\{n=N0\}^\{N1\} C(n) (n*dampTT(n,zeta R) - zeta R diffTT(n,zeta R))/R^(n+1)\par
+!\par
+implicit none\par
+real(prec) :: diffLong\par
+real(prec),intent(in) :: R\par
+integer,intent(in) :: ret_type,N0,N1\par
+real(prec),intent(in) :: zeta\par
+real(prec),intent(in) :: C(N0:N1)\par
+real(prec) :: iR,zetaR\par
+integer :: n\par
+if(ret_type/=0) then\par
+   write(*,*) 'ERROR! diffLong called with non-zero ret_type'\par
+   stop\par
+endif\par
+iR = 1._prec/R\par
+zetaR = zeta*R\par
+diffLong = C(N1)*(N1*dampTT(N1,zetaR) - zetaR*diffTT(N1,zetaR))\par
+do n=N1-1,N0,-1\par
+   if(C(n)/=ZERO) then\par
+      diffLong = diffLong*iR + C(n)*(n*dampTT(n,zetaR) - zetaR*diffTT(n,zetaR))\par
+   else\par
+      diffLong = diffLong*iR\par
+   endif\par
+enddo\par
+diffLong = diffLong*iR**(N0+1)\par
+end function diffLong\par
+\par
+function formSigma(R,n,aS)\par
+!sigma formula\par
+!\par
+! exp(-a(0) R) s(0) + sum_\{i=1\}^\{n\} exp(-a(i) R^2) s(i)\par
+!\par
+implicit none\par
+real(prec) :: formSigma\par
+real(prec),intent(in) :: R\par
+integer,intent(in) :: n\par
+real(prec),intent(in) :: aS(2,0:n)\par
+real(prec) :: R2\par
+integer :: i\par
+R2 = R*R\par
+formSigma = exp(-aS(1,0)*R)*aS(2,0)\par
+do i=1,n\par
+   formSigma = formSigma + exp(-aS(1,i)*R2)*aS(2,i)\par
+enddo\par
+end function formSigma\par
+\par
+!-------------------------------------------------------------------------------\par
+!-------------------------------------------------------------------------------\par
+!-------------------------------------------------------------------------------\par
+\par
+function dampTT(n,x)\par
+!Tang-Toennies damping function\par
+!\par
+! dampTT(n,x) = 1 - exp(-x) sum_\{i=0\}^\{n\} x^i/i!\par
+!\par
+!             = exp(-x) sum_\{i=n+1\}^\{infty\} x^i/i!\par
+!\par
+implicit none\par
+real(prec) :: dampTT\par
+integer,intent(in) :: n\par
+real(prec),intent(in) :: x\par
+real(prec),parameter :: dampTT_MINlimit = tiny(0._prec)\par
+real(prec),parameter :: dampTT_MIDlimit(0:16) = (/&\par
+     0.10536052_prec,&\par
+     0.53181161_prec, 1.1020653_prec, 1.7447696_prec, 2.4325910_prec,&\par
+     3.1518980_prec , 3.8947668_prec, 4.6561182_prec, 5.4324681_prec,&\par
+     6.2213046_prec , 7.0207466_prec, 7.8293420_prec, 8.6459425_prec,&\par
+     9.4696212_prec ,10.299617_prec ,11.135297_prec ,11.976127_prec  /)\par
+real(prec),parameter :: dampTT_MAXlimit(0:16) = (/&\par
+     35.350506_prec,&\par
+     39.040395_prec, 42.189070_prec, 45.049320_prec, 47.719353_prec,&\par
+     50.250606_prec, 52.674332_prec, 55.011322_prec, 57.276297_prec,&\par
+     59.480153_prec, 61.631241_prec, 63.736139_prec, 65.800138_prec,&\par
+     67.827579_prec, 69.822072_prec, 71.786664_prec, 73.723952_prec /)\par
+real(prec) :: term,suma\par
+integer :: i\par
+if(x<dampTT_MINlimit) then\par
+   dampTT = 0._prec\par
+elseif(x<dampTT_MIDlimit(n)) then\par
+   term = 1._prec\par
+   do i=1,n\par
+      term = term*x/i\par
+   enddo\par
+   suma = 0._prec\par
+   do i=n+1,2*n+17\par
+      term = term*x/i\par
+      suma = suma + term\par
+   enddo\par
+   dampTT = exp(-x)*suma\par
+elseif(x<dampTT_MAXlimit(n)) then\par
+   term = 1._prec\par
+   suma = 1._prec\par
+   do i=1,n\par
+      term = term*x/i\par
+      suma = suma + term\par
+   enddo\par
+   dampTT = 1._prec - exp(-x)*suma\par
+else\par
+   dampTT = 1._prec\par
+endif\par
+end function dampTT\par
+\par
+function shftTT(n,x)\par
+!shifted Tang-Toennies damping function\par
+!\par
+! shftTT(n,x) = dampTT(n,x) - 1\par
+!\par
+!             = - exp(-x) sum_\{i=0\}^\{n\} x^i/i!\par
+!\par
+implicit none\par
+real(prec) :: shftTT\par
+integer,intent(in) :: n\par
+real(prec),intent(in) :: x\par
+real(prec),parameter :: shftTT_MAXlimit = 709.782712893384_prec\par
+real(prec) :: term,suma\par
+integer :: i\par
+if(x<shftTT_MAXlimit) then\par
+   term = 1._prec\par
+   suma = 1._prec\par
+   do i=1,n\par
+      term = term*x/i\par
+      suma = suma + term\par
+   enddo\par
+   shftTT = -exp(-x)*suma\par
+else\par
+   shftTT = 0._prec\par
+endif\par
+end function shftTT\par
+\par
+function diffTT(n,x)\par
+!derivative of the Tang-Toennies damping function\par
+!\par
+! diffTT(n,x) = exp(-x) x^n/n!\par
+!\par
+implicit none\par
+real(prec) :: diffTT\par
+integer,intent(in) :: n\par
+real(prec),intent(in) :: x\par
+real(prec),parameter :: diffTT_MAXlimit = 709.782712893384_prec\par
+real(prec) :: term\par
+integer :: i\par
+if(x<diffTT_MAXlimit) then\par
+   term = 1._prec\par
+   do i=1,n\par
+      term = term*x/i\par
+   enddo\par
+   diffTT = exp(-x)*term\par
+else\par
+   diffTT = 0._prec\par
+endif\par
+end function diffTT\par
+\par
+function retar(R)\par
+implicit none\par
+real(prec) :: retar\par
+real(prec),intent(in) :: R\par
+real(prec),parameter :: A(5) = (/&\par
+     6.169870091028090e-2_prec ,&\par
+     8.281954197590046e-4_prec ,&\par
+     2.936387935854446e-6_prec ,&\par
+     4.020288241131003e-9_prec ,&\par
+     2.948899823358023e-12_prec/)\par
+real(prec),parameter :: B(6) = (/&\par
+     6.169870091028090e-2_prec ,&\par
+     8.523723778811090e-4_prec ,&\par
+     4.032972820432622e-6_prec ,&\par
+     9.969788378653687e-9_prec ,&\par
+     1.224004819647673e-11_prec,&\par
+     8.978131367598067e-15_prec/)\par
+real(prec) :: num,den\par
+num =         A(5)\par
+num = num*R + A(4)\par
+num = num*R + A(3)\par
+num = num*R + A(2)\par
+num = num*R + A(1)\par
+num = num*R + 1._prec\par
+den =         B(6)\par
+den = den*R + B(5)\par
+den = den*R + B(4)\par
+den = den*R + B(3)\par
+den = den*R + B(2)\par
+den = den*R + B(1)\par
+den = den*R + 1._prec\par
+retar = num/den\par
+end function retar\par
+\par
+end module potentials\par
+\par
+\pard\sa200\sl276\slmult1\lang9\f1\fs22\par
+}
+ 
