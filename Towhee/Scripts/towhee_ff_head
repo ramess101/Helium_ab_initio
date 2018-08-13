@@ -1,0 +1,13 @@
+towhee_ff Version
+          14
+Number of Nonbonded Types
+           1
+Potential Type
+Tabulated Pair                 
+Classical Mixrule
+Explicit
+Atom Type Number
+           1
+table_pair
+           1           1          3000
+table_pair_data

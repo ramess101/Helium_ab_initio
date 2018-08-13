@@ -1,0 +1,79 @@
+#!/bin/bash
+
+Compound=Helium
+Model=2Body_Total
+
+#nmol_tot=5200
+#rcut=18
+#nmol_liq=4800
+#nmol_vap=400
+#inix_liq=48
+#inix_vap=8
+#seed=1302001
+
+#nmol_tot=2800
+#rcut=18
+#nmol_liq=2400
+#nmol_vap=400
+#inix_liq=24
+#inix_vap=8
+#seed=1302001
+
+nmol_tot=2800
+rcut=14
+nmol_liq=2400
+nmol_vap=400
+inix_liq=24
+inix_vap=8
+seed=1302001
+
+vapor_density=(0.107335766 0.326103737 0.704662872 1.620195283 2.894828028)
+liquid_density=(45.84429021 43.58762698 41.13466023 38.350324 34.84396011)
+
+Temp=(7 8 9 10 11)
+
+echo "$rcut" > rcut
+
+python pair_potential.py
+
+cat towhee_ff_head tabulated_pair_potential towhee_ff_tail > towhee_ff
+
+cp towhee_ff /data/ram9/"$Compound"/"$Model"/"$nmol_tot"_"$rcut"/towhee_ff
+
+for rep in $(seq 0 7) # Perform 8 replicate simulations at each temperature
+
+do
+
+for j in $(seq 0 4)
+
+do
+
+cd /data/ram9/"$Compound"/"$Model"/"$nmol_tot"_"$rcut" || exit
+
+mkdir "${Temp[j]}"_"$rep"
+
+cd "${Temp[j]}"_"$rep" || exit
+
+cp /data/ram9/"$Compound"/"$Model"/towhee_input towhee_input
+cp /data/ram9/"$Compound"/"$Model"/run_job_eq_prod run_job_eq_prod
+
+sed -i -e s/some_random_seed/"$seed"/ towhee_input
+sed -i -e s/some_nmol_tot/"$nmol_tot"/ towhee_input
+sed -i -e s/some_temperature/"${Temp[j]}"/ towhee_input
+sed -i -e s/some_nmol_liq/"$nmol_liq"/ towhee_input
+sed -i -e s/some_nmol_vap/"$nmol_vap"/ towhee_input
+sed -i -e s/some_inix_liq/"$inix_liq $inix_liq $inix_liq"/ towhee_input
+sed -i -e s/some_inix_vap/"$inix_vap $inix_vap $inix_vap"/ towhee_input
+sed -i -e s/some_liquid_density/"${liquid_density[j]}"/ towhee_input
+sed -i -e s/some_vapor_density/"${vapor_density[j]}"/ towhee_input
+
+nice -n 19 qsub -cwd run_job_eq_prod
+
+done
+
+seed=$((seed+1)) # Change the seed for every replicate loop
+
+done
+
+exit 0
+
