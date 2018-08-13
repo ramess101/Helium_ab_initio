@@ -1,0 +1,727 @@
+********************************************************************************
+                ______                                __                        
+               / ____/___ _______________ _____  ____/ /________ _              
+              / /   / __ `/ ___/ ___/ __ `/ __ \/ __  / ___/ __ `/              
+             / /___/ /_/ (__  |__  ) /_/ / / / / /_/ / /  / /_/ /               
+             \____/\__,_/____/____/\__,_/_/ /_/\__,_/_/   \__,_/                
+                                                                                
+********************************************************************************
+
+Run info
+********************************************************************************
+version: Cassandra Version 1.2 20160804
+inputfile: helium.inp
+name of run: helium.out
+date (mm/dd/yyyy): 07/19/2018
+time: 12:40:31
+machine: 647trc-calc1
+********************************************************************************
+
+Verbose log
+********************************************************************************
+Normal output to logfile
+********************************************************************************
+
+Simulation type
+********************************************************************************
+GEMC                
+********************************************************************************
+
+Copy input file
+********************************************************************************
+ # Run_Name
+ helium.out
+ 
+ # Sim_Type
+ GEMC
+ 
+ # Nbr_Species
+ 1
+ 
+ # VDW_Style
+ Mie cut_tail 14.0
+ Mie cut_tail 14.0
+ 
+ # Charge_Style
+ NONE
+ NONE
+ 
+ # Intra_Scaling
+ 0.0 0.0 0.0 1.0
+ 0.0 0.0 0.0 1.0
+ 
+ # Mixing_Rule
+ LB
+ 
+ # Rcutoff_Low
+ 1.0
+ 
+ # Molecule_Files
+ helium.mcf 2800
+ 
+ # Box_Info
+ 2
+ cubic
+ 39.80
+ 
+ cubic
+ 62.70
+ 
+ # Temperature_Info
+ 10.0
+ 10.0
+ 
+ # Move_Probability_Info
+ 
+ # Prob_Translation
+ 0.85
+ 0.15
+ 1.0
+ 
+ # Prob_Volume
+ 0.03
+ 200.0
+ 
+ # Prob_Swap
+ 0.12
+ cbmc
+ 
+ # Done_Probability_Info
+ 
+ # Start_Type
+ make_config 2400
+ make_config 400
+ 
+ # Run_Type
+ Equilibration 100 100
+ 
+ # Simulation_Length_Info
+ Units       Steps
+ Prop_Freq   1000
+ Coord_Freq  5000
+ Run         2000000
+ 
+ # Seed
+ 1211131639 1211131640
+ 
+ # Property_Info 1
+ Density
+ Nmols
+ Volume
+ Pressure
+ 
+ # Property_Info 2
+ Density
+ Nmols
+ Volume
+ Pressure
+ 
+ 
+ # Fragment_Files
+ species1/frag1/frag1.dat  1
+ 
+ # CBMC_Info
+ kappa_ins 12
+ rcut_cbmc 6.5 6.5
+ 
+ END
+********************************************************************************
+
+Number of species
+********************************************************************************
+1
+********************************************************************************
+
+Box info
+********************************************************************************
+Number of simulation boxes     2
+Box 1 is CUBIC               
+ Each Side Of :       39.8000     Angstrom
+ Cell basis vector lengths in A,     39.8000      39.8000      39.8000
+ Cosine of angles alpha, beta, gamma     0.0000       0.0000       0.0000
+ Distance between box faces    39.8000      39.8000      39.8000
+ Box volume, A^3         63044.7920
+Box 2 is CUBIC               
+ Each Side Of :       62.7000     Angstrom
+ Cell basis vector lengths in A,     62.7000      62.7000      62.7000
+ Cosine of angles alpha, beta, gamma     0.0000       0.0000       0.0000
+ Distance between box faces    62.7000      62.7000      62.7000
+ Box volume, A^3        246491.8830
+********************************************************************************
+
+Pair style
+********************************************************************************
+VDW style used is:   Mie            in box:  1
+ VDW sum style is:  cut_tail       in box:  1
+ rcut =    14.000 Angstrom
+VDW style used is:   Mie            in box:  2
+ VDW sum style is:  cut_tail       in box:  2
+ rcut =    14.000 Angstrom
+Charge style in box 1 is NONE
+Charge style in box 2 is NONE
+Section "# Pair_Energy" is missing from the input file
+ By default, pair interaction energy arrays will not be stored
+Lorentz-Berthelot mixing rule specified
+********************************************************************************
+
+Molecule info
+********************************************************************************
+ Reading molecular connectivity information
+ Species:            1
+ Molecular connectivity file: helium.mcf                                                                                                              
+   1 atom(s) specified.
+   0 bond(s) specified.
+   0 angle(s) specified.
+   0 dihedral(s) specified.
+   0 improper(s) specified.
+   1 fragment(s) specified.
+   0 fragment bond(s) specified.
+
+ Species  Max molecules
+ -------  -------------
+      1           2800
+
+ Species     1
+ -------------------------------------------------------------------------------
+ Atom parameters read
+ Bond parameters read
+ Angle parameters read
+ Dihedral parameters read
+ Improper parameters read
+ Intra molecule scaling factors for species            1
+  VDW 1-2 scaling factor       0.000
+  VDW 1-3 scaling factor       0.000
+  VDW 1-4 scaling factor       0.000
+  VDW 1-N scaling factor       1.000
+ Total number of atoms in fragment     1  is   1
+ Fragment info read
+ Fragment file for fragment 1 is species1/frag1/frag1.dat
+ -------------------------------------------------------------------------------
+
+ Fragment coord info
+ -------------------------------------------------------------------------------
+ library_coords array successfully allocated
+ Finished loading fragment coordinates from
+ species1/frag1/frag1.dat
+ -------------------------------------------------------------------------------
+********************************************************************************
+
+Start type
+********************************************************************************
+Initial configuration for box 1 will be made
+ Will insert    2400  molecules of species   1
+Initial configuration for box 2 will be made
+ Will insert     400  molecules of species   1
+********************************************************************************
+
+Seed info
+********************************************************************************
+The starting seeds are:   1211131639   1211131640
+********************************************************************************
+
+Temperature
+********************************************************************************
+Temperature of box 1 is  10.000 K
+Temperature of box 2 is  10.000 K
+********************************************************************************
+
+Move probabilities
+********************************************************************************
+Probability for translation                0.850000
+ Maximum displacement width for species  1 in box  1  is      0.15000
+ Maximum displacement width for species  1 in box  2  is      1.00000
+Probability for volume move                0.030000
+ Maximum volume displacement is    200.000
+ Volume moves will be performed in actual volumes
+Probability for particle swap              0.120000
+ Species 1 will be inserted using CBMC
+ Number of insertable species is    1
+  By default, box_out will be selected according to its mole fraction
+  By default, species will be selected according to its mole fraction in box_out
+Number of moves is :   3
+********************************************************************************
+
+CBMC info
+********************************************************************************
+Kappa for first fragment insertion          12
+ Cutoff for CBMC for box 1 is         6.50
+ Cutoff for CBMC for box 2 is         6.50
+********************************************************************************
+
+Simulation length info
+********************************************************************************
+Thermodynamic quantities will be computed every      1000 Steps     
+Coordinates will be written every                    5000 Steps     
+ movie header file for box   1 is      helium.out.box1.H
+ movie_XYZ file for box      1 is      helium.out.box1.xyz
+ movie header file for box   2 is      helium.out.box2.H
+ movie_XYZ file for box      2 is      helium.out.box2.xyz
+The simulation will be run for                    2000000 Steps     
+Instantaneous values will be written every           1000 Steps     
+********************************************************************************
+
+Property info
+********************************************************************************
+Total number of property files to be written is     1   for box 1
+ Maximum number of properties per file is    4
+ Writing the name of the property files and the corresponding property output
+ Property file    1   is  helium.out.box1.prp
+ Properties output in these files are
+ Density
+ Nmols
+ Volume
+ Pressure
+Total number of property files to be written is     1   for box 2
+ Maximum number of properties per file is    4
+ Writing the name of the property files and the corresponding property output
+ Property file    1   is  helium.out.box2.prp
+ Properties output in these files are
+ Density
+ Nmols
+ Volume
+ Pressure
+********************************************************************************
+
+Minimum distance cutoff
+********************************************************************************
+MC low cutoff distance is   1.000    Angstrom
+********************************************************************************
+
+Run type
+********************************************************************************
+ The input run type is Equilibration
+ Update frequency is          100
+ Update frequency for adjusting maximum volume displacement is
+         100
+********************************************************************************
+
+********************************************************************************
+************************ Begin Cassandra simulation ****************************
+********************************************************************************
+
+Initial configuration
+********************************************************************************
+ Inserting         2400 molecules of species            1
+ Inserting          400 molecules of species            1
+********************************************************************************
+
+Compute total energy
+********************************************************************************
+ Starting energy components for box 1
+  Atomic units-Extensive
+ -----------------------------------------------------------
+ Total system energy                 -3172597.022
+ Intra molecular energy                     0.000
+   Bond energy                              0.000
+   Bond angle energy                        0.000
+   Dihedral angle energy                    0.000
+   Improper angle energy                    0.000
+ Intra molecule vdw                         0.000
+ Intra molecule q                           0.000
+ Inter molecule vdw                  -3172597.022
+ Long range correction                     -0.000
+ Inter molecule q                           0.000
+ -----------------------------------------------------------
+
+ Starting energy components for box 2
+  Atomic units-Extensive
+ -----------------------------------------------------------
+ Total system energy                   -34483.966
+ Intra molecular energy                     0.000
+   Bond energy                              0.000
+   Bond angle energy                        0.000
+   Dihedral angle energy                    0.000
+   Improper angle energy                    0.000
+ Intra molecule vdw                         0.000
+ Intra molecule q                           0.000
+ Inter molecule vdw                    -34483.966
+ Long range correction                     -0.000
+ Inter molecule q                           0.000
+ -----------------------------------------------------------
+
+********************************************************************************
+
+Run simulation
+********************************************************************************
+      Step       Move   Mol Spc Box  Success  MaxWidth
+       142  translate         1   1  0.65000   0.19500
+       275  translate         1   1  0.54000   0.21060
+       425  translate         1   1  0.53000   0.22324
+       553  translate         1   1  0.61000   0.27235
+       693  translate         1   1  0.52000   0.28324
+       751  translate         1   2  0.82000   1.64000
+       860  translate         1   1  0.52000   0.29457
+       994  translate         1   1  0.61000   0.35938
+      1130  translate         1   1  0.47000   0.33781
+      1260  translate         1   1  0.57000   0.38511
+      1386  translate         1   1  0.52000   0.40051
+      1529  translate         1   1  0.48000   0.38449
+      1531  translate         1   2  0.86000   2.82080
+      1655  translate         1   1  0.57000   0.43832
+      1799  translate         1   1  0.53000   0.46462
+      1941  translate         1   1  0.45000   0.41816
+      2081  translate         1   1  0.48000   0.40143
+      2207  translate         1   1  0.53000   0.42552
+      2341  translate         1   1  0.53000   0.45105
+      2347  translate         1   2  0.78000   4.40045
+      2477  translate         1   1  0.49000   0.44203
+      2605  translate         1   1  0.43000   0.38014
+      2743  translate         1   1  0.42000   0.31932
+      2882  translate         1   1  0.51000   0.32571
+      3022  translate         1   1  0.50000   0.32571
+      3173  translate         1   1  0.53000   0.34525
+      3241  translate         1   2  0.78000   6.86470
+      3324  translate         1   1  0.38000   0.26239
+      3459  translate         1   1  0.48000   0.25189
+      3534   vol_swap                0.15000       60.
+      3591  translate         1   1  0.50000   0.25189
+      3736  translate         1   1  0.51000   0.25693
+      3860  translate         1   2  0.81000  11.12081
+      3883  translate         1   1  0.51000   0.26207
+      4018  translate         1   1  0.44000   0.23062
+      4148  translate         1   1  0.61000   0.28136
+      4289  translate         1   1  0.58000   0.32638
+      4418  translate         1   1  0.44000   0.28721
+      4553  translate         1   1  0.45000   0.25849
+      4678  translate         1   1  0.48000   0.24815
+      4811  translate         1   2  0.81000  14.00000
+      4813  translate         1   1  0.44000   0.21837
+      4950  translate         1   1  0.43000   0.18780
+      5090  translate         1   1  0.45000   0.16902
+      5230  translate         1   1  0.42000   0.14198
+      5361  translate         1   1  0.52000   0.14766
+      5506  translate         1   1  0.54000   0.15947
+      5601  translate         1   2  0.84000  14.00000
+      5647  translate         1   1  0.53000   0.16904
+      5789  translate         1   1  0.54000   0.18256
+      5920  translate         1   1  0.46000   0.16796
+      6055  translate         1   1  0.48000   0.16124
+      6190  translate         1   1  0.47000   0.15156
+      6330  translate         1   1  0.51000   0.15459
+      6467  translate         1   1  0.43000   0.13295
+      6520  translate         1   2  0.80000  14.00000
+      6542   vol_swap                0.00000        6.
+      6602  translate         1   1  0.50000   0.13295
+      6733  translate         1   1  0.48000   0.12763
+      6877  translate         1   1  0.56000   0.14295
+      7017  translate         1   1  0.46000   0.13151
+      7160  translate         1   1  0.54000   0.14203
+      7284  translate         1   2  0.71000  14.00000
+      7301  translate         1   1  0.46000   0.13067
+      7439  translate         1   1  0.47000   0.12283
+      7585  translate         1   1  0.48000   0.11792
+      7719  translate         1   1  0.50000   0.11792
+      7866  translate         1   1  0.40000   0.09433
+      7997  translate         1   1  0.46000   0.08679
+      8069  translate         1   2  0.68000  14.00000
+      8130  translate         1   1  0.50000   0.08679
+      8262  translate         1   1  0.44000   0.07637
+      8410  translate         1   1  0.59000   0.09012
+      8547  translate         1   1  0.50000   0.09012
+      8677  translate         1   1  0.53000   0.09553
+      8826  translate         1   1  0.51000   0.09744
+      8958  translate         1   2  0.78000  14.00000
+      8973  translate         1   1  0.46000   0.08964
+      9111  translate         1   1  0.51000   0.09144
+      9251  translate         1   1  0.42000   0.07681
+      9270   vol_swap                0.25000        3.
+      9394  translate         1   1  0.55000   0.08449
+      9532  translate         1   1  0.39000   0.06590
+      9663  translate         1   1  0.49000   0.06458
+      9707  translate         1   2  0.67000  14.00000
+      9807  translate         1   1  0.48000   0.06200
+      9944  translate         1   1  0.54000   0.06696
+     10072  translate         1   1  0.51000   0.06830
+     10205  translate         1   1  0.43000   0.05874
+     10341  translate         1   1  0.44000   0.05169
+     10474  translate         1   1  0.51000   0.05272
+     10575  translate         1   2  0.76000  14.00000
+     10612  translate         1   1  0.58000   0.06116
+     10748  translate         1   1  0.59000   0.07216
+     10881  translate         1   1  0.47000   0.06783
+     11010  translate         1   1  0.47000   0.06376
+     11139  translate         1   1  0.56000   0.07142
+     11272  translate         1   1  0.46000   0.06570
+     11400  translate         1   2  0.75000  14.00000
+     11418  translate         1   1  0.54000   0.07096
+     11559  translate         1   1  0.50000   0.07096
+     11684  translate         1   1  0.40000   0.05677
+     11808  translate         1   1  0.52000   0.05904
+     11946  translate         1   1  0.46000   0.05432
+     12077  translate         1   1  0.51000   0.05540
+     12224  translate         1   1  0.49000   0.05429
+     12330  translate         1   2  0.66000  14.00000
+     12355  translate         1   1  0.45000   0.04886
+     12491  translate         1   1  0.47000   0.04593
+     12625  translate         1   1  0.44000   0.04042
+     12761  translate         1   1  0.54000   0.04365
+     12901  translate         1   1  0.49000   0.04278
+     13055  translate         1   1  0.49000   0.04193
+     13059   vol_swap                0.00000        0.
+     13098  translate         1   2  0.66000  14.00000
+     13198  translate         1   1  0.50000   0.04193
+     13327  translate         1   1  0.39000   0.03270
+     13470  translate         1   1  0.51000   0.03336
+     13603  translate         1   1  0.50000   0.03336
+     13743  translate         1   1  0.51000   0.03402
+     13886  translate         1   1  0.54000   0.03674
+     14014  translate         1   1  0.44000   0.03234
+     14082  translate         1   2  0.65000  14.00000
+     14155  translate         1   1  0.52000   0.03363
+     14286  translate         1   1  0.56000   0.03766
+     14412  translate         1   1  0.53000   0.03992
+     14549  translate         1   1  0.47000   0.03753
+     14684  translate         1   1  0.55000   0.04128
+     14848  translate         1   1  0.37000   0.03055
+     14914  translate         1   2  0.76000  14.00000
+     14989  translate         1   1  0.42000   0.02566
+     15115  translate         1   1  0.55000   0.02823
+     15249  translate         1   1  0.44000   0.02484
+     15373  translate         1   1  0.52000   0.02583
+     15507  translate         1   1  0.63000   0.03255
+     15637  translate         1   1  0.48000   0.03125
+     15774  translate         1   1  0.44000   0.02750
+     15789  translate         1   2  0.76000  14.00000
+     15906  translate         1   1  0.50000   0.02750
+     16036  translate         1   1  0.54000   0.02970
+     16168  translate         1   1  0.40000   0.02376
+     16311  translate         1   1  0.42000   0.01996
+     16445  translate         1   1  0.51000   0.02036
+     16590  translate         1   1  0.55000   0.02239
+     16607   vol_swap                0.04000        0.
+     16679  translate         1   2  0.66000  14.00000
+     16722  translate         1   1  0.51000   0.02284
+     16848  translate         1   1  0.54000   0.02467
+     16987  translate         1   1  0.52000   0.02565
+     17132  translate         1   1  0.48000   0.02463
+     17272  translate         1   1  0.46000   0.02266
+     17401  translate         1   1  0.44000   0.01994
+     17524  translate         1   2  0.65000  14.00000
+     17554  translate         1   1  0.53000   0.02113
+     17698  translate         1   1  0.47000   0.01987
+     17843  translate         1   1  0.49000   0.01947
+     17976  translate         1   1  0.51000   0.01986
+     18101  translate         1   1  0.49000   0.01946
+     18240  translate         1   1  0.51000   0.01985
+     18371  translate         1   1  0.50000   0.01985
+     18500  translate         1   1  0.54000   0.02144
+     18518  translate         1   2  0.64000  14.00000
+     18649  translate         1   1  0.52000   0.02230
+     18790  translate         1   1  0.48000   0.02140
+     18916  translate         1   1  0.44000   0.01884
+     19054  translate         1   1  0.49000   0.01846
+     19189  translate         1   1  0.57000   0.02104
+     19309  translate         1   1  0.54000   0.02273
+     19350   vol_swap                0.11000        0.
+     19450  translate         1   1  0.50000   0.02273
+     19453  translate         1   2  0.64000  14.00000
+     19579  translate         1   1  0.48000   0.02182
+     19719  translate         1   1  0.46000   0.02007
+     19845  translate         1   1  0.48000   0.01927
+     19983  translate         1   1  0.56000   0.02158
+     20118  translate         1   1  0.44000   0.01899
+     20256  translate         1   1  0.48000   0.01823
+     20381  translate         1   2  0.69000  14.00000
+     20388  translate         1   1  0.47000   0.01714
+     20524  translate         1   1  0.53000   0.01817
+     20655  translate         1   1  0.45000   0.01635
+     20802  translate         1   1  0.52000   0.01700
+     20948  translate         1   1  0.50000   0.01700
+     21081  translate         1   1  0.60000   0.02040
+     21160  translate         1   2  0.76000  14.00000
+     21212  translate         1   1  0.45000   0.01836
+     21354  translate         1   1  0.57000   0.02094
+     21508  translate         1   1  0.46000   0.01926
+     21637  translate         1   1  0.48000   0.01849
+     21763  translate         1   1  0.52000   0.01923
+     21900  translate         1   1  0.45000   0.01731
+     22036  translate         1   1  0.45000   0.01558
+     22092  translate         1   2  0.62000  14.00000
+     22178  translate         1   1  0.31000   0.00966
+     22315  translate         1   1  0.55000   0.01062
+     22456  translate         1   1  0.46000   0.00977
+     22597  translate         1   1  0.50000   0.00977
+     22700   vol_swap                0.48000        0.
+     22737  translate         1   1  0.51000   0.00997
+     22891  translate         1   1  0.50000   0.00997
+     22925  translate         1   2  0.61000  14.00000
+     23036  translate         1   1  0.51000   0.01017
+     23162  translate         1   1  0.49000   0.00996
+     23294  translate         1   1  0.45000   0.00897
+     23428  translate         1   1  0.54000   0.00969
+     23572  translate         1   1  0.52000   0.01007
+     23655  translate         1   2  0.71000  14.00000
+     23718  translate         1   1  0.50000   0.01007
+     23857  translate         1   1  0.51000   0.01027
+     23994  translate         1   1  0.46000   0.00945
+     24128  translate         1   1  0.53000   0.01002
+     24277  translate         1   1  0.45000   0.00902
+     24403  translate         1   2  0.75000  14.00000
+     24409  translate         1   1  0.55000   0.00992
+     24542  translate         1   1  0.50000   0.00992
+     24679  translate         1   1  0.47000   0.00932
+     24808  translate         1   1  0.47000   0.00876
+     24952  translate         1   1  0.56000   0.00982
+     25090  translate         1   1  0.53000   0.01041
+     25224  translate         1   1  0.57000   0.01186
+     25249  translate         1   2  0.74000  14.00000
+     25354  translate         1   1  0.48000   0.01139
+     25482  translate         1   1  0.55000   0.01253
+     25615  translate         1   1  0.44000   0.01102
+     25743  translate         1   1  0.50000   0.01102
+     25874  translate         1   1  0.47000   0.01036
+     26010  translate         1   1  0.49000   0.01015
+     26143  translate         1   1  0.50000   0.01015
+     26242  translate         1   2  0.62000  14.00000
+     26292  translate         1   1  0.49000   0.00995
+     26330   vol_swap                0.43000        0.
+     26421  translate         1   1  0.52000   0.01035
+     26555  translate         1   1  0.53000   0.01097
+     26689  translate         1   1  0.56000   0.01229
+     26827  translate         1   1  0.56000   0.01376
+     26963  translate         1   1  0.51000   0.01404
+     27073  translate         1   2  0.51000  14.00000
+     27099  translate         1   1  0.51000   0.01432
+     27233  translate         1   1  0.52000   0.01489
+     27370  translate         1   1  0.47000   0.01400
+     27507  translate         1   1  0.47000   0.01316
+     27633  translate         1   1  0.55000   0.01447
+     27768  translate         1   1  0.50000   0.01447
+     27905  translate         1   1  0.42000   0.01216
+     27985  translate         1   2  0.63000  14.00000
+     28041  translate         1   1  0.46000   0.01118
+     28173  translate         1   1  0.49000   0.01096
+     28320  translate         1   1  0.55000   0.01206
+     28457  translate         1   1  0.56000   0.01350
+     28589  translate         1   1  0.48000   0.01296
+     28726  translate         1   1  0.44000   0.01141
+     28830  translate         1   2  0.61000  14.00000
+     28854  translate         1   1  0.51000   0.01164
+     28983  translate         1   1  0.59000   0.01373
+     29113  translate         1   1  0.48000   0.01318
+     29247  translate         1   1  0.41000   0.01081
+     29355   vol_swap                0.39000        0.
+     29380  translate         1   1  0.45000   0.00973
+     29511  translate         1   1  0.53000   0.01031
+     29646  translate         1   1  0.50000   0.01031
+     29773  translate         1   2  0.55000  14.00000
+     29789  translate         1   1  0.53000   0.01093
+     29918  translate         1   1  0.46000   0.01006
+     30052  translate         1   1  0.51000   0.01026
+     30183  translate         1   1  0.42000   0.00862
+     30326  translate         1   1  0.55000   0.00948
+     30455  translate         1   1  0.46000   0.00872
+     30586  translate         1   1  0.42000   0.00732
+     30661  translate         1   2  0.53000  14.00000
+     30728  translate         1   1  0.58000   0.00850
+     30857  translate         1   1  0.46000   0.00782
+     30981  translate         1   1  0.52000   0.00813
+     31126  translate         1   1  0.49000   0.00797
+     31251  translate         1   1  0.51000   0.00813
+     31387  translate         1   1  0.53000   0.00861
+     31514  translate         1   1  0.53000   0.00913
+     31648  translate         1   1  0.45000   0.00822
+     31696  translate         1   2  0.59000  14.00000
+     31777  translate         1   1  0.51000   0.00838
+     31911  translate         1   1  0.53000   0.00888
+     32050  translate         1   1  0.48000   0.00853
+     32184  translate         1   1  0.49000   0.00836
+     32314  translate         1   1  0.41000   0.00685
+     32466  translate         1   1  0.51000   0.00699
+     32570  translate         1   2  0.62000  14.00000
+     32602  translate         1   1  0.48000   0.00671
+     32742  translate         1   1  0.57000   0.00765
+     32873  translate         1   1  0.47000   0.00719
+     32883   vol_swap                0.50000        0.
+     33001  translate         1   1  0.41000   0.00590
+     33122  translate         1   1  0.55000   0.00649
+     33259  translate         1   1  0.56000   0.00727
+     33410  translate         1   1  0.46000   0.00668
+     33474  translate         1   2  0.58000  14.00000
+     33542  translate         1   1  0.51000   0.00682
+     33691  translate         1   1  0.47000   0.00641
+     33824  translate         1   1  0.49000   0.00628
+     33949  translate         1   1  0.56000   0.00703
+     34086  translate         1   1  0.54000   0.00760
+     34231  translate         1   1  0.42000   0.00638
+     34311  translate         1   2  0.54000  14.00000
+     34364  translate         1   1  0.51000   0.00651
+     34508  translate         1   1  0.45000   0.00586
+     34646  translate         1   1  0.43000   0.00504
+     34788  translate         1   1  0.57000   0.00574
+     34921  translate         1   1  0.49000   0.00563
+     35024  translate         1   2  0.55000  14.00000
+     35056  translate         1   1  0.54000   0.00608
+     35192  translate         1   1  0.50000   0.00608
+     35336  translate         1   1  0.43000   0.00523
+     35483  translate         1   1  0.47000   0.00491
+     35604  translate         1   1  0.54000   0.00531
+     35738  translate         1   1  0.55000   0.00584
+     35874  translate         1   1  0.45000   0.00525
+     36001  translate         1   1  0.50000   0.00525
+     36067  translate         1   2  0.55000  14.00000
+     36130  translate         1   1  0.48000   0.00504
+     36265  translate         1   1  0.50000   0.00504
+     36396  translate         1   1  0.50000   0.00504
+     36515  translate         1   1  0.56000   0.00565
+     36651  translate         1   1  0.52000   0.00588
+     36758   vol_swap                0.63000        0.
+     36789  translate         1   1  0.42000   0.00494
+     36923  translate         1   1  0.47000   0.00464
+     37050  translate         1   1  0.46000   0.00427
+     37067  translate         1   2  0.54000  14.00000
+     37180  translate         1   1  0.52000   0.00444
+     37308  translate         1   1  0.52000   0.00462
+     37433  translate         1   1  0.53000   0.00489
+     37559  translate         1   1  0.51000   0.00499
+     37687  translate         1   1  0.49000   0.00489
+     37820  translate         1   1  0.46000   0.00450
+     37950  translate         1   1  0.43000   0.00387
+     38089  translate         1   1  0.56000   0.00433
+     38160  translate         1   2  0.50000  14.00000
+     38221  translate         1   1  0.55000   0.00477
+     38379  translate         1   1  0.44000   0.00420
+     38508  translate         1   1  0.43000   0.00361
+     38637  translate         1   1  0.45000   0.00325
+     38766  translate         1   1  0.50000   0.00325
+     38891  translate         1   1  0.54000   0.00351
+     39019  translate         1   1  0.51000   0.00358
+     39122  translate         1   2  0.51000  14.00000
+     39153  translate         1   1  0.51000   0.00365
+     39299  translate         1   1  0.44000   0.00321
+     39437  translate         1   1  0.52000   0.00334
+     39529   vol_swap                0.38000        0.
+     39579  translate         1   1  0.46000   0.00307
+     39718  translate         1   1  0.47000   0.00289
+     39851  translate         1   1  0.55000   0.00318
+     39989  translate         1   1  0.50000   0.00318
+     40002  translate         1   2  0.52000  14.00000
+     40114  translate         1   1  0.54000   0.00343
+     40247  translate         1   1  0.52000   0.00357
+     40377  translate         1   1  0.55000   0.00393
+     40514  translate         1   1  0.45000   0.00353
+     40642  translate         1   1  0.50000   0.00353
+     40771  translate         1   1  0.48000   0.00339
+     40913  translate         1   1  0.57000   0.00387
+     41060  translate         1   1  0.37000   0.00286
+     41087  translate         1   2  0.57000  14.00000
+     41207  translate         1   1  0.55000   0.00315
+     41344  translate         1   1  0.48000   0.00302
+     41470  translate         1   1  0.41000   0.00248
+     41605  translate         1   1  0.38000   0.00188
+     41736  translate         1   1  0.55000   0.00207
+     41871  translate         1   1  0.52000   0.00215
+     41997  translate         1   2  0.44000  12.32000
+     42006  translate         1   1  0.59000   0.00254
+     42148  translate         1   1  0.47000   0.00239
+     42292  translate         1   1  0.54000   0.00258
+     42419  translate         1   1  0.49000   0.00253
+     42552  translate         1   1  0.48000   0.00243
+     42587   vol_swap                0.44000        0.
+     42691  translate         1   1  0.48000   0.00233
+     42818  translate         1   1  0.51000   0.00238
+     42860  translate         1   2  0.44000  10.84160
+     42953  translate         1   1  0.44000   0.00209
+     43089  translate         1   1  0.48000   0.00201
+     43227  translate         1   1  0.56000   0.00225
+     43367  translate         1   1  0.52000   0.00234

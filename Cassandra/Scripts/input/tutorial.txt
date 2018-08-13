@@ -1,0 +1,82 @@
+Cassandra Tutorial
+
+Name: Xenon gas in GEMC-NVT ensemble
+required files: xenon.pdb xenon.inp
+Reference: J. Chem. Phys. 143, 114504 (2015)
+
+Steps
+1.  Open xenon.pdb in a text editor. There is one HETATM record.
+2.  In a terminal, run command:
+
+> mcfgen.py xenon.pdb --ffTemplate
+
+3.  Enter "Mie" (without quotes) when prompted for the VDW type.
+4.  Open xenon.ff in a text editor and enter the following information:
+
+    Sigma 3.964
+    Epsilon 243.8
+    Repulsive_Exponent 14.
+    Dispersive_Exponent 6.
+    atom_type_charge 0.
+
+5.  In a terminal, run command:
+
+> mcfgen.py xenon.pdb
+
+6.  Open xenon.mcf in a text editor. Only Atom_Info and Fragment_Info sections 
+    are populated.
+    Make sure the mass of Xe is set to 131.293.
+7.  Open xenon.inp in a text editor and enter the following information:
+
+    Run_Name: anything you want (no spaces)
+    Sim_Type: GEMC
+    Molecule_Files: xenon.mcf 400
+    Cut-off Option: 
+	Mie cut_tail 7.0
+	Mie cut_tail 7.0
+    Box_Info: 
+	2
+	CUBIC
+	35
+	
+	CUBIC
+	35
+    Temperature_Info: 160-280 160-280 !requires temperatures for each box
+    Prob_Translation: 
+	0.79
+	0.5   !max displacement for box1
+        0.5   !max displacement for box2
+    Prob_Volume: 
+	0.01
+	200   !max volume change for both boxes
+    Prob_Swap: 
+	0.20
+	cbmc
+    Start_Type: 
+      make_config 200 !initiate # molecules for box1
+      make_config 200 !initiate # molecules for box2
+    Simulation_Length_Info:
+      Units Steps
+      Prop_Freq 1000
+      Coord_Freq 50000
+      Run 500000
+
+    Do not enter change the section Fragment_Files. This information will be
+    added by the library_setup.py script.
+8.  In a terminal, run command:
+
+> python library_setup.py `which cassandra.exe` xenon.inp xenon.pdb
+
+9.  Open species1/frag1/frag1.dat in a text editor.
+
+If you haven't dont so already, make sure you are running the job on a single thread 
+> setenv OMP_NUM_THREADS 1 (in bash:export OMP_NUM_THREADS=1)
+
+11. In a terminal, run command:
+
+> cassandra.exe xenon.inp
+
+12. Plot the density using the following command:
+
+> python ../../Scripts/plot.py RUN_NAME.box1.prp1 RUN_NAME.box2.prp1 -skip NUM_LINES
+
