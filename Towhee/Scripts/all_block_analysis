@@ -1,0 +1,52 @@
+#!/bin/bash
+
+Compound=Helium
+Model=2Body_Total
+
+nmol_tot=2800
+rcut=14
+Stage=2
+
+Temp=(7 8 9 10 11)
+
+for rep in $(seq 0 7) # Perform 8 replicate simulations at each temperature
+
+do
+
+for j in $(seq 0 4)
+
+do
+
+cd /h/Helium_ab_initio/Towhee/Results/"$nmol_tot"_"$rcut"/"${Temp[j]}"_"$rep" || exit
+
+number_blocks=$(grep -c "Block Averages" ./Output_"$Stage")
+
+echo "$number_blocks"
+
+Count=0
+
+while [ $Count -le "$number_blocks" ]
+
+do
+
+Count=$((Count + 1))
+
+#grep "U                    kJ/mol" ./Output_"$Stage" | tail >> U_Ensemble
+#grep "BA Box: 1 Specific density [g/ml] " ./Output_"$Stage" | tail >> rho_box1
+#grep "BA Box: 2 Specific density [g/ml] " ./Output_"$Stage" | tail >> rho_box2
+
+#sed -i s/" U                    kJ\/mol      \[.*\]"/""/ U_Ensemble
+
+grep "BA Box: 1 Specific density" ./Output_"$Stage" | tail -n $Count > ./box_1_averages_"$Stage"
+grep "BA Box: 2 Specific density" ./Output_"$Stage" | tail -n $Count > ./box_2_averages_"$Stage"
+
+sed -i s/"BA Box: 1 Specific density \[.*\] "/""/ ./box_1_averages_"$Stage"
+sed -i s/"BA Box: 2 Specific density \[.*\] "/""/ ./box_2_averages_"$Stage"
+
+done # for Count
+
+done # for j
+
+done # for rep
+
+exit 0

@@ -123,3 +123,23 @@ plt.ylabel(r'log$_{10}$(Pressure/bar)')
 plt.tight_layout()
 fig.savefig(system_path+'plots/ClausiusClapeyron.pdf')
 plt.close()  
+
+f = open(system_path+'VLCC.txt','w')
+
+f.write(r'Tsat (K)'+'\t'+r'rho_liq (kg/m3)'+'\t'+r'rho_vap (kg/m3)')
+
+for Tsat_i, rho_liq_i, rho_vap_i in zip(Temp_all,rho_liq,rho_vap):
+    
+    f.write('\n'+str(Tsat_i)+'\t'+str(rho_liq_i)+'\t'+str(rho_vap_i))
+    
+f.close()
+
+f = open(system_path+'Psat.txt','w')
+
+f.write(r'Tsat (K)'+'\t'+r'Psat (bar)')
+
+for Tsat_i, press_vap_i in zip(Temp_all,press_vap):
+    
+    f.write('\n'+str(Tsat_i)+'\t'+str(press_vap_i))
+    
+f.close()

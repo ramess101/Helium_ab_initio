@@ -1,0 +1,28 @@
+#!/bin/bash
+
+Compound=Helium
+Model=2Body_Total
+
+nmol_tot=2800
+rcut=14
+
+Temp=(7 8 9 10 11)
+
+for rep in $(seq 0 7) # Perform 8 replicate simulations at each temperature
+
+do
+
+for j in $(seq 0 4)
+
+do
+
+cd /h/Helium_ab_initio/Towhee/Results/"$nmol_tot"_"$rcut"/"${Temp[j]}"_"$rep" || exit
+
+sed -i s'/-316/E-316/' towhee_vlcc
+sed -i s'/-309/E-309/' towhee_vlcc
+
+done
+
+done
+
+exit 0
