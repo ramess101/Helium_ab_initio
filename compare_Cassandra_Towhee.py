@@ -64,6 +64,7 @@ T_c_star= 1.31
 rho_c_star= 0.314
 rho_L_star_params= [0.477, 0.2124, -0.01151]
 rho_v_star_params= [-0.477, 0.05333, 0.1261]
+P_v_star_params = [1.2629, -4.8095, -0.15115]
 
 rho_L_star_params = [rho_c_star, T_c_star, rho_L_star_params[0], rho_L_star_params[1], rho_L_star_params[2]]
 rho_v_star_params = [rho_c_star, T_c_star, rho_v_star_params[0], rho_v_star_params[1], rho_v_star_params[2]]
@@ -90,6 +91,16 @@ def rho_v_hat_LJ(T,eps,sig,M_w):
     rho_v = rho_v_star *  M_w  / sig**3 / N_A * m3_to_nm3 * gm_to_kg #[kg/m3]
     return rho_v
 
+def P_v_star_hat(T_star, b = P_v_star_params):
+    P_v_star = np.exp(b[0]*T_star + b[1]/T_star + b[2]/(T_star**4))
+    return P_v_star
+
+def P_v_hat_LJ(T,eps,sig):
+    T_star = T/(np.ones(len(T))*eps)
+    P_v_star = P_v_star_hat(T_star)
+    P_v = P_v_star *  eps  / sig**3 * k_B * m3_to_nm3 * J_per_m3_to_kPA #[kPa]
+    return P_v
+
 ### Properties for Helium
 sig_LJ = 0.264 #[nm]
 eps_LJ = 11. #[K]
@@ -98,9 +109,11 @@ M_w = 4.0026 #[gm/mol]
 T_plot = np.linspace(np.min(Temp_all),T_c_star*eps_LJ,500)
 rho_L_plot = rho_L_hat_LJ(T_plot,eps_LJ,sig_LJ,M_w)
 rho_v_plot = rho_v_hat_LJ(T_plot,eps_LJ,sig_LJ,M_w)
+P_v_plot = P_v_hat_LJ(T_plot,eps_LJ,sig_LJ)/100. #[bar]
 
 plt.plot(rho_L_plot,T_plot,'g--',label='Lennard-Jones')
 plt.plot(rho_v_plot,T_plot,'g--')
+plt.plot([311.,250.],[7.,11.],'go',markersize=10,mfc='None',label='Cassandra, Lennard-Jones')
 
 plt.ylabel('Temperature (K)')
 plt.xlabel('Density (kg/m3)')
