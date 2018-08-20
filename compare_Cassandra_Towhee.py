@@ -22,10 +22,10 @@ root_path = 'H:/Helium_ab_initio/'
 Nmol = 2800
 rcut = 14 #[Ang]
 
-packages = ['Cassandra','Towhee']   
+packages = ['Cassandra','Towhee','Cassandra_LJ','Towhee_LJ_native','Towhee_LJ_tabulated']   
 
-color_scheme = {'Cassandra':'b','Towhee':'r'}
-shape_scheme = {'Cassandra':'o','Towhee':'s'}
+color_scheme = {'Cassandra':'b','Towhee':'r','Cassandra_LJ':'g','Towhee_LJ_native':'c','Towhee_LJ_tabulated':'m'}
+shape_scheme = {'Cassandra':'o','Towhee':'s','Cassandra_LJ':'^','Towhee_LJ_native':'v','Towhee_LJ_tabulated':'d'}
 
 fig = plt.figure(figsize=(12,12)) 
 
@@ -38,6 +38,18 @@ for pack in packages:
     elif pack == 'Towhee':
     
         system_path = root_path+pack+'/Results/'+str(Nmol)+'_'+str(rcut)+'/'                                    
+
+    elif pack == 'Cassandra_LJ':
+    
+        system_path = root_path+'Cassandra/Results/LJ_1400_14/'                                    
+
+    elif pack == 'Towhee_LJ':
+    
+        system_path = root_path+'Towhee/Results/LJ_truncated_native_2800_18/'
+        
+    elif pack == 'Towhee_LJ_tabulated':
+    
+        system_path = root_path+'Towhee/Results/LJ_truncated_2800_18/'
 
     VLCC = np.loadtxt(system_path+'VLCC.txt',skiprows=1)
     Temp_all = VLCC[:,0]
@@ -113,7 +125,7 @@ P_v_plot = P_v_hat_LJ(T_plot,eps_LJ,sig_LJ)/100. #[bar]
 
 plt.plot(rho_L_plot,T_plot,'g--',label='Lennard-Jones')
 plt.plot(rho_v_plot,T_plot,'g--')
-plt.plot([311.,250.],[7.,11.],'go',markersize=10,mfc='None',label='Cassandra, Lennard-Jones')
+#plt.plot([311.,250.],[7.,11.],'go',markersize=10,mfc='None',label='Cassandra, Lennard-Jones')
 
 plt.ylabel('Temperature (K)')
 plt.xlabel('Density (kg/m3)')

@@ -1,0 +1,128 @@
+# Run_Name
+helium.out.2NVT
+!------------------------------------------------------------------------------
+
+# Sim_Type
+GEMC
+!------------------------------------------------------------------------------
+
+# Nbr_Species
+1
+!------------------------------------------------------------------------------
+
+# VDW_Style
+Mie cut_tail 14.0
+Mie cut_tail 14.0
+!------------------------------------------------------------------------------
+
+# Charge_Style
+NONE
+NONE
+!-----------------------------------------------------------------------------
+
+# Intra_Scaling
+0.0 0.0 0.0 1.0
+0.0 0.0 0.0 1.0
+!-----------------------------------------------------------------------------
+
+# Mixing_Rule
+LB
+!-----------------------------------------------------------------------------
+
+# Rcutoff_Low
+1.5
+!------------------------------------------------------------------------------
+
+# Molecule_Files
+helium.mcf 2800
+!----------------------------------------------------------one line per species
+
+# Box_Info
+2
+cubic
+insert_box_1
+
+cubic
+insert_box_2
+!-------------------------------------------------------line 1: number of boxes
+!--------------------------------------------------------------line 2: box type
+!--------------------------------------------------------------line 3: box size
+!--------------------------------------------------------------repeat for second box
+
+# Temperature_Info
+insert_temps_1
+insert_temps_2
+!----------------------------------------------------------one temperature per box
+
+# Move_Probability_Info
+
+# Prob_Translation
+0.999999
+0.15
+14.0
+
+# Prob_Volume
+0.0000005
+200.
+
+# Prob_Swap
+0.0000005
+cbmc
+
+# Done_Probability_Info
+!---------------------one line for each box and one entry/line for each species
+!-----------------------------------------each molecule moves per volume change
+
+# Start_Type
+make_config insert_mols_1
+make_config insert_mols_2
+!--------make_config: one line for each species and one entry/line for each box
+!------------------------------------------------------------read_old: filename
+!----------------------------------------------------------checkpoint: filename
+
+# Run_Type
+Equilibration 100 100
+!-------------------------Equilibration: update maximum widths every 100 steps/update maximum
+!-------------------------volume displacement every 100 steps
+
+# Simulation_Length_Info
+Units       Steps
+Prop_Freq   1000
+Coord_Freq  5000
+Run         insert_steps
+!------------------ simulation length every 2200 steps, XYZ output every 2200 steps, property
+!---------------------------------------output every 100 steps
+
+# Seed
+insert_seed_1 insert_seed_2
+!------------------------------------------------------------------------------
+
+# Property_Info 1
+mass_density
+Nmols
+Volume
+Pressure
+energy_total
+energy_lj
+!------------------------------------------------------------------------------
+
+# Property_Info 2
+mass_density
+Nmols
+Volume
+Pressure
+energy_total
+energy_lj
+!------------------------------------------------------------------------------
+
+
+# Fragment_Files
+species1/frag1/frag1.dat  1
+!---------------------------------------------------------one line per fragment
+
+# CBMC_Info
+kappa_ins 12
+rcut_cbmc 6.5 6.5
+!------------------------------------------------------------------------------
+
+END

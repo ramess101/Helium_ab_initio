@@ -1,5 +1,5 @@
 # Run_Name
-helium.out
+helium.out.equil
 !------------------------------------------------------------------------------
 
 # Sim_Type
@@ -74,8 +74,7 @@ cbmc
 !-----------------------------------------each molecule moves per volume change
 
 # Start_Type
-make_config insert_mols_1
-make_config insert_mols_2
+checkpoint helium.out.2NVT.chk
 !--------make_config: one line for each species and one entry/line for each box
 !------------------------------------------------------------read_old: filename
 !----------------------------------------------------------checkpoint: filename
@@ -88,7 +87,7 @@ Equilibration 100 100
 # Simulation_Length_Info
 Units       Steps
 Prop_Freq   1000
-Coord_Freq  500000
+Coord_Freq  100000
 Run         insert_steps
 !------------------ simulation length every 2200 steps, XYZ output every 2200 steps, property
 !---------------------------------------output every 100 steps
@@ -122,7 +121,7 @@ species1/frag1/frag1.dat  1
 
 # CBMC_Info
 kappa_ins 12
-rcut_cbmc 6.5 6.5
+rcut_cbmc 14. 14.
 !------------------------------------------------------------------------------
 
 END
