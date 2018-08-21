@@ -13,17 +13,17 @@ import matplotlib.pyplot as plt
 font = {'size' : '24'}
 plt.rc('font',**font)
 
-root_path = 'H:/Helium_ab_initio/Towhee/Results/'
+root_path = 'H:/Helium_ab_initio/Towhee/Results/LJ_truncated_'
 
 Nmol = 2800
-rcut = 14 #[Ang]
+rcut = 18 #[Ang]
 
 system_path = root_path+str(Nmol)+'_'+str(rcut)+'/'
 
 Temps = np.array([7.,8.,9.,10.,11.])                                     
                                      
 NTemps = len(Temps)
-NReps=8
+NReps=1
 NBoxes=2
 NSims = NTemps*NReps
 MCSteps = 100000

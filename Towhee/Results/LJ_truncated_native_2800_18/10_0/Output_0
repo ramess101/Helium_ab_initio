@@ -1,0 +1,1049 @@
+ MCCCS Towhee - Version 7.2.0   (August 25 2016)    
+ Copyright (C) <2016> Marcus G. Martin
+ Code Contributors for 2016: Marcus G. Martin;
+ Copyright (C) <2015> Marcus G. Martin
+ Code Contributors for 2015: Marcus G. Martin;
+ Copyright (C) <2014> Marcus G. Martin
+ Code Contributors for 2014: Marcus G. Martin;
+ Copyright (C) <2013> Marcus G. Martin
+ Code Contributors for 2013: Wesley Emeneker; Marcus G. Martin;
+ Copyright (C) <2012> Marcus G. Martin
+ Code Contributors for 2012: Marcus G. Martin;
+ Copyright (C) <2011> Marcus G. Martin
+ Code Contributors for 2011: Fred James; Marcus G. Martin; Suleiman Oloriegbe;
+ Copyright (C) <2010> Marcus G. Martin
+ Code Contributors for 2010: Rene Haber; Andrej Lajovic; Marcus G. Martin; Loukas Peristeras;
+ Copyright (C) <2009> Marcus G. Martin
+ Code Contributors for 2009: Rene Haber; Marcus G. Martin; Loukas Peristeras;
+ Copyright (C) <2008> Marcus G. Martin
+ Code Contributors for 2008: Rene Haber; Iyad A. Hijazi; Marcus G. Martin; Loukas Peristeras; Craig Tenney;
+ Copyright (C) <2007> Marcus G. Martin
+ Code Contributors for 2007: Bernhard Eckl; Frank Heilmann; Jianhui Li; Marcus G. Martin; Craig M. Tenney; Ozgur Yazaydin
+ Copyright (C) <2006> Marcus G. Martin
+ Code Contributors for 2006: Alan A. Chen; Arben Jusufi; Christian D. Lorenz; Marcus G. Martin; Jeffrey J. Potoff; Vincent K. Shen; Matthew A. Wyczalkowski; Ozgur Yazaydin
+ Copyright (C) <2005> Marcus G. Martin
+ Code Contributors for 2005: Marcus G. Martin; Alan A. Chen; Christian D. Lorenz; Matthew A. Wyczalkowski
+ Copyright (C) <2004> Marcus G. Martin
+ Code Contributors for 2004: Marcus G. Martin; Christian D. Lorenz; Peter A. Schultz; Aidan P. Thompson; Jeffrey J. Potoff; Steve R. Lustig; Paul S. Crozier; Nicholas du Preez
+ Copyright (C) <2003> Marcus G. Martin
+ Code Contributors for 2003: Marcus G. Martin; Christian D. Lorenz; David B. Ritch; Michael L. Greenfield; Yogesh Srivastava; Evangelos A Coutsias
+ Copyright (C) <2002> Marcus G. Martin
+ Code Contributors for 2002: Marcus G. Martin; Christian D. Lorenz; Aidan P. Thompson; Allen G. Sault
+ Copyright (C) <2000-2001> Marcus G. Martin
+ Copyright (C) <1999> J. Ilja Siepmann and Marcus G. Martin
+ Code Contributors for 1999: J. Ilja Siepmann; Marcus G. Martin; Bin Chen; Collin D. Wick; John Stubbs
+
+ Direct comments about this code to Marcus G. Martin (marcus_martin@users.sourceforge.net)
+ See the MCCCS Towhee web site for more information and the users manual.
+ http://towhee.sourceforge.net
+
+ We would like to thank the following agencies for providing funding used to develop MCCCS Towhee
+ -Department of Energy Industrial Technologies Program (MGM)
+ -National Science Foundation (JIS)
+ -Department of Energy Computational Science Graduate Fellowship (MGM,CDW)
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+ Reading from towhee_input file: towhee_input                                                                                                            
+ in directory: current directory
+ inputformat: Towhee         
+ ensemble: nvt                           
+ temperature:  10.0000    
+ nmolty:            1
+ nmolectyp:         2800
+ numboxes:            2
+ stepstyle: cycles  
+ nstep:         5000
+ printfreq:         1000
+ blocksize:         5000
+ moviefreq:            0
+ backupfreq:         5000
+ runoutput: full                
+Full output of updates and block averages
+ pdb_output_freq:        50000
+ pressure_virial_freq:            0
+ trmaxdispfreq:           40
+ volmaxdispfreq:           40
+ potentialstyle: internal                      
+ ffnumber:            1
+ ff_filename:
+../towhee_ff                                                                                                            
+ classical_potential: Lennard-Jones                 
+ READCLASSICAL: pot_num:     1 potential name: Lennard-Jones                 
+ classical_mixrule: Lorentz-Berthelot             
+ lshift:  F
+ ltailc:  F
+ rmin:  1.00000    
+ rcut:  18.0000    
+ rcutin:  10.0000    
+ electrostatic_form: none                                              
+ Setting up force field parameters from files
+ opening forcefield file:    1
+ Lorentz-Berthelot Mixing rules
+ Arithmetic mean of sigma terms
+ Geometric mean of epsilon term
+default max_bond_length:  3.00
+ No solvation model used
+ linit:  T
+ initboxtype: number density      
+initstyle Box:    1
+ full cbmc           
+initstyle Box:    2
+ full cbmc           
+Box:  1 initlattice: simple cubic        
+Box:  2 initlattice: simple cubic        
+Box:  1 initmol:      2400
+Box:  2 initmol:       400
+Box:  1 inix,iniy,iniz:        24         24         24
+Box:  2 inix,iniy,iniz:         8          8          8
+  38.3503    
+  1.62020    
+itest:  1 pairbox:  1   2
+ pmvol:  0.00000    
+ pmvlpr:  1.00000    
+ rmvol: 0.100000    
+ tavol: 0.500000    
+ pm2boxcbswap:  0.00000    
+ pm2cbswmt:  1.00000    
+ pm2cbswpr:  1.00000    
+ pmavb1:  0.00000    
+ pmavb1in: 0.500000    
+ pmavb1mt:  1.00000    
+moltyp:  1 pmavb1ct: 1.000000
+ avb1rad:  8.00000    
+ pmtracm:  1.00000    
+ pmtcmt:  1.00000    
+ rmtrac: 0.500000    
+ tatrac: 0.500000    
+cbmc_analysis: normal                        
+cbmc_formulation: Martin and Frischknecht 2006                                
+ Coupled to pre-nonbond formulation from
+ M.G. Martin; A.L. Frischknecht; Mol. Phys. 104 2439-2456 (2006)
+cbmc_setting_style: Martin and Frischknecht       
+ input_style: basic connectivity map                            
+ nunit:            1
+ nmaxcbmc:            1
+ lpdbnames:  F
+   using the TwoBody    force field
+ charge_assignment: bond increment                
+   Building the input file for molecule type:     1
+unit:    1 name:He        
+Charges assigned for Molecule Type:    1
+Unit:    1 nbname: He         Charge:    0.00000
+Total charge for Molecule Type:    1 is:    0.00000
+ Verifying input structures are consistent
+Determining cyclic subunits for molecule type          1
+Default total charge on molecule   1 is   0.00000
+Total charge in the simulation system:   0.00000
+Bond Types
+   No Bond Types
+Angle Types
+   No Angle Types
+Torsion Types
+   No Torsion Types
+Improper Torsion Types
+   No Improper Types
+Energies exclusively from internal potentials
+Nonbonded Force Field
+Lennard-Jones 12-6 potential
+u(r) = 4*epsilon[(sigma/r)^12 - (sigma/r)^6] - shift
+Num. Atom(i)    Num. Atom(j)         sigma    epsilon      shift     1-4sig     1-4eps
+   1 He            1 He             2.6400    11.0000     0.0000     0.0000     0.0000
+Determining Arbitrary Trial Distribution Parameters: see towhee_cbmc for full details
+ Canonical Gibbs ensemble
+ 3-dimensional periodic box
+ Additional Center-of-Mass cutoff
+ Dual Cutoff Configurational-bias Monte Carlo
+ Coupled-decoupled Configurational-bias MC
+
+Molecular mass for molecule type     1 is     4.0026 g/mol
+ Calling initconf
+Selected random number generator DX-1597-2-7 and single integer seed    1302001
+Testing random number generator using the single integer seed
+    0.176388  0.962482  0.823343  0.766693  0.978065
+10 million RNG sum (approximately 5 million):   4999431.7789132409
+Box idim hinverse:    1 1    0.02519    0.00000    0.00000
+Box idim hinverse:    1 2    0.00000    0.02519    0.00000
+Box idim hinverse:    1 3    0.00000    0.00000    0.02519
+Box idim hinverse:    2 1    0.01594    0.00000    0.00000
+Box idim hinverse:    2 2    0.00000    0.01594    0.00000
+Box idim hinverse:    2 3    0.00000    0.00000    0.01594
+INITCONF: building template for molecule type:    1
+Initial Structure Growth Trial:    1
+
+Number of MC cycles:                 5000
+Number of molecules:                 2800
+Temperature [K]:        10.00000
+
+Initial Energies for Box     1
+Total molecules in this box       2400
+Molecules of type   1 :       2400
+ Total vibration (atoms ij bonded together)                     0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) regular                                             0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) van der waals                                       0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) Electric                                            0.000 [K]         0.00000 [kcal/mol]
+  bond-bond (ij-jk)                                             0.000 [K]         0.00000 [kcal/mol]
+ Total angle (atoms ijk bonded in sequence)                     0.000 [K]         0.00000 [kcal/mol]
+  angle (ijk) regular                                           0.000 [K]         0.00000 [kcal/mol]
+  bond-angle (ij-ijk)                                           0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) van der waals                                      0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) Electric                                           0.000 [K]         0.00000 [kcal/mol]
+  angle-angle (ijk-ijm)                                         0.000 [K]         0.00000 [kcal/mol]
+ Total torsion (ijkl bonded in sequence)                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijkl) regular                                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-kl) bond-bond                                     0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-ijkl) bond-torsion                                0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-ijkl) angle-torsion                              0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-jkl-ijkl) angle-angle-torsion                    0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four van der waals                          0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four Electric                               0.000 [K]         0.00000 [kcal/mol]
+ Total improper (ijkm, i,k,m bonded to j)                       0.000 [K]         0.00000 [kcal/mol]
+ Total nonbond (more than 3 bonds apart) vdw             75225078.941 [K]    149488.46867 [kcal/mol]
+  intramolecular                                                0.000 [K]         0.00000 [kcal/mol]
+  2-body vdw intermolecular                              75225078.941 [K]    149488.46867 [kcal/mol]
+  3-body vdw intermolecular                                     0.000 [K]         0.00000 [kcal/mol]
+ Total external field                                           0.000 [K]         0.00000 [kcal/mol]
+ Total solvation                                                0.000 [K]         0.00000 [kcal/mol]
+Total classical                                          75225078.941 [K]    149488.46867 [kcal/mol]
+ Aggregate van der waals (bond and nonbond)              75225078.941 [K]    149488.46867 [kcal/mol]
+ Aggregate Electric (bond and nonbond)                          0.000 [K]         0.00000 [kcal/mol]
+Initial Energies for Box     2
+Total molecules in this box        400
+Molecules of type   1 :        400
+ Total vibration (atoms ij bonded together)                     0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) regular                                             0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) van der waals                                       0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) Electric                                            0.000 [K]         0.00000 [kcal/mol]
+  bond-bond (ij-jk)                                             0.000 [K]         0.00000 [kcal/mol]
+ Total angle (atoms ijk bonded in sequence)                     0.000 [K]         0.00000 [kcal/mol]
+  angle (ijk) regular                                           0.000 [K]         0.00000 [kcal/mol]
+  bond-angle (ij-ijk)                                           0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) van der waals                                      0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) Electric                                           0.000 [K]         0.00000 [kcal/mol]
+  angle-angle (ijk-ijm)                                         0.000 [K]         0.00000 [kcal/mol]
+ Total torsion (ijkl bonded in sequence)                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijkl) regular                                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-kl) bond-bond                                     0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-ijkl) bond-torsion                                0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-ijkl) angle-torsion                              0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-jkl-ijkl) angle-angle-torsion                    0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four van der waals                          0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four Electric                               0.000 [K]         0.00000 [kcal/mol]
+ Total improper (ijkm, i,k,m bonded to j)                       0.000 [K]         0.00000 [kcal/mol]
+ Total nonbond (more than 3 bonds apart) vdw                  -95.537 [K]        -0.18985 [kcal/mol]
+  intramolecular                                                0.000 [K]         0.00000 [kcal/mol]
+  2-body vdw intermolecular                                   -95.537 [K]        -0.18985 [kcal/mol]
+  3-body vdw intermolecular                                     0.000 [K]         0.00000 [kcal/mol]
+ Total external field                                           0.000 [K]         0.00000 [kcal/mol]
+ Total solvation                                                0.000 [K]         0.00000 [kcal/mol]
+Total classical                                               -95.537 [K]        -0.18985 [kcal/mol]
+ Aggregate van der waals (bond and nonbond)                   -95.537 [K]        -0.18985 [kcal/mol]
+ Aggregate Electric (bond and nonbond)                          0.000 [K]         0.00000 [kcal/mol]
+
+ +++++ start of markov chain +++++
+
+Cycle      Box   Energy [K]  Volume [A^3] Press. [kPa] Molecules
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96028.     14803.   0.154153
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15972.     15944.   0.998247
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96077.     32446.   0.104117
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15923.     15441.   1.936059
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95976.     36251.   0.078652
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16024.     14188.   3.428457
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96033.     40319.   0.066044
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15967.     12903.   5.541102
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95736.     44010.   0.060721
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16264.     12050.   8.210806
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95849.     47541.   0.060235
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16151.     11805.  12.002794
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96000.     49694.   0.062361
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16000.     11204.  16.809913
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96186.     51356.   0.066592
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15814.     10915.  23.204781
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96069.     51832.   0.071856
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15931.     10862.  31.642751
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95978.     52817.   0.079085
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16022.     10690.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96017.     52978.   0.087272
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15983.     10702.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95779.     52788.   0.096198
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16221.     10729.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96034.     53089.   0.106360
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15966.     10549.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95826.     52832.   0.117279
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16174.     10774.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96111.     52908.   0.129122
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15889.     10522.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96266.     53007.   0.142197
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15734.     10389.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96090.     52715.   0.156018
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15910.     10595.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95978.     52643.   0.171149
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16022.     10439.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96052.     52096.   0.185653
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15948.     10561.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96172.     51738.   0.199753
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15828.     10592.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95927.     51481.   0.214402
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16073.     10724.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95876.     51204.   0.229010
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16124.     10719.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96162.     51063.   0.243213
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15838.     10606.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96016.     50748.   0.257094
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15984.     10571.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95988.     50907.   0.272698
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16012.     10644.  36.000000
+      1000 B: 1 -0.1298E+06  0.6258E+05          0.0  2400
+           B: 2 -0.1429E+04  0.2469E+06          0.0   400
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96028.     50623.   0.287516
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15972.     10608.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95891.     50114.   0.300520
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16109.     10845.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96157.     49849.   0.311587
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15843.     10581.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95912.     49747.   0.323224
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16088.     10665.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96106.     50146.   0.337302
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15894.     10752.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95892.     49454.   0.347911
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16108.     10763.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96062.     49291.   0.357038
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15938.     10717.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96031.     49169.   0.365615
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15969.     10658.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95993.     49425.   0.376497
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16007.     10880.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95646.     48955.   0.385409
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16354.     10897.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95814.     49131.   0.395256
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16186.     10632.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96048.     49038.   0.403601
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15952.     10674.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96022.     49002.   0.411932
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15978.     10532.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96068.     49170.   0.421674
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15932.     10546.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96148.     48897.   0.428893
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15852.     10727.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95922.     48896.   0.437254
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16078.     10777.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95828.     48420.   0.441872
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16172.     10546.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96023.     48844.   0.449534
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15977.     10705.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95874.     48450.   0.454344
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16126.     10676.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96140.     48961.   0.462766
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15860.     10699.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95833.     48150.   0.465021
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16167.     10786.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95989.     48627.   0.471149
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16011.     10711.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95987.     48673.   0.477820
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16013.     10605.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95849.     48269.   0.481255
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16151.     10847.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95918.     48475.   0.486433
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16082.     10833.  36.000000
+      2000 B: 1 -0.1467E+06  0.6258E+05          0.0  2400
+           B: 2 -0.1189E+04  0.2469E+06          0.0   400
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96050.     48944.   0.495741
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15950.     10553.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95969.     47900.   0.494868
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16031.     10731.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95934.     48600.   0.501398
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16066.     10759.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96090.     48691.   0.508140
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15910.     10641.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96109.     48454.   0.512364
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15891.     10725.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95847.     48382.   0.517266
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16153.     10928.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95998.     48515.   0.522827
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16002.     10501.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96186.     48211.   0.524110
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15814.     10515.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95907.     47834.   0.522804
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16093.     10757.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95940.     48791.   0.531752
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16060.     10670.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95913.     48092.   0.533254
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16087.     10587.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95898.     48153.   0.535523
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16102.     10505.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95884.     48307.   0.539600
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16116.     10823.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96186.     48330.   0.542259
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15814.     10539.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95906.     48444.   0.547811
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16094.     10683.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95907.     48105.   0.549542
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16093.     10742.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96043.     48583.   0.555968
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15957.     10476.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95791.     48325.   0.560953
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16209.     10729.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95955.     48383.   0.565694
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16045.     10753.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96042.     48480.   0.571101
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15958.     10597.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95851.     48462.   0.577495
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16149.     10824.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95866.     48111.   0.579639
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16134.     10654.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95936.     47915.   0.578999
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16064.     10592.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95942.     48110.   0.580676
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16058.     10687.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95939.     48252.   0.584096
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16061.     10706.  36.000000
+      3000 B: 1 -0.1369E+06  0.6258E+05          0.0  2400
+           B: 2 -0.1238E+04  0.2469E+06          0.0   400
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95991.     48084.   0.585173
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16009.     10684.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95947.     48656.   0.593498
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16053.     10729.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95770.     47911.   0.593820
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16230.     10673.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96091.     48312.   0.597114
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15909.     10685.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96045.     48256.   0.600018
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15955.     10401.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95956.     48234.   0.603219
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16044.     10548.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96037.     48381.   0.607773
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15963.     10570.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95890.     47945.   0.607773
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16110.     10767.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96004.     47926.   0.606811
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15996.     10715.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96116.     48244.   0.609159
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15884.     10701.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95838.     48003.   0.610227
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16162.     10744.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95862.     48089.   0.612239
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16138.     10292.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96172.     47871.   0.609501
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15828.     10653.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95901.     48404.   0.615266
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16099.     10810.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96110.     48107.   0.615931
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15890.     10635.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96048.     47877.   0.614046
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15952.     10481.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96144.     48080.   0.614148
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15856.     10447.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95980.     47887.   0.612830
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16020.     10893.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95980.     47986.   0.612779
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16020.     10725.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96199.     48349.   0.615958
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15801.     10492.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95955.     48219.   0.619058
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16045.     10663.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96067.     47943.   0.617892
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15933.     10630.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95920.     47980.   0.618149
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16080.     10762.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95994.     48360.   0.622825
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16006.     10929.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96084.     48121.   0.623849
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15916.     10605.  36.000000
+      4000 B: 1 -0.1339E+06  0.6258E+05          0.0  2400
+           B: 2 -0.1352E+04  0.2469E+06          0.0   400
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96189.     48056.   0.623349
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15811.     10385.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96011.     48393.   0.628381
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15989.     10534.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95945.     47984.   0.628532
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16055.     10525.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95989.     48211.   0.631367
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16011.     10802.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95751.     47739.   0.629567
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16249.     10871.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96092.     48282.   0.632659
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15908.     10698.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96047.     47779.   0.629438
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15953.     10507.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96076.     48031.   0.629346
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15924.     10609.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96018.     48183.   0.631627
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15982.     10606.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95855.     48079.   0.633624
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16145.     10737.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95885.     48456.   0.640411
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16115.     10757.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95974.     47753.   0.637288
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16026.     10820.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96209.     48058.   0.636672
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15791.     10465.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96164.     48169.   0.637824
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15836.     10526.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95809.     48046.   0.639708
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16191.     10736.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95961.     48003.   0.640008
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16039.     10580.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96215.     47827.   0.636276
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15785.     10596.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96011.     47856.   0.634294
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15989.     10656.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96031.     48149.   0.636058
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15969.     10559.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95936.     47940.   0.635687
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16064.     10707.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96155.     47969.   0.634252
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15845.     10559.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96097.     48172.   0.635882
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15903.     10418.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95874.     48003.   0.636758
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16126.     10651.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          95955.     48283.   0.640812
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          16045.     10752.  36.000000
+              Updating maximum translational/rotational displacements
+ Box: 1 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          96008.     47828.   0.638463
+ Box: 2 Molecule:  1  Attempts   Accepted   New Displacement
+ Translate COM          15992.     10722.  36.000000
+      5000 B: 1 -0.1325E+06  0.6258E+05          0.0  2400
+           B: 2 -0.1425E+04  0.2469E+06          0.0   400
+Block Averages (BA) for block     1
+BA Box: 1 Volume [A^3] 0.62580958E+05
+BA Box: 1 V^2 [A^6] 0.39163763E+10
+BA Box: 1 Specific density [g/ml] 0.25489847E+00
+BA Box: 1 Virial Pressure      [kPa] 0.00000000E+00
+BA Box: 1 Total Classical 0.70740435E+06
+BA Box: 1 Inter vdw       0.70740435E+06
+BA Box: 1 Angle           0.00000000E+00
+BA Box: 1 Torsion         0.00000000E+00
+BA Box: 1 Intra vdw       0.00000000E+00
+BA Box: 1 External Field  0.00000000E+00
+BA Box: 1 Vibration       0.00000000E+00
+BA Box: 1 Coulomb         0.00000000E+00
+BA Box: 1 Tail vdw        0.00000000E+00
+BA Box: 1 Solvation       0.00000000E+00
+BA Box: 1 u (Gibbs Total) [K] Type   1 0.00000000E+00
+BA Box: 1 Number density [nm-3] Type   1 0.38350324E+02
+BA Box: 1 Mol Fraction Type   1 0.10000000E+01
+BA Box: 1 Stress Tensor Virial S_xx          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial S_yy          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial S_zz          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial S_xy          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial S_xz          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial S_yz          [kPa] 0.00000000E+00
+BA Box: 1 Stress Tensor Virial P_tail        [kPa] 0.00000000E+00
+BA Box: 1 Radius of Gyration Type:  1        0.00000
+BA Box: 2 Volume [A^3] 0.24688382E+06
+BA Box: 2 V^2 [A^6] 0.60951620E+11
+BA Box: 2 Specific density [g/ml] 0.10768757E-01
+BA Box: 2 Virial Pressure      [kPa] 0.00000000E+00
+BA Box: 2 Total Classical -.13172705E+04
+BA Box: 2 Inter vdw       -.13172705E+04
+BA Box: 2 Angle           0.00000000E+00
+BA Box: 2 Torsion         0.00000000E+00
+BA Box: 2 Intra vdw       0.00000000E+00
+BA Box: 2 External Field  0.00000000E+00
+BA Box: 2 Vibration       0.00000000E+00
+BA Box: 2 Coulomb         0.00000000E+00
+BA Box: 2 Tail vdw        0.00000000E+00
+BA Box: 2 Solvation       0.00000000E+00
+BA Box: 2 u (Gibbs Total) [K] Type   1 0.00000000E+00
+BA Box: 2 Number density [nm-3] Type   1 0.16201953E+01
+BA Box: 2 Mol Fraction Type   1 0.10000000E+01
+BA Box: 2 Stress Tensor Virial S_xx          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial S_yy          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial S_zz          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial S_xy          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial S_xz          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial S_yz          [kPa] 0.00000000E+00
+BA Box: 2 Stress Tensor Virial P_tail        [kPa] 0.00000000E+00
+BA Box: 2 Radius of Gyration Type:  1        0.00000
+
+ +++++ end of markov chain +++++
+
+ Final hmatrix (general box dimensions) 
+Box:     1
+  hmatrix(1,x)      39.70215       0.00000       0.00000
+  hmatrix(2,x)       0.00000      39.70215       0.00000
+  hmatrix(3,x)       0.00000       0.00000      39.70215
+Box:     2
+  hmatrix(1,x)      62.73321       0.00000       0.00000
+  hmatrix(2,x)       0.00000      62.73321       0.00000
+  hmatrix(3,x)       0.00000       0.00000      62.73321
+
+* COM Translation Moves *
+Molecule:  1 Box: 1 Attempts:       11998854. Accepted:        6043890. Accepted:  50.371 %
+Molecule:  1 Box: 2 Attempts:        2001146. Accepted:        1351469. Accepted:  67.535 %
+
+Final Energies for Box     1
+Total molecules in this box       2400
+Molecules of type   1 :       2400
+ Total vibration (atoms ij bonded together)                     0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) regular                                             0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) van der waals                                       0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) Electric                                            0.000 [K]         0.00000 [kcal/mol]
+  bond-bond (ij-jk)                                             0.000 [K]         0.00000 [kcal/mol]
+ Total angle (atoms ijk bonded in sequence)                     0.000 [K]         0.00000 [kcal/mol]
+  angle (ijk) regular                                           0.000 [K]         0.00000 [kcal/mol]
+  bond-angle (ij-ijk)                                           0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) van der waals                                      0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) Electric                                           0.000 [K]         0.00000 [kcal/mol]
+  angle-angle (ijk-ijm)                                         0.000 [K]         0.00000 [kcal/mol]
+ Total torsion (ijkl bonded in sequence)                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijkl) regular                                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-kl) bond-bond                                     0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-ijkl) bond-torsion                                0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-ijkl) angle-torsion                              0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-jkl-ijkl) angle-angle-torsion                    0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four van der waals                          0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four Electric                               0.000 [K]         0.00000 [kcal/mol]
+ Total improper (ijkm, i,k,m bonded to j)                       0.000 [K]         0.00000 [kcal/mol]
+ Total nonbond (more than 3 bonds apart) vdw              -132482.359 [K]      -263.27104 [kcal/mol]
+  intramolecular                                                0.000 [K]         0.00000 [kcal/mol]
+  2-body vdw intermolecular                               -132482.359 [K]      -263.27104 [kcal/mol]
+  3-body vdw intermolecular                                     0.000 [K]         0.00000 [kcal/mol]
+ Total external field                                           0.000 [K]         0.00000 [kcal/mol]
+ Total solvation                                                0.000 [K]         0.00000 [kcal/mol]
+Total classical                                           -132482.359 [K]      -263.27104 [kcal/mol]
+ Aggregate van der waals (bond and nonbond)               -132482.359 [K]      -263.27104 [kcal/mol]
+ Aggregate Electric (bond and nonbond)                          0.000 [K]         0.00000 [kcal/mol]
+Final Energies for Box     2
+Total molecules in this box        400
+Molecules of type   1 :        400
+ Total vibration (atoms ij bonded together)                     0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) regular                                             0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) van der waals                                       0.000 [K]         0.00000 [kcal/mol]
+  bond (ij) Electric                                            0.000 [K]         0.00000 [kcal/mol]
+  bond-bond (ij-jk)                                             0.000 [K]         0.00000 [kcal/mol]
+ Total angle (atoms ijk bonded in sequence)                     0.000 [K]         0.00000 [kcal/mol]
+  angle (ijk) regular                                           0.000 [K]         0.00000 [kcal/mol]
+  bond-angle (ij-ijk)                                           0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) van der waals                                      0.000 [K]         0.00000 [kcal/mol]
+  angle (ik) Electric                                           0.000 [K]         0.00000 [kcal/mol]
+  angle-angle (ijk-ijm)                                         0.000 [K]         0.00000 [kcal/mol]
+ Total torsion (ijkl bonded in sequence)                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijkl) regular                                        0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-kl) bond-bond                                     0.000 [K]         0.00000 [kcal/mol]
+  torsion (ij-ijkl) bond-torsion                                0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-ijkl) angle-torsion                              0.000 [K]         0.00000 [kcal/mol]
+  torsion (ijk-jkl-ijkl) angle-angle-torsion                    0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four van der waals                          0.000 [K]         0.00000 [kcal/mol]
+  torsion (i-l) one-four Electric                               0.000 [K]         0.00000 [kcal/mol]
+ Total improper (ijkm, i,k,m bonded to j)                       0.000 [K]         0.00000 [kcal/mol]
+ Total nonbond (more than 3 bonds apart) vdw                -1424.797 [K]        -2.83138 [kcal/mol]
+  intramolecular                                                0.000 [K]         0.00000 [kcal/mol]
+  2-body vdw intermolecular                                 -1424.797 [K]        -2.83138 [kcal/mol]
+  3-body vdw intermolecular                                     0.000 [K]         0.00000 [kcal/mol]
+ Total external field                                           0.000 [K]         0.00000 [kcal/mol]
+ Total solvation                                                0.000 [K]         0.00000 [kcal/mol]
+Total classical                                             -1424.797 [K]        -2.83138 [kcal/mol]
+ Aggregate van der waals (bond and nonbond)                 -1424.797 [K]        -2.83138 [kcal/mol]
+ Aggregate Electric (bond and nonbond)                          0.000 [K]         0.00000 [kcal/mol]
+Averages               Units Type       Box  1      Box  2
+ Volume                 nm^3       0.62581E+02 0.24688E+03
+ Volume^2               nm^6       0.39164E+04 0.60952E+05
+ Molecule Number                1     2400.000     400.000
+ Molar Volume         ml/mol       0.15703E+02 0.37169E+03
+ Specific Density       g/ml        0.25489847  0.01076876
+ Number Density         nm-3    1     38.35032     1.62020
+ Mole Fraction                  1    1.0000000   1.0000000
+ Radius of Gyration        A    1    0.0000000   0.0000000
+ Ideal Pressure          kPa       0.52964E+04 0.22376E+03
+ Ideal p_i <N/V>kT       kPa    1  0.52964E+04 0.22376E+03
+ Total Classical           K        0.7074E+06 -0.1317E+04
+ Inter vdw                 K        0.7074E+06 -0.1317E+04
+ Angle                     K        0.0000E+00  0.0000E+00
+ Torsion                   K        0.0000E+00  0.0000E+00
+ Intra vdw                 K        0.0000E+00  0.0000E+00
+ External Field            K        0.0000E+00  0.0000E+00
+ Vibration                 K        0.0000E+00  0.0000E+00
+ Coulomb                   K        0.0000E+00  0.0000E+00
+ Tail vdw                  K        0.0000E+00  0.0000E+00
+ Solvation                 K        0.0000E+00  0.0000E+00
+ G: Sum{<u_i><N_i>}   kJ/mol        0.0000E+00  0.0000E+00
+ U                    kJ/mol        0.5881E+04 -0.1095E+02
+ H_vap (pV/n=RT)      kJ/mol       -0.2395E+01
+ H_vap (thermo p)     kJ/mol       -0.2478E+01
+Please see towhee_citations for a list of suggested citations for this simulation

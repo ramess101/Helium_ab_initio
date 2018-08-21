@@ -1,15 +1,15 @@
 #!/bin/bash
 
 Compound=Helium
-Model=2Body_Total
+Model=2Body_Total 
 
 nmol_tot=2800
-rcut=14
+rcut=18
 Stage=2
 
-Temp=(7 8 9 10 11)
+Temp=(7 8 9 10 11 11.55 12.1 12.65 13.2 13.75)
 
-for rep in $(seq 0 7) # Perform 8 replicate simulations at each temperature
+for rep in $(seq 0 0) # Perform 8 replicate simulations at each temperature
 
 do
 
@@ -17,7 +17,7 @@ for j in $(seq 0 4)
 
 do
 
-cd /h/Helium_ab_initio/Towhee/Results/"$nmol_tot"_"$rcut"/"${Temp[j]}"_"$rep" || exit
+cd /h/Helium_ab_initio/Towhee/Results/LJ_truncated_"$nmol_tot"_"$rcut"/"${Temp[j]}"_"$rep" || exit
 
 number_blocks=$(grep -c "Block Averages" ./Output_"$Stage")
 
