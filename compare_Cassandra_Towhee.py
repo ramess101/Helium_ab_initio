@@ -62,6 +62,19 @@ for pack in packages:
     plt.plot(rho_vap,Temp_all,color_scheme[pack]+shape_scheme[pack],markersize=8,mfc='None')
     plt.plot(rho_rect,Temp_all,color_scheme[pack]+shape_scheme[pack],markersize=8,mfc='None')
     
+#    if pack == 'Cassandra':
+#        
+#        rho_liq_Cass = rho_liq.copy()
+#        Temp_Cass = Temp_all.copy()
+#        
+#    elif pack == 'Towhee':
+#        
+#        rho_liq_Tow = rho_liq.copy()
+#        Temp_Tow = Temp_all.copy()
+#        
+#for Temp in np.unique(Temp_Tow):
+#    print(np.mean(rho_liq_Cass[Temp_Cass==Temp]/rho_liq_Tow[Temp_Tow==Temp]))
+    
 ### Copied from LJ_fluid_correlations
 # Conversion constants
 
@@ -130,8 +143,8 @@ plt.plot(rho_v_plot,T_plot,'g--')
 plt.ylabel('Temperature (K)')
 plt.xlabel('Density (kg/m3)')
 plt.xlim([-10,None])
-plt.ylim([None,12])
-plt.yticks([7,8,9,10,11,12])
+plt.ylim([None,14])
+plt.yticks([7,8,9,10,11,12,13,14])
 plt.tight_layout()
 plt.legend()
 fig.savefig(root_path+'VLCC_Cassandra_Towhee.pdf')
