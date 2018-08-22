@@ -366,7 +366,7 @@ else
    elms(3) = elms(3) + formLong(R,0,N0_REL,N1_REL,zeta_REL,C_REL)
    elms(4) = elms(4) + formLong(R,0,N0_QED,N1_QED,zeta_QED,C_QED)
 endif
-V = sum(elms) * 315775.13_prec
+V = sum(elms) * 315775.13_prec * 0.8314472_prec
 end function V
 
 ! I added this function, meant to be the energy derivative.
@@ -392,7 +392,7 @@ elms(2) = elms(2) + diffLong(R,0,N0_AD,N1_AD,zeta_AD,C_AD)
 elms(3) = elms(3) + diffLong(R,0,N0_REL,N1_REL,zeta_REL,C_REL)
 elms(4) = elms(4) + diffLong(R,0,N0_QED,N1_QED,zeta_QED,C_QED)
 V_diff = sum(elms)
-V_diff = V_diff * 315775.13_prec * 1.8897261254535_prec
+V_diff = V_diff * 315775.13_prec * 0.8314472_prec / 0.529177249_prec
 end function V_diff
 
 function mu2V_NA(R)

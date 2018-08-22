@@ -11,8 +11,8 @@ GEMC
 !------------------------------------------------------------------------------
 
 # VDW_Style
-Mie cut_tail 14.0
-Mie cut_tail 14.0
+LJ cut_tail 14.0
+LJ cut_tail 14.0
 !------------------------------------------------------------------------------
 
 # Charge_Style
@@ -97,8 +97,8 @@ insert_seed_1 insert_seed_2
 !------------------------------------------------------------------------------
 
 # Property_Info 1
-mass_density
 Nmols
+mass_density
 Volume
 Pressure
 energy_total
@@ -106,8 +106,8 @@ energy_lj
 !------------------------------------------------------------------------------
 
 # Property_Info 2
-mass_density
 Nmols
+mass_density
 Volume
 Pressure
 energy_total

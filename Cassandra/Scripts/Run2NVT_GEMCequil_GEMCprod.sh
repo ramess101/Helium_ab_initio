@@ -27,7 +27,16 @@ cass_path="$1"
 inp_file_2NVT="$2"
 inp_file_equil="$3"
 inp_file_prod="$4"
+pinoffset="$5"
 
 "$cass_path" "$inp_file_2NVT" > run_info_2NVT 2>&1  # Run 2NVT Cassandra
+cur_pid=$!
+taskset -cp "$pinoffset" $cur_pid > /dev/null 2>&1
+
 "$cass_path" "$inp_file_equil" > run_info_equil 2>&1  # Run GEMC equil Cassandra
+cur_pid=$!
+taskset -cp "$pinoffset" $cur_pid > /dev/null 2>&1
+
 "$cass_path" "$inp_file_prod" > run_info_prod 2>&1 # Run GEMC prod Cassandra
+cur_pid=$!
+taskset -cp "$pinoffset" $cur_pid > /dev/null 2>&1

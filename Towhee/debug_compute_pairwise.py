@@ -11,8 +11,12 @@ import matplotlib.pyplot as plt
 
 rcut = 14. #[A]
 
-xyz = np.loadtxt('initial_configuration_debug_vapor5.txt',skiprows=1)
-Lbox = 155.03813 #[A]
+#xyz = np.loadtxt('initial_configuration_debug_vapor.txt',skiprows=1)
+#Lbox = 155.03813 #[A]
+
+xyz = np.loadtxt('initial_configuration_debug_higher_precision.txt',skiprows=1)
+Lbox = 37.40893 #[A]
+
 halfLbox = Lbox/2.
 
 Nmol = len(xyz)
@@ -43,7 +47,8 @@ for i in range(Nmol):
         
         rmatrix[i,j] = dr
                
-U_total = 0
+U_Cassandra = 0
+U_Towhee = 0
 
 for i in range(Nmol):
     
@@ -53,25 +58,25 @@ for i in range(Nmol):
             
             drij = rmatrix[i,j]
             
-#            if drij < 1.1375:
-#                
-#                U_total += 452459.440452
-#                
-#            elif drij < 1.5:
-#                
-#                U_total += 452459.440452 + (5557.32389591 - 452459.440452)/(1.5-1.1375)*(drij-1.1375)
-#                
-#            elif drij < 1.8625:
-#                
-#                U_total += 5557.32389591 + (1057.18832413-5557.32389591)/(1.8625-1.5)*(drij-1.5)
-#                
-#            elif drij <= rcut:
-#            
-#                U_total += V_total_hat(rmatrix[i,j])
+            if drij < 1.1375:
+                
+                U_Towhee += 452459.440452
+                
+            elif drij < 1.5:
+                
+                U_Towhee += 452459.440452 + (5557.32389591 - 452459.440452)/(1.5-1.1375)*(drij-1.1375)
+                
+            elif drij < 1.8625:
+                
+                U_Towhee += 5557.32389591 + (1057.18832413-5557.32389591)/(1.8625-1.5)*(drij-1.5)
+                
+            elif drij <= rcut:
+            
+                U_Towhee += V_total_hat(rmatrix[i,j])
                 
             if drij <= rcut:
                 
-                U_total += V_total_hat(rmatrix[i,j])
+                U_Cassandra += V_total_hat(rmatrix[i,j])
             
-print(U_total)
-print(U_total/Nmol)
+print(U_Towhee)
+print(U_Cassandra)

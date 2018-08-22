@@ -9,7 +9,7 @@ import math
 from scipy.misc import derivative
 
 hartree_to_K = 315775.13
-bohr_to_A = 0.529177 
+bohr_to_A = 0.529177249
 
 def TangToennies(n,x):
     sum_in = 0.

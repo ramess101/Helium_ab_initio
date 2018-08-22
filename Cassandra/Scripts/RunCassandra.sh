@@ -28,7 +28,7 @@ trap "clean" SIGINT SIGTERM EXIT SIGQUIT  # Call cleanup when asked to
 
 ######### INPUT SPECIFICATIONS ##############################
 scripts_dir="$PWD"
-working_dir="$PWD"/Sequential_trial3_highTemp
+working_dir="$PWD"/1400_14
 cass_path="/home/ram9/Cassandra_Helium/Src/cassandra_gfortran.exe"
 inp_file_2NVT="helium.2NVT.inp" # File to actually run
 inp_file_equil="helium.equil.inp" # File to actually run
@@ -38,28 +38,28 @@ inp_dir="$PWD"/input  # Contains all files necessary for a run
 steps_NVT=(100000 100000 100000 100000 100000)
 steps_equil=(1000000 1000000 1000000 1000000 1000000)
 steps_prod=(5000000 5000000 5000000 5000000 5000000)
-#temps1=(7 8 9 10 11)  # Temperatures in each box
-#temps2=(7 8 9 10 11)
+temps1=(7 8 9 10 11)  # Temperatures in each box
+temps2=(7 8 9 10 11)
 # What different size conditions for each temperature
 #sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
 #sizes2=(400 400 400 400 400)
 #boxes1=(37.40893 38.04369 38.78536 39.70215 40.99157)  # Box sizes for each temperature
 #boxes2=(155.03813 107.04542 82.79921 62.73321 51.69863)
-temps1=(11.5 12 12.5 13 13.5)  # Temperatures in each box
-temps2=(11.5 12 12.5 13 13.5)
+#temps1=(11.5 12 12.5 13 13.5)  # Temperatures in each box
+#temps2=(11.5 12 12.5 13 13.5)
 # What different size conditions for each temperature
-sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
-sizes2=(400 400 400 400 400)
-boxes1=(40.99157 40.99157 40.99157 40.99157 40.99157)  # Box sizes for each temperature
-boxes2=(51.69863 51.69863 51.69863 51.69863 51.69863)
+#sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
+#sizes2=(400 400 400 400 400)
+#boxes1=(40.99157 40.99157 40.99157 40.99157 40.99157)  # Box sizes for each temperature
+#boxes2=(51.69863 51.69863 51.69863 51.69863 51.69863)
 
 # What different size conditions for each temperature
-#sizes1=(1200 1200 1200 1200 1200)  # Molecules in each box for each temperature
-#sizes2=(200 200 200 200 200)
-#boxes1=(29.69148742 30.19529676 30.78396063 31.51161734 32.53503067)  # Box sizes for each temperature
-#boxes2=(123.0538453 84.96200616 65.71777653 49.79138177 41.03322982)
+sizes1=(1200 1200 1200 1200 1200)  # Molecules in each box for each temperature
+sizes2=(200 200 200 200 200)
+boxes1=(29.69148742 30.19529676 30.78396063 31.51161734 32.53503067)  # Box sizes for each temperature
+boxes2=(123.0538453 84.96200616 65.71777653 49.79138177 41.03322982)
 # How many replicates of each temperature and size combination
-replicates=1
+replicates=3
 # How many processes should be allowed to run at any time
 max_jobs=5
 # Random seeds to start with; they will be incremented for each job
@@ -144,6 +144,7 @@ done
 ################ CASSANDRA RUNNING ####################
 
 cur_jobs=0
+pinoffset=0
 # For each temperature
 for i in $(seq 0 $temp_nums); do
   cd "temp_$i" || error_report "Cannot change to temp_$i"
@@ -151,8 +152,9 @@ for i in $(seq 0 $temp_nums); do
   for j in $(seq 0 $rep_nums); do
     cd "rep_$j" || error_report "Cannot change to rep_$j"
     #"$cass_path" "$inp_file" > run_info 2>&1 &  # Start Cassandra
-    bash "$scripts_dir"/Run2NVT_GEMCequil_GEMCprod.sh "$cass_path" "$inp_file_2NVT" "$inp_file_equil" "$inp_file_prod"  & #Run the sequential 2NVT, GEMC equil, and GEMC prod
+    bash "$scripts_dir"/Run2NVT_GEMCequil_GEMCprod.sh "$cass_path" "$inp_file_2NVT" "$inp_file_equil" "$inp_file_prod" "$pinoffset"  & #Run the sequential 2NVT, GEMC equil, and GEMC prod
     cur_jobs=$((cur_jobs + 1))
+    pinoffset=$((pinoffset + 1))
     # echo "cur_jobs $cur_jobs"
     #if [ $cur_jobs -ge $max_jobs ]; then
       # Wait for the jobs to finish.
