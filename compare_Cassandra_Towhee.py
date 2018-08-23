@@ -22,12 +22,13 @@ root_path = 'H:/Helium_ab_initio/'
 Nmol = 2800
 rcut = 14 #[Ang]
 
-packages = ['Cassandra','Towhee','Cassandra_LJ','Towhee_LJ_native','Towhee_LJ_tabulated']   
+packages = ['Cassandra','Towhee'] #,'Cassandra_LJ','Towhee_LJ_native','Towhee_LJ_tabulated']   
 
 color_scheme = {'Cassandra':'b','Towhee':'r','Cassandra_LJ':'g','Towhee_LJ_native':'c','Towhee_LJ_tabulated':'m'}
 shape_scheme = {'Cassandra':'o','Towhee':'s','Cassandra_LJ':'^','Towhee_LJ_native':'v','Towhee_LJ_tabulated':'d'}
 
-fig = plt.figure(figsize=(12,12)) 
+fig, ax = plt.subplots(nrows=1,ncols=1,figsize=(12,12)) 
+ax.set_xscale('log')
 
 for pack in packages:
 
@@ -136,15 +137,15 @@ rho_L_plot = rho_L_hat_LJ(T_plot,eps_LJ,sig_LJ,M_w)
 rho_v_plot = rho_v_hat_LJ(T_plot,eps_LJ,sig_LJ,M_w)
 P_v_plot = P_v_hat_LJ(T_plot,eps_LJ,sig_LJ)/100. #[bar]
 
-plt.plot(rho_L_plot,T_plot,'g--',label='Lennard-Jones')
-plt.plot(rho_v_plot,T_plot,'g--')
+#plt.plot(rho_L_plot,T_plot,'g--',label='Lennard-Jones')
+#plt.plot(rho_v_plot,T_plot,'g--')
 #plt.plot([311.,250.],[7.,11.],'go',markersize=10,mfc='None',label='Cassandra, Lennard-Jones')
 
 plt.ylabel('Temperature (K)')
 plt.xlabel('Density (kg/m3)')
 plt.xlim([-10,None])
-plt.ylim([None,14])
-plt.yticks([7,8,9,10,11,12,13,14])
+plt.ylim([None,12])
+plt.yticks([7,8,9,10,11,12])
 plt.tight_layout()
 plt.legend()
 fig.savefig(root_path+'VLCC_Cassandra_Towhee.pdf')

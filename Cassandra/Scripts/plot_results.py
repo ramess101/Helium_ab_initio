@@ -15,10 +15,10 @@ plt.rc('font',**font)
 
 root_path = '/home/ram9/Cassandra_Helium/'
 
-Nmol = 2800
+Nmol = 1400
 rcut = 14 #[Ang]
 
-system_path = root_path+'Helium_'+str(Nmol)+'_'+str(rcut)+'/'
+system_path = root_path+str(Nmol)+'_'+str(rcut)+'/'
 
 Temps = np.array([7.,8.,9.,10.,11.])                                     
                                      
@@ -56,7 +56,7 @@ for iTemp, Temp_i in enumerate(Temps):
             Nstep_equil = 2000000
             Nstep_all = MC_step[-1]
 
-            rho_box_all = prp_box[:,1] #[kg/m3]
+            rho_box_all = prp_box[:,2] #[kg/m3]
             rho_box_prod = rho_box_all[MC_step>Nstep_equil]
             rho_box_avg = np.mean(rho_box_prod)            
 

@@ -123,7 +123,7 @@ def dV_total_hat(R):
     return dV
 
 def U_tail(rc,plot=False):
-    r = np.linspace(rc,1000,100000)
+    r = np.linspace(rc,10000,500000)
     dr = r[1]-r[0]
     U = V_total_hat(r)
     Uintegrand = U*r**2*dr
@@ -156,7 +156,7 @@ def U_tail(rc,plot=False):
     return Uint
 
 def P_tail(rc,plot=False):
-    r = np.linspace(rc,1000,100000)
+    r = np.linspace(rc,10000,500000)
     dr = r[1]-r[0]
     dU = dV_total_hat(r)
     Pintegrand = dU*r**3*dr
@@ -187,6 +187,91 @@ def P_tail(rc,plot=False):
         plt.show()
         
     return Pint
+
+
+if False:
+
+    rcut_range = np.linspace(8,22,29)
+    U_tail_range = np.zeros(len(rcut_range))
+    P_tail_range = np.zeros(len(rcut_range))
+    eps_LJ_range = np.zeros(len(rcut_range))
+    sig_LJ_range = np.zeros(len(rcut_range))
+    
+    for ircut, rcut in enumerate(rcut_range):
+    
+    #rcut = 8 #[A]
+    
+        U_tail_rcut = U_tail(rcut)
+        P_tail_rcut = P_tail(rcut)
+        
+        print('Cutoff distance: '+str(rcut)+' [A]')
+        
+        print('Actual tail corrections, U and P:')
+        print(U_tail_rcut,P_tail_rcut)
+        
+        eps_LJ = 11. #[K]
+        sig_LJ = 2.64 #[A]
+        
+        ULJ_tail = lambda eps,sig,rcut: 4.*eps*(1./9. * sig**12. / rcut**9. - 1./3. * sig**6. / rcut**3.)
+        PLJ_tail = lambda eps,sig,rcut: -8.*eps*(2./3. * sig**12. / rcut**9. - sig**6. / rcut**3.)
+        
+        print('Initial guess LJ tail corrections, U and P:')
+        print(ULJ_tail(eps_LJ,sig_LJ,rcut),PLJ_tail(eps_LJ,sig_LJ,rcut))
+        
+        Utol = 1e-10
+        Ptol = 1e-10
+        
+        for i in range(10000):
+        
+            sigma6 = -rcut**3./(8.*eps_LJ)*(P_tail_rcut + 12.*U_tail_rcut)
+            sigma12 = sigma6**2 
+            sig_LJ = sigma6**(1./6.)
+            eps_LJ = U_tail_rcut/(4./9.*(sigma12/rcut**9.) - (4./3.)*(sigma6/rcut**3))
+            if i > 200 and i%10 == 0:
+        #        print(i,eps_LJ,sig_LJ)
+                devU = ( ULJ_tail(eps_LJ,sig_LJ,rcut) - U_tail_rcut ) / U_tail_rcut *100.
+                devP =  ( PLJ_tail(eps_LJ,sig_LJ,rcut) - P_tail_rcut ) / P_tail_rcut *100.
+                        
+                if devU < Utol and devP < Ptol: 
+                    print('Number of iterations required and converged epsilon [K] and sigma [A]')
+                    print(i,eps_LJ,sig_LJ)
+                    break
+        
+        print('Final LJ tail corrections, U and P')
+        print(ULJ_tail(eps_LJ,sig_LJ,rcut),PLJ_tail(eps_LJ,sig_LJ,rcut))
+        
+        assert devU < Utol, 'Not precise enough energy tail correction'
+        assert devP < Ptol, 'Not precise enough pressure tail correction'
+        
+        U_tail_range[ircut] = U_tail_rcut
+        P_tail_range[ircut] = P_tail_rcut
+        eps_LJ_range[ircut] = eps_LJ
+        sig_LJ_range[ircut] = sig_LJ
+                    
+    plt.plot(rcut_range,sig_LJ_range,'ko-')
+    plt.xlabel('Cut-off distance (A)')
+    plt.ylabel(r'$\sigma$ LJ (A)')
+    plt.show()
+    
+    plt.plot(rcut_range,U_tail_range,'ko-')
+    plt.xlabel('Cut-off distance (A)')
+    plt.ylabel(r'$U^{\rm LR} [K A^3]$')
+    plt.show()
+    
+    plt.plot(rcut_range,P_tail_range,'ko-')
+    plt.xlabel('Cut-off distance (A)')
+    plt.ylabel(r'$P^{\rm LR} [K A^3]$')
+    plt.show()
+    
+    plt.plot(rcut_range,eps_LJ_range,'ko-')
+    plt.xlabel('Cut-off distance (A)')
+    plt.ylabel(r'$\epsilon$ LJ (K)')
+    plt.show()
+    
+    plt.plot(np.log10(-U_tail_range/eps_LJ_range),np.log10(eps_LJ_range),'ko-')
+    plt.xlabel(r'log$_{10}(-U^{\rm LR}/\epsilon)$')
+    plt.ylabel(r'log$_{10}(\epsilon$ LJ (K))')
+    plt.show()
 
 RV_BO_lit = np.loadtxt('RV_BO_lit.txt')
 R_BO_lit = RV_BO_lit[:,0]*bohr_to_A

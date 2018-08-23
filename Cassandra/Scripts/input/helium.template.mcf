@@ -8,7 +8,7 @@
 
 # Atom_Info
 1
-1    He_s1    He    4.0026    0.    LJ      0.0028662102721911643       10.037020621578602
+1    He_s1    He    4.0026    0.    LJ      some_epsilon       some_sigma
 
 # Bond_Info
 0

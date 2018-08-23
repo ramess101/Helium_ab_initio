@@ -27,44 +27,82 @@ trap "clean" SIGINT SIGTERM EXIT SIGQUIT  # Call cleanup when asked to
 ##############################################################
 
 ######### INPUT SPECIFICATIONS ##############################
+Nmol=2800
+rcut=14
+
+# How many replicates of each temperature and size combination
+replicates=3
+# How many processes should be allowed to run at any time
+max_jobs=15
+
 scripts_dir="$PWD"
-working_dir="$PWD"/1400_14
+working_dir="$PWD"/"$Nmol"_"$rcut"
 cass_path="/home/ram9/Cassandra_Helium/Src/cassandra_gfortran.exe"
 inp_file_2NVT="helium.2NVT.inp" # File to actually run
 inp_file_equil="helium.equil.inp" # File to actually run
 inp_file_prod="helium.prod.inp" # File to actually run
 inp_dir="$PWD"/input  # Contains all files necessary for a run
+
 # Each temperature set requires a step number specification
 steps_NVT=(100000 100000 100000 100000 100000)
 steps_equil=(1000000 1000000 1000000 1000000 1000000)
 steps_prod=(5000000 5000000 5000000 5000000 5000000)
+
 temps1=(7 8 9 10 11)  # Temperatures in each box
 temps2=(7 8 9 10 11)
+
+if [ "$Nmol" -eq 2800 ]; then
+
 # What different size conditions for each temperature
-#sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
-#sizes2=(400 400 400 400 400)
-#boxes1=(37.40893 38.04369 38.78536 39.70215 40.99157)  # Box sizes for each temperature
-#boxes2=(155.03813 107.04542 82.79921 62.73321 51.69863)
-#temps1=(11.5 12 12.5 13 13.5)  # Temperatures in each box
-#temps2=(11.5 12 12.5 13 13.5)
-# What different size conditions for each temperature
-#sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
-#sizes2=(400 400 400 400 400)
-#boxes1=(40.99157 40.99157 40.99157 40.99157 40.99157)  # Box sizes for each temperature
-#boxes2=(51.69863 51.69863 51.69863 51.69863 51.69863)
+sizes1=(2400 2400 2400 2400 2400)  # Molecules in each box for each temperature
+sizes2=(400 400 400 400 400)
+boxes1=(37.40893 38.04369 38.78536 39.70215 40.99157)  # Box sizes for each temperature
+boxes2=(155.03813 107.04542 82.79921 62.73321 51.69863)
+
+elif [ "$Nmol" -eq 1400 ]; then
 
 # What different size conditions for each temperature
 sizes1=(1200 1200 1200 1200 1200)  # Molecules in each box for each temperature
 sizes2=(200 200 200 200 200)
 boxes1=(29.69148742 30.19529676 30.78396063 31.51161734 32.53503067)  # Box sizes for each temperature
 boxes2=(123.0538453 84.96200616 65.71777653 49.79138177 41.03322982)
-# How many replicates of each temperature and size combination
-replicates=3
-# How many processes should be allowed to run at any time
-max_jobs=5
+
+else
+
+echo 'Box sizes for this many molecules have not been computed yet'
+exit 0
+
+fi
+
 # Random seeds to start with; they will be incremented for each job
 seed1=1211131639
 seed2=1211131640
+
+if [ "$rcut" -eq 14 ]; then
+
+eps_LJ=0.0028662102721911643
+sig_LJ=10.037020621578602
+
+elif [ "$rcut" -eq 18 ]; then
+
+eps_LJ=0.00037622243257559964
+sig_LJ=14.421128645581341
+
+elif [ "$rcut" -eq 10 ]; then
+
+eps_LJ=0.071901779536520355
+sig_LJ=5.7839926700950608
+
+else
+
+echo 'Tail corrections have not been computed for this cut-off distance'
+exit 0
+
+fi
+
+cp "$inp_dir"/helium.template.mcf "$inp_dir"/helium.mcf
+sed -i -e s/some_epsilon/$eps_LJ/ "$inp_dir"/helium.mcf
+sed -i -e s/some_sigma/$sig_LJ/ "$inp_dir"/helium.mcf
 
 #################################################################
 ################### DIRECTORY PREPARATION ######################
