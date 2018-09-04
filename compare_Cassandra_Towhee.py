@@ -28,7 +28,7 @@ color_scheme = {'Cassandra':'b','Towhee':'r','Cassandra_LJ':'g','Towhee_LJ_nativ
 shape_scheme = {'Cassandra':'o','Towhee':'s','Cassandra_LJ':'^','Towhee_LJ_native':'v','Towhee_LJ_tabulated':'d'}
 
 fig, ax = plt.subplots(nrows=1,ncols=1,figsize=(12,12)) 
-ax.set_xscale('log')
+#ax.set_xscale('log')
 
 for pack in packages:
 
