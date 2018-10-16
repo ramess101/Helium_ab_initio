@@ -2548,7 +2548,7 @@ END SUBROUTINE Compute_Molecule_Self_Energy
     ExistCheck: &
     IF (atom_list(ia,im,is)%exist .AND. atom_list(ja,jm,js)%exist) THEN  ! TODO: Cut below this
        rij = SQRT(rijsq)
-       Wij_vdw = - V_diff(rij)
+       Wij_vdw = - rij * V_diff(rij)
 
        ! Determine atom type indices
 !       itype = nonbond_list(ia,is)%atom_type_number
