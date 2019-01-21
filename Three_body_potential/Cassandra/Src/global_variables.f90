@@ -568,6 +568,7 @@ INTEGER :: n_lat_atoms
 
 !!! Pair_Nrg_Variables
 REAL(DP), ALLOCATABLE :: pair_vdw_temp(:), pair_qq_temp(:)
+REAL(DP), ALLOCATABLE :: triad_vdw_temp(:)
 
 !!!! DSF variables
 REAL(DP), ALLOCATABLE, DIMENSION(:) :: alpha_dsf
