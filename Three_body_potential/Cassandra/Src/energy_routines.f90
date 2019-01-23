@@ -919,10 +919,11 @@ CONTAINS
 			  ! Determine if any atoms of these three molecules will interact
 			  CALL Check_MoleculePair_Cutoff(im,is,this_locate3,jspecies,get_interaction, &
 				   rcom,rx,ry,rz) 
+			  IF (.NOT. get_interaction) CYCLE moleculeLOOP3 
+				   
 			  CALL Check_MoleculePair_Cutoff(this_locate,ispecies,this_locate3,jspecies,get_interaction, &
 				   rcom,rx,ry,rz)
-
-			  IF (.NOT. get_interaction) CYCLE moleculeLOOP       
+			  IF (.NOT. get_interaction) CYCLE moleculeLOOP3       
 			  
 			  CALL Compute_MoleculeTriad_Energy(im,is,this_locate,ispecies,this_locate3,jspecies, &
 				   this_box,Eijk_triad,my_overlap)
@@ -1046,7 +1047,7 @@ SUBROUTINE Compute_MoleculeTriad_Energy(im,is,jm,js,km,ks,this_box, &
 				!   is,im,ia,js,jm,ja,get_vdw,get_qq, &
 				 !  Eij_intra_vdw,Eij_intra_qq,Eij_inter_vdw,Eij_inter_qq)
 
-              Eijk_triad = 0.0_DP
+              Eijk_triad = 0.1_DP
 
 			  vlj_triad = vlj_triad + Eijk_triad
 
@@ -2111,6 +2112,10 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 					
 					triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
 					triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
+					triad_nrg_vdw(locate_1,locate_3,locate_2) = 0.0_DP
+					triad_nrg_vdw(locate_2,locate_3,locate_1) = 0.0_DP
+					triad_nrg_vdw(locate_3,locate_2,locate_1) = 0.0_DP
+					triad_nrg_vdw(locate_3,locate_1,locate_2) = 0.0_DP
 					
 				 END IF
 				 
