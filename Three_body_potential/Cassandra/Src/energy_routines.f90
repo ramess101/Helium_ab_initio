@@ -95,6 +95,8 @@ MODULE Energy_Routines
   !                       between this molecule and all other molecules in the 
   !                       system.
   !
+  ! Compute_MoleculeTriad_Energy: Computes the three body energy between triad 
+  !
   ! Compute_MoleculePair_Energy: 
   ! Compute_MoleculePair_Force:
   !                       Computes the intermolecular energy/force between a 
@@ -898,6 +900,137 @@ CONTAINS
     
   END SUBROUTINE Compute_Molecule_Nonbond_Inter_Energy
   !-----------------------------------------------------------------------------
+
+SUBROUTINE Compute_MoleculeTriad_Energy(im,is,jm,js,km,ks,this_box, &
+    vlj_triad,overlap)
+    !***************************************************************************
+    ! The subroutine returns the interaction energy of the input molecule with 
+    ! two other molecules. Thus, it computes the three body intermolecular vdw 
+    ! interactions. 
+    !
+    ! CALLS
+    !
+    ! Minimum_Image_Separation
+    ! Check_AtomPair_Cutoff
+    ! Compute_AtomPair_Energy
+    ! Get_Position_Alive
+    !
+    ! CALLED BY
+    !
+    ! Compute_Molecule_Nonbond_Inter_Energy
+    ! Compute_System_Total_Energy
+    !***************************************************************************
+  
+    IMPLICIT NONE
+
+    INTEGER, INTENT(IN) :: im, is, jm, js, km, ks, this_box
+    REAL(DP), INTENT(OUT) :: vlj_triad
+    LOGICAL, INTENT(OUT) :: overlap
+    !---------------------------------------------------------------------------
+
+    INTEGER :: ia, ja, ka 
+
+    REAL(DP) :: rxijp, ryijp, rzijp, rxij, ryij, rzij, rijsq
+	REAL(DP) :: rxikp, ryikp, rzikp, rxik, ryik, rzik, riksq
+	REAL(DP) :: rxjkp, ryjkp, rzjkp, rxjk, ryjk, rzjk, rjksq
+    REAL(DP) :: Eijk_triad
+
+    LOGICAL :: get_vdw_ij, get_vdw_ik, get_vdw_jk, get_qq
+
+    INTEGER :: locate_im, locate_jm, locate_km
+
+    vlj_triad = 0.0_DP
+    overlap = .FALSE.
+
+    DO ia = 1, natoms(is)
+
+      IF (.NOT. atom_list(ia,im,is)%exist) CYCLE
+
+      DO ja = 1, natoms(js)
+          
+        IF ( .NOT. atom_list(ja,jm,js)%exist) CYCLE
+
+        DO ka = 1, natoms(ks)
+		
+			IF ( .NOT. atom_list(ka,km,ks)%exist) CYCLE
+
+			! Obtain the minimum image separation between i and j
+			rxijp = atom_list(ia,im,is)%rxp - atom_list(ja,jm,js)%rxp
+			ryijp = atom_list(ia,im,is)%ryp - atom_list(ja,jm,js)%ryp
+			rzijp = atom_list(ia,im,is)%rzp - atom_list(ja,jm,js)%rzp
+			
+			! Obtain the minimum image separation between i and k
+			rxikp = atom_list(ia,im,is)%rxp - atom_list(ka,km,ks)%rxp
+			ryikp = atom_list(ia,im,is)%ryp - atom_list(ka,km,ks)%ryp
+			rzikp = atom_list(ia,im,is)%rzp - atom_list(ka,km,ks)%rzp
+			
+			! Obtain the minimum image separation between j and k
+			rxjkp = atom_list(ja,jm,js)%rxp - atom_list(ka,km,ks)%rxp
+			ryjkp = atom_list(ja,jm,js)%ryp - atom_list(ka,km,ks)%ryp
+			rzjkp = atom_list(ja,jm,js)%rzp - atom_list(ka,km,ks)%rzp
+			  
+			! Now get the minimum image separation for all three pairs
+			CALL Minimum_Image_Separation(this_box,rxijp,ryijp,rzijp,rxij,ryij,rzij)
+			CALL Minimum_Image_Separation(this_box,rxikp,ryikp,rzikp,rxik,ryik,rzik)
+			CALL Minimum_Image_Separation(this_box,rxjkp,ryjkp,rzjkp,rxjk,ryjk,rzjk)
+			
+			rijsq = rxij*rxij + ryij*ryij + rzij*rzij
+			riksq = rxik*rxik + ryik*ryik + rzik*rzik
+			rjksq = rxjk*rxjk + ryjk*ryjk + rzjk*rzjk
+
+			IF( rijsq < rcut_lowsq .OR. riksq < rcut_lowsq .OR. rjksq < rcut_lowsq) THEN
+			  overlap = .TRUE.
+			  RETURN
+			END IF
+			  
+			! Now figure out what needs to be computed, then call pair_energy
+			CALL Check_AtomPair_Cutoff(rijsq,get_vdw_ij,get_qq,this_box)
+            CALL Check_AtomPair_Cutoff(riksq,get_vdw_ik,get_qq,this_box)			
+            CALL Check_AtomPair_Cutoff(rjksq,get_vdw_jk,get_qq,this_box)
+
+			IF(cbmc_flag .AND. (.NOT. species_list(is)%L_Coul_CBMC)) THEN
+			  get_qq=.FALSE. 
+			ENDIF 
+
+			! Compute vdw and q-q energy, if required
+			IF (get_vdw_ij .AND. get_vdw_ik .AND. get_vdw_jk) THEN 
+
+			  !CALL Compute_ThreeBody_Energy(rxij,ryij,rzij,rijsq, &
+				!   is,im,ia,js,jm,ja,get_vdw,get_qq, &
+				 !  Eij_intra_vdw,Eij_intra_qq,Eij_inter_vdw,Eij_inter_qq)
+
+              Eijk_triad = 0.0_DP
+
+			  vlj_triad = vlj_triad + Eijk_triad
+
+			END IF
+		END DO
+      END DO
+    END DO
+
+    IF (l_pair_nrg) THEN
+      IF ( .NOT. cbmc_flag ) THEN
+        ! if here then, there was no overlap between im and jm
+        ! update the interaction energy of the pair
+        ! first find out the position of each im in the pair interaction energy
+        CALL Get_Position_Alive(im,is,locate_im)
+        CALL Get_Position_Alive(jm,js,locate_jm)
+        CALL Get_Position_Alive(km,ks,locate_km)
+          
+        triad_nrg_vdw(locate_im,locate_jm,locate_km) = vlj_triad 
+        triad_nrg_vdw(locate_jm,locate_im,locate_km) = vlj_triad
+        triad_nrg_vdw(locate_im,locate_km,locate_jm) = vlj_triad 
+        triad_nrg_vdw(locate_jm,locate_km,locate_im) = vlj_triad
+        triad_nrg_vdw(locate_km,locate_jm,locate_im) = vlj_triad 
+        triad_nrg_vdw(locate_km,locate_im,locate_jm) = vlj_triad		
+          
+      END IF
+    END IF
+
+  END SUBROUTINE Compute_MoleculeTriad_Energy
+  !-----------------------------------------------------------------------------
+
+
 
   SUBROUTINE Compute_MoleculePair_Energy(im,is,jm,js,this_box, &
     vlj_pair,vqq_pair,overlap)
@@ -1944,10 +2077,10 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 				 
 				 IF (.NOT. get_interaction) CYCLE imLOOP5
 			 
-			     !CALL Compute_MoleculeTriad_Energy(this_im_1,is,this_im_2,is,this_im_3,is, &
-                 ! this_box,vlj_triad)
+					 CALL Compute_MoleculeTriad_Energy(this_im_1,is,this_im_2,is,this_im_3,is, &
+					  this_box,vlj_triad,my_overlap)
 				  
-				 vlj_triad = 0.0_DP
+				 !vlj_triad = 0.0_DP
              
 				 ! IF (my_overlap) THEN
 					! SHARED_OVERLAP = .true.
