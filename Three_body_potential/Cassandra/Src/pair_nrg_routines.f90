@@ -168,7 +168,7 @@ CONTAINS
 
     REAL(DP), OPTIONAL, INTENT(OUT) :: box_nrg_vdw(:), box_nrg_qq(:)
 
-    INTEGER :: locate_1, locate_2, this_species, this_im, locate_im
+    INTEGER :: locate_1, locate_2, this_species, this_im, locate_im, locate_3, this_species2, this_jm, locate_jm
 
 
     IF ( .NOT. present(n_cls_mol)) THEN
@@ -248,8 +248,29 @@ CONTAINS
                    
                    E_vdw = E_vdw + pair_vdw_temp(position)
                    E_qq = E_qq + pair_qq_temp(position)
+				   
+  		           speciesLoop2: DO this_species2 = 1, nspecies
+					  
+					  molidLoop2: DO this_jm = 1, nmols(this_species2, this_box)
+						 
+						locate_jm = locate(this_jm,this_species2,this_box)
+						 
+						IF (molecule_list(locate_jm,this_species2)%live) THEN
+							   
+							   CALL Get_Position_Alive(locate_jm,this_species2,locate_3)
+							   
+							   position = locate_3 + stride
+							   
+							   triad_vdw_temp(position) = triad_nrg_vdw(locate_2,locate_1,locate_3)
                    
-                
+				               E_vdw = E_vdw + triad_vdw_temp(position)
+				   
+				        END IF
+             
+					  END DO molidLoop2
+					  
+				   END DO speciesLoop2
+				   
              END IF
              
           END DO molidLoop
@@ -292,7 +313,7 @@ CONTAINS
 
     INTEGER :: n_mols, imol, stride
 
-    INTEGER :: locate_1, this_species, this_im, locate_im, locate_2
+    INTEGER :: locate_1, this_species, this_im, locate_im, locate_2, locate_3, this_species2, this_jm, locate_jm
 
 
     IF ( present(n_cls_mol)) THEN
@@ -325,7 +346,6 @@ CONTAINS
              
              IF (molecule_list(locate_im,this_species)%live) THEN
                 
-                   
                    CALL Get_Position_Alive(locate_im,this_species,locate_2)
                    
                    pair_nrg_vdw(locate_1,locate_2) = pair_vdw_temp(locate_2 + stride)
@@ -333,8 +353,30 @@ CONTAINS
                    
                    pair_nrg_qq(locate_1,locate_2) = pair_qq_temp(locate_2 + stride)
                    pair_nrg_qq(locate_2,locate_1) = pair_qq_temp(locate_2 + stride)
-                
-                
+				   
+				   DO this_species2 = 1, nspecies
+          
+					  DO this_jm = 1, nmols(this_species2, this_box)
+						 
+						 locate_jm = locate(this_jm,this_species2,this_box)
+						 
+						 IF (molecule_list(locate_jm,this_species2)%live) THEN
+							   
+							   CALL Get_Position_Alive(locate_jm,this_species2,locate_3)
+							   
+							   triad_nrg_vdw(locate_1,locate_2,locate_3) = triad_vdw_temp(locate_3 + stride)
+							   triad_nrg_vdw(locate_2,locate_1,locate_3) = triad_vdw_temp(locate_3 + stride)
+                               triad_nrg_vdw(locate_1,locate_3,locate_2) = triad_vdw_temp(locate_3 + stride)
+							   triad_nrg_vdw(locate_2,locate_3,locate_1) = triad_vdw_temp(locate_3 + stride)
+                               triad_nrg_vdw(locate_3,locate_2,locate_1) = triad_vdw_temp(locate_3 + stride)
+							   triad_nrg_vdw(locate_3,locate_1,locate_2) = triad_vdw_temp(locate_3 + stride)
+				
+                         END IF
+						 
+					  END DO
+					  
+				   END DO
+				   
              END IF
              
           END DO
