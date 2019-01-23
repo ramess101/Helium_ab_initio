@@ -202,7 +202,7 @@ CONTAINS
     pair_qq_temp(:) = 0.0_DP
 	triad_vdw_temp(:) = 0.0_DP
 
-   
+ 
 
     DO imol = 1, n_mols
        

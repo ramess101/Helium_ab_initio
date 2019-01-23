@@ -209,6 +209,7 @@ MODULE Energy_Routines
   USE Global_Variables
   USE File_Names
   USE Pair_Nrg_Routines
+  !USE he3fci !TODO: Convert to module
  !$  USE OMP_LIB
 
   IMPLICIT NONE
@@ -929,7 +930,7 @@ CONTAINS
 				   this_box,Eijk_triad,my_overlap)
 			  
 			  IF (my_overlap) shared_overlap = .TRUE.
-			  
+			  !Eijk_triad = 0.0_DP
 			  E_inter_vdw = E_inter_vdw + Eijk_triad
 			  
 			END DO moleculeLoop3
@@ -1043,11 +1044,10 @@ SUBROUTINE Compute_MoleculeTriad_Energy(im,is,jm,js,km,ks,this_box, &
 			! Compute vdw and q-q energy, if required
 			IF (get_vdw_ij .AND. get_vdw_ik .AND. get_vdw_jk) THEN 
 
-			  !CALL Compute_ThreeBody_Energy(rxij,ryij,rzij,rijsq, &
-				!   is,im,ia,js,jm,ja,get_vdw,get_qq, &
-				 !  Eij_intra_vdw,Eij_intra_qq,Eij_inter_vdw,Eij_inter_qq)
+			  CALL Compute_ThreeBody_Energy(rijsq,riksq,rjksq, &
+				  is,im,ia,js,jm,ja,ks,km,ka,Eijk_triad)
 
-              Eijk_triad = 0.1_DP
+              !Eijk_triad = 0.0_DP
 
 			  vlj_triad = vlj_triad + Eijk_triad
 
@@ -1078,7 +1078,43 @@ SUBROUTINE Compute_MoleculeTriad_Energy(im,is,jm,js,km,ks,this_box, &
   END SUBROUTINE Compute_MoleculeTriad_Energy
   !-----------------------------------------------------------------------------
 
+  SUBROUTINE Compute_ThreeBody_Energy(rijsq,riksq,rjksq,is,im,ia,js,jm,ja,ks,km,ka, &
+    Eijk_triad)
 
+    ! Computes the three body energy
+
+    ! Called by: 
+    !   Compute_MoleculeTriad_Energy
+    ! Calls: 
+    !   He3
+  !----------------------------------------------------------------------------
+    ! Passed to
+    REAL(DP) :: rijsq, riksq, rjksq, rij, rik, rjk
+    INTEGER :: is,im,ia,js,jm,ja,ks,km,ka,ibox
+    LOGICAL :: get_vdw
+    REAL(DP) :: test  ! UNDO additino by Michelle
+
+    ! Returned
+    REAL(DP) :: Eijk_triad
+
+    Eijk_triad = 0.0_DP
+	
+  !----------------------------------------------------------------------------
+    ibox = molecule_list(im,is)%which_box
+
+    ! If either atom is not yet present, then don't try to compute an energy
+    ExistCheck: &
+    IF (atom_list(ia,im,is)%exist .AND. atom_list(ja,jm,js)%exist .AND. atom_list(ka,km,ks)%exist) THEN
+       rij = SQRT(rijsq)
+	   rik = SQRT(riksq)
+	   rjk = SQRT(rjksq)
+       Eijk_triad = 0.1_DP
+	   
+	   !Call He3(rij,rik,rjk,Eijk_triad)
+       
+    ENDIF ExistCheck
+
+  END SUBROUTINE Compute_ThreeBody_Energy
 
   SUBROUTINE Compute_MoleculePair_Energy(im,is,jm,js,this_box, &
     vlj_pair,vqq_pair,overlap)
@@ -1960,7 +1996,7 @@ END SUBROUTINE Compute_Molecule_Self_Energy
     energy(this_box)%inter_q = 0.0_DP
     energy(this_box)%reciprocal = 0.0_DP
     ! Compute the intramolecular energy of the system if the flag is set.
-
+    
     IF (intra_flag) THEN
 
        energy(this_box)%intra = 0.0_DP
@@ -2129,18 +2165,16 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 				 
 				 IF (.NOT. get_interaction) CYCLE imLOOP5
 			 
-					 CALL Compute_MoleculeTriad_Energy(this_im_1,is,this_im_2,is,this_im_3,is, &
+			     CALL Compute_MoleculeTriad_Energy(this_im_1,is,this_im_2,is,this_im_3,is, &
 					  this_box,vlj_triad,my_overlap)
-				  
-				 !vlj_triad = 0.0_DP
              
-				 ! IF (my_overlap) THEN
-					! SHARED_OVERLAP = .true.
-				 ! END IF
+				 IF (my_overlap) THEN
+					SHARED_OVERLAP = .true.
+				 END IF
 				 
 				 E_inter_vdw  = E_inter_vdw + vlj_triad
 				 
-				 END DO imLOOP5
+			   END DO imLOOP5
 			 
           END DO imLOOP2
           !$OMP END PARALLEL DO
