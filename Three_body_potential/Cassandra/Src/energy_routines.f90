@@ -808,15 +808,15 @@ CONTAINS
     LOGICAL :: overlap
     !---------------------------------------------------------------------------
 
-    INTEGER  :: ispecies, imolecule, this_box, this_locate
+    INTEGER  :: ispecies, imolecule, this_box, this_locate, jspecies, jmolecule, this_locate3
     
-    REAL(DP) :: Eij_vdw, Eij_qq
+    REAL(DP) :: Eij_vdw, Eij_qq, Eijk_triad
     REAL(DP) :: eps
     REAL(DP) :: rcom, rx, ry, rz
 
     LOGICAL :: get_interaction
 
-    INTEGER :: locate_1, locate_2
+    INTEGER :: locate_1, locate_2, locate_3
 
     LOGICAL :: l_pair_store 
     LOGICAL :: my_overlap, shared_overlap
@@ -887,6 +887,53 @@ CONTAINS
           
           E_inter_vdw = E_inter_vdw + Eij_vdw
           E_inter_qq  = E_inter_qq + Eij_qq
+		  
+		  speciesLoop3: DO jspecies = 1, nspecies
+
+		    moleculeLoop3: DO jmolecule = 1, nmols(jspecies,this_box)
+			  
+			  IF(shared_overlap) CYCLE
+			  
+			  this_locate3 = locate(jmolecule,jspecies,this_box)
+			  IF (.NOT. molecule_list(this_locate3,jspecies)%live) CYCLE moleculeLoop3
+			  IF (jspecies == is .AND. this_locate3 == im) CYCLE moleculeLoop3
+			  IF (jspecies == ispecies .AND. this_locate3 == this_locate) CYCLE moleculeLoop3
+			  
+			  ! reset triad energy, if storing energies
+			  IF (l_pair_store) THEN
+				 IF (jspecies == 1) THEN
+					locate_3 = this_locate3
+				 ELSE
+					locate_3 = SUM(max_molecules(1:jspecies-1)) + this_locate3
+				 END IF
+				 
+				 triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
+				 triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
+				 triad_nrg_vdw(locate_1,locate_3,locate_2) = 0.0_DP
+				 triad_nrg_vdw(locate_2,locate_3,locate_1) = 0.0_DP
+				 triad_nrg_vdw(locate_3,locate_2,locate_1) = 0.0_DP
+				 triad_nrg_vdw(locate_3,locate_1,locate_2) = 0.0_DP
+				
+			  END IF
+			  
+			  ! Determine if any atoms of these three molecules will interact
+			  CALL Check_MoleculePair_Cutoff(im,is,this_locate3,jspecies,get_interaction, &
+				   rcom,rx,ry,rz) 
+			  CALL Check_MoleculePair_Cutoff(this_locate,ispecies,this_locate3,jspecies,get_interaction, &
+				   rcom,rx,ry,rz)
+
+			  IF (.NOT. get_interaction) CYCLE moleculeLOOP       
+			  
+			  CALL Compute_MoleculeTriad_Energy(im,is,this_locate,ispecies,this_locate3,jspecies, &
+				   this_box,Eijk_triad,my_overlap)
+			  
+			  IF (my_overlap) shared_overlap = .TRUE.
+			  
+			  E_inter_vdw = E_inter_vdw + Eijk_triad
+			  
+			END DO moleculeLoop3
+			
+		END DO speciesLoop3
           
        END DO moleculeLoop
        !$OMP END PARALLEL DO
