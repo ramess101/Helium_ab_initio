@@ -1929,8 +1929,8 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 				 IF (l_triad_store) THEN
 					CALL Get_Position_Alive(this_im_3,is,locate_3)
 					
-				!	triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
-				!	triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
+					triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
+					triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
 					
 				 END IF
 				 
@@ -1947,7 +1947,7 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 			     !CALL Compute_MoleculeTriad_Energy(this_im_1,is,this_im_2,is,this_im_3,is, &
                  ! this_box,vlj_triad)
 				  
-				 vlj_triad = 1.0_DP
+				 vlj_triad = 0.0_DP
              
 				 ! IF (my_overlap) THEN
 					! SHARED_OVERLAP = .true.
