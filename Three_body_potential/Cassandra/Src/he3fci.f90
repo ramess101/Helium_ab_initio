@@ -1,8 +1,10 @@
 module he3fci
 implicit none
+!integer,parameter :: prec = selected_real_kind(P=15)
+!real(prec),parameter :: ZERO = 0._prec
 
-!private
-!public
+private
+public HE3 
 
 contains
 
@@ -34,11 +36,11 @@ contains
 !*==HE3.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
 !---------------------------------------------------------------------
       SUBROUTINE HE3(R1,R2,R3,E3)
-! R1,R2,R3: in bohr; E3: in hartree
+! R1,R2,R3: in Angstrom; E3: in Cassandra atomic units
       IMPLICIT NONE
 !*--HE331
 !*** Start of declarations inserted by SPAG
-      REAL*8 COStheta1 , COStheta2 , COStheta3 , E3 , R1 , R2 , R3 ,    &
+      REAL*8 COStheta1 , COStheta2 , COStheta3 , E3 , R1 , R2 , R3 , R1_bohr, R2_bohr, R3_bohr,    &
            & THEta1 , THEta2 , THEta3
 !*** End of declarations inserted by SPAG
       COMMON /THETAS/ THEta1 , THEta2 , THEta3 , COStheta1 , COStheta2 ,&
@@ -56,13 +58,20 @@ contains
       THEta1 = DACOS(COStheta1)
       THEta2 = DACOS(COStheta2)
       THEta3 = DACOS(COStheta3)
+	  
+	  R1_bohr = R1 !/ 0.529177249_prec
+	  R2_bohr = R2 !/ 0.529177249_prec
+	  R3_bohr = R3 !/ 0.529177249_prec
  
-      CALL DOFCI(R1,R2,R3,E3)
+      CALL DOFCI(R1_bohr,R2_bohr,R3_bohr,E3)
+	  
+	  E3 = E3 !* 315775.13_prec * 0.8314472_prec !Return E3 in Cassandra atomic units
  
       END
 !*==DOFCI.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
 !---------------------------------------------------------------------
       SUBROUTINE DOFCI(R1,R2,R3,Corr)
+! R1,R2,R3: in bohr; E3: in hartree
       IMPLICIT NONE
 !*--DOFCI59
 !*** Start of declarations inserted by SPAG
