@@ -8,15 +8,13 @@ public HE3
 
 contains
 
-!*==AA0001.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
 ! calculates nonadditive 3-body energies from the He3 FCI fit (fitted to 253 points)
 ! reads in distances in bohr
       ! IMPLICIT NONE
-!*--AA00015
-!*** Start of declarations inserted by SPAG
+
 !      REAL*8 e2k , e3 , r1 , r2 , r3 , unit1 , unit2
 !      INTEGER i , n
-!*** End of declarations inserted by SPAG
+
 !      DATA e2k/315774.65D0/
  
 !      unit=1.d6  ! microhartrees
@@ -33,16 +31,15 @@ contains
          ! WRITE (*,'(3f10.6,3g14.6)') r1 , r2 , r3 , e3*unit1 , e3*unit2
       ! ENDDO
       ! END
-!*==HE3.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
+
 !---------------------------------------------------------------------
       SUBROUTINE HE3(R1,R2,R3,E3)
 ! R1,R2,R3: in Angstrom; E3: in Cassandra atomic units
       IMPLICIT NONE
-!*--HE331
-!*** Start of declarations inserted by SPAG
+
       REAL*8 COStheta1 , COStheta2 , COStheta3 , E3 , R1 , R2 , R3 , R1_bohr, R2_bohr, R3_bohr,    &
            & THEta1 , THEta2 , THEta3
-!*** End of declarations inserted by SPAG
+
       COMMON /THETAS/ THEta1 , THEta2 , THEta3 , COStheta1 , COStheta2 ,&
                     & COStheta3
  
@@ -67,14 +64,13 @@ contains
 	  
 	  E3 = E3 !* 315775.13_prec * 0.8314472_prec !Return E3 in Cassandra atomic units
  
-      END
-!*==DOFCI.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
+      END SUBROUTINE HE3
+
 !---------------------------------------------------------------------
       SUBROUTINE DOFCI(R1,R2,R3,Corr)
 ! R1,R2,R3: in bohr; E3: in hartree
       IMPLICIT NONE
-!*--DOFCI59
-!*** Start of declarations inserted by SPAG
+
       REAL*8 a , a333 , a344 , a355 , a434 , a443 , a445 , a454 , a535 ,&
            & a544 , a553 , a555 , beta , Corr , COStheta1 , COStheta2 , &
            & COStheta3 , d066 , d068 , d077
@@ -426,16 +422,15 @@ contains
  
 !--------- 4th order part: end
  
-      END
-!*==P.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
+      END SUBROUTINE DOFCI
+
 !---------------------------------------------------------------------
       FUNCTION P(L,Theta)
       IMPLICIT NONE
-!*--P417
-!*** Start of declarations inserted by SPAG
+
       INTEGER L
       REAL*8 P , Theta
-!*** End of declarations inserted by SPAG
+
       IF ( L.EQ.0 ) THEN
          P = 1.0D0
       ELSEIF ( L.EQ.1 ) THEN
@@ -450,19 +445,18 @@ contains
          WRITE (*,*) 'l too large in P'
          STOP
       ENDIF
-      END
-!*==D3.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
+      END FUNCTION P
+
 !---------------------------------------------------------------------
       FUNCTION D3(N1,N2,N3,Beta,R1,R2,R3)
 !
 !     calculate the damping factor
 !
       IMPLICIT NONE
-!*--D3444
-!*** Start of declarations inserted by SPAG
+
       REAL*8 Beta , br , D3 , dx , dy , dz , R1 , R2 , R3 , sum , term
       INTEGER i , N1 , N2 , N3 , ncn
-!*** End of declarations inserted by SPAG
+
       IF ( N1.EQ.0 ) THEN
          dx = 1.0D0
       ELSE
@@ -504,15 +498,12 @@ contains
       ENDIF
       D3 = dx*dy*dz
 !     write(6,*) n,beta,r,d
-      END
-!*==INITAB.spg  processed by SPAG 6.72Dc at 22:00 on 23 Jan 2019
+      END FUNCTION D3
 !---------------------------------------------------------------------
       SUBROUTINE INITAB(Fname,A1,L1,A2,L2)
       IMPLICIT NONE
-!*--INITAB495
-!*** Start of declarations inserted by SPAG
+
       INTEGER i , ii , L1 , L2
-!*** End of declarations inserted by SPAG
       CHARACTER*6 Fname
       REAL*8 A1(*) , A2(*)
       OPEN (7,FILE=Fname)
@@ -532,7 +523,7 @@ contains
       RETURN
  100  WRITE (*,'(a,a)') 'Error reading file ' , Fname
       STOP
-      END
+      END SUBROUTINE INITAB
 !---------------------------------------------------------------------
 
 
