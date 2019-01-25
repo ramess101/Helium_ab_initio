@@ -2132,6 +2132,22 @@ END SUBROUTINE Compute_Molecule_Self_Energy
                 
                 pair_nrg_qq(locate_1,locate_2) = 0.0_DP
                 pair_nrg_qq(locate_2,locate_1) = 0.0_DP
+				
+				imLOOP6: DO im_3 = im_2 + 1, nmols(is,this_box)
+				
+					this_im_3 = locate(im_3,is,this_box)
+					IF (.NOT. molecule_list(this_im_3,is)%live) CYCLE imLOOP6
+
+					CALL Get_Position_Alive(this_im_3,is,locate_3)
+					
+					triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
+					triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
+					triad_nrg_vdw(locate_1,locate_3,locate_2) = 0.0_DP
+					triad_nrg_vdw(locate_2,locate_3,locate_1) = 0.0_DP
+					triad_nrg_vdw(locate_3,locate_2,locate_1) = 0.0_DP
+					triad_nrg_vdw(locate_3,locate_1,locate_2) = 0.0_DP
+					
+				END DO imLOOP6
 
              END IF
              
@@ -2160,18 +2176,9 @@ END SUBROUTINE Compute_Molecule_Self_Energy
 			  
 				 IF (SHARED_OVERLAP) CYCLE imLOOP5
 				 
-				 IF (l_triad_store) THEN
-					CALL Get_Position_Alive(this_im_3,is,locate_3)
-					
-					triad_nrg_vdw(locate_1,locate_2,locate_3) = 0.0_DP
-					triad_nrg_vdw(locate_2,locate_1,locate_3) = 0.0_DP
-					triad_nrg_vdw(locate_1,locate_3,locate_2) = 0.0_DP
-					triad_nrg_vdw(locate_2,locate_3,locate_1) = 0.0_DP
-					triad_nrg_vdw(locate_3,locate_2,locate_1) = 0.0_DP
-					triad_nrg_vdw(locate_3,locate_1,locate_2) = 0.0_DP
-					
-				 END IF
+				 CALL Get_Position_Alive(this_im_3,is,locate_3)
 				 
+				 !Only need to compute distances between this_im_3 and other two
 				 CALL Check_MoleculePair_Cutoff(this_im_3,is,this_im_1,is,get_interaction, &
 					  rcom,rx,ry,rz)
 				 
