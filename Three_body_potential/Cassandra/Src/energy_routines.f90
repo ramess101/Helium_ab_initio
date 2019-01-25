@@ -1126,8 +1126,7 @@ SUBROUTINE Compute_MoleculeTriad_Energy(im,is,jm,js,km,ks,this_box, &
 	   rik = SQRT(riksq)
 	   rjk = SQRT(rjksq)
 	   
-	   !Call HE3(rij,rik,rjk,Eijk_triad)
-	   Eijk_triad = 0.1_DP
+	   Call HE3(rij,rik,rjk,Eijk_triad)
        
     ENDIF ExistCheck
 
