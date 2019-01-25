@@ -163,7 +163,7 @@ CONTAINS
     INTEGER, OPTIONAL:: n_cls_mol, id_cls_mol(:), is_cls_mol(:)
     INTEGER, OPTIONAL :: box_cls_mol(:)
 
-    INTEGER :: n_mols, stride, position, imol
+    INTEGER :: n_mols, stride, position, position2, imol
     REAL(DP), INTENT(OUT) :: E_vdw, E_qq
 
     REAL(DP), OPTIONAL, INTENT(OUT) :: box_nrg_vdw(:), box_nrg_qq(:)
@@ -176,7 +176,7 @@ CONTAINS
        n_mols = 1
        ALLOCATE(pair_vdw_temp(SUM(max_molecules)))
        ALLOCATE(pair_qq_temp(SUM(max_molecules)))
-	   ALLOCATE(triad_vdw_temp(SUM(max_molecules)))
+	   ALLOCATE(triad_vdw_temp(SUM(max_molecules),SUM(max_molecules)))
 
     ELSE
 
@@ -186,7 +186,7 @@ CONTAINS
 
        ALLOCATE(pair_vdw_temp(n_mols*SUM(max_molecules)))
        ALLOCATE(pair_qq_temp(n_mols*SUM(max_molecules)))
-	   ALLOCATE(triad_vdw_temp(n_mols*SUM(max_molecules)))
+	   ALLOCATE(triad_vdw_temp(n_mols*SUM(max_molecules),n_mols*SUM(max_molecules)))
 
        IF ( present(box_cls_mol)) THEN
           box_nrg_vdw(:) = 0.0_DP
@@ -200,9 +200,7 @@ CONTAINS
    
     pair_vdw_temp(:) = 0.0_DP
     pair_qq_temp(:) = 0.0_DP
-	triad_vdw_temp(:) = 0.0_DP
-
- 
+	triad_vdw_temp(:,:) = 0.0_DP
 
     DO imol = 1, n_mols
        
@@ -228,7 +226,6 @@ CONTAINS
        CALL Get_Position_Alive(alive,is,locate_1)
 
        !Get_Position_Alive is used in conjunction with pair_vdw/pair_qq arrays
-
        stride = (imol-1) * SUM(max_molecules)
        
        speciesLoop: DO this_species = 1, nspecies
@@ -251,19 +248,19 @@ CONTAINS
 				   
   		           speciesLoop2: DO this_species2 = 1, nspecies
 					  
-					  molidLoop2: DO this_jm = 1, nmols(this_species2, this_box)
-						 
+					  molidLoop2: DO this_jm = this_im + 1, nmols(this_species2, this_box)
+						
 						locate_jm = locate(this_jm,this_species2,this_box)
-						 
+						
 						IF (molecule_list(locate_jm,this_species2)%live) THEN
 							   
 							   CALL Get_Position_Alive(locate_jm,this_species2,locate_3)
 							   
-							   position = locate_3 + stride
-							   
-							   triad_vdw_temp(position) = triad_nrg_vdw(locate_2,locate_1,locate_3)
-                   
-				               E_vdw = E_vdw + triad_vdw_temp(position)
+							   position2 = locate_3 + stride
+							  
+							   triad_vdw_temp(position,position2) = triad_nrg_vdw(locate_2,locate_1,locate_3)
+                               
+				               E_vdw = E_vdw + triad_vdw_temp(position,position2)
 				   
 				        END IF
              
@@ -283,7 +280,7 @@ CONTAINS
        END IF
 
     END DO
-
+	
   END SUBROUTINE Store_Molecule_Pair_Interaction_Arrays
   !****************************************************************
 
@@ -356,7 +353,7 @@ CONTAINS
 				   
 				   DO this_species2 = 1, nspecies
           
-					  DO this_jm = 1, nmols(this_species2, this_box)
+					  DO this_jm = this_im + 1, nmols(this_species2, this_box)
 						 
 						 locate_jm = locate(this_jm,this_species2,this_box)
 						 
@@ -364,12 +361,12 @@ CONTAINS
 							   
 							   CALL Get_Position_Alive(locate_jm,this_species2,locate_3)
 							   
-							   triad_nrg_vdw(locate_1,locate_2,locate_3) = triad_vdw_temp(locate_3 + stride)
-							   triad_nrg_vdw(locate_2,locate_1,locate_3) = triad_vdw_temp(locate_3 + stride)
-                               triad_nrg_vdw(locate_1,locate_3,locate_2) = triad_vdw_temp(locate_3 + stride)
-							   triad_nrg_vdw(locate_2,locate_3,locate_1) = triad_vdw_temp(locate_3 + stride)
-                               triad_nrg_vdw(locate_3,locate_2,locate_1) = triad_vdw_temp(locate_3 + stride)
-							   triad_nrg_vdw(locate_3,locate_1,locate_2) = triad_vdw_temp(locate_3 + stride)
+							   triad_nrg_vdw(locate_1,locate_2,locate_3) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
+							   triad_nrg_vdw(locate_2,locate_1,locate_3) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
+                               triad_nrg_vdw(locate_1,locate_3,locate_2) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
+							   triad_nrg_vdw(locate_2,locate_3,locate_1) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
+                               triad_nrg_vdw(locate_3,locate_2,locate_1) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
+							   triad_nrg_vdw(locate_3,locate_1,locate_2) = triad_vdw_temp(locate_2 + stride, locate_3 + stride)
 				
                          END IF
 						 
