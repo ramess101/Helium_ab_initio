@@ -1,7 +1,7 @@
 module he3fci
 implicit none
-!integer,parameter :: prec = selected_real_kind(P=15)
-!real(prec),parameter :: ZERO = 0._prec
+integer,parameter :: prec = selected_real_kind(P=15)
+real(prec),parameter :: ZERO = 0._prec
 
 private
 public HE3 
@@ -56,29 +56,30 @@ contains
       THEta2 = DACOS(COStheta2)
       THEta3 = DACOS(COStheta3)
 	  
-	  R1_bohr = R1 !/ 0.529177249_prec
-	  R2_bohr = R2 !/ 0.529177249_prec
-	  R3_bohr = R3 !/ 0.529177249_prec
+	  !Convert Cassandra units (Angstrom) to bohr before passing into DOFCI
+	  R1_bohr = R1 / 0.529177249_prec
+	  R2_bohr = R2 / 0.529177249_prec
+	  R3_bohr = R3 / 0.529177249_prec
  
       CALL DOFCI(R1_bohr,R2_bohr,R3_bohr,E3)
 	  
-	  E3 = E3 !* 315775.13_prec * 0.8314472_prec !Return E3 in Cassandra atomic units
- 
+	  E3 = E3 * 315775.13_prec * 0.8314472_prec !Return E3 in Cassandra atomic units
+      
       END SUBROUTINE HE3
 
 !---------------------------------------------------------------------
       SUBROUTINE DOFCI(R1,R2,R3,Corr)
 ! R1,R2,R3: in bohr; E3: in hartree
       IMPLICIT NONE
-
+      
       REAL*8 a , a333 , a344 , a355 , a434 , a443 , a445 , a454 , a535 ,&
            & a544 , a553 , a555 , beta , Corr , COStheta1 , COStheta2 , &
            & COStheta3 , d066 , d068 , d077
-      REAL*8 d086 , D3 , d333 , d338 , d344 , d347 , d355 , d374 ,      &
+      REAL*8 d086 , d333 , d338 , d344 , d347 , d355 , d374 ,      &
            & d383 , d434 , d437 , d443 , d445 , d446 , d454 , d464 ,    &
            & d473 , d535 , d544 , d553
       REAL*8 d555 , d606 , d608 , d644 , d660 , d680 , d707 , d734 ,    &
-           & d743 , d770 , d806 , d833 , d860 , P , pn11 , pn12 , pn13 ,&
+           & d743 , d770 , d806 , d833 , d860 , pn11 , pn12 , pn13 ,&
            & pn21 , pn22 , pn23
       REAL*8 pn31 , pn32 , pn33 , R1 , r13 , r14 , r15 , r16 , r17 ,    &
            & r18 , R2 , r23 , r24 , r25 , r26 , r27 , r28 , R3 , r33 ,  &
@@ -106,7 +107,7 @@ contains
       DATA z113/4.1241D0/
       DATA z122/1.7377D0/
       DATA z222/3.2839D0/
- 
+
       IF ( init.EQ.1 ) THEN
          CALL INITAB('E3.dat',beta,46,a,41)
          init = 0
