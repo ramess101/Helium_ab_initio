@@ -64,6 +64,8 @@ for system in systems:
     rhol = VLCC[:,1]
     rhov = VLCC[:,2]
     
+    ### Trim low and/or high data
+        
     Psat = Psat[Tsat>=TsatLow]
     rhol = rhol[Tsat>=TsatLow]
     rhov = rhov[Tsat>=TsatLow]
@@ -82,8 +84,41 @@ for system in systems:
         Psat = Psat[::-1]
         
     #######
+
+    rhor = (rhol+rhov)/2.
+    logPsat = np.log10(Psat)
+    Tsat_avg = np.unique(Tsat)
+    invTsat_avg = 10./Tsat_avg
+    Psat_avg = np.zeros(len(Tsat_avg))
+    rhol_avg = np.zeros(len(Tsat_avg))
+    rhov_avg = np.zeros(len(Tsat_avg))
+    rhor_avg = np.zeros(len(Tsat_avg))
+    Psat_95 = np.zeros(len(Tsat_avg))
+    logPsat_95 = np.zeros(len(Tsat_avg))
+    rhol_95 = np.zeros(len(Tsat_avg))
+    rhov_95 = np.zeros(len(Tsat_avg))
+    rhor_95 = np.zeros(len(Tsat_avg))
+
+    f0 = open('H:/Helium_ab_initio/Critical_constants/'+system+'_GEMC.txt','w')
+    f0.write('T (K)'+'\t'+'rhol (kg/m3)'+'\t'+'rhov (kg/m3)'+'\t'+'Psat (MPa)'+'\n')
     
-    He_fit = VLE(Tsat,rhol,rhov,Psat)
+    for iTsat, Tsat_i in enumerate(Tsat_avg):
+        Psat_avg[iTsat] = np.mean(Psat[Tsat == Tsat_i])
+        rhol_avg[iTsat] = np.mean(rhol[Tsat == Tsat_i])
+        rhov_avg[iTsat] = np.mean(rhov[Tsat == Tsat_i])
+        rhor_avg[iTsat] = np.mean(rhor[Tsat == Tsat_i])
+        Psat_95[iTsat] = 3.18 * np.std(Psat[Tsat == Tsat_i])
+        logPsat_95[iTsat] = 3.18 * np.std(logPsat[Tsat == Tsat_i])
+        rhol_95[iTsat] = 3.18 * np.std(rhol[Tsat == Tsat_i])
+        rhov_95[iTsat] = 3.18 * np.std(rhov[Tsat == Tsat_i])
+        rhor_95[iTsat] = 3.18 * np.std(rhor[Tsat == Tsat_i])
+
+        f0.write(str(Tsat_i)+'\t'+str(np.round(rhol_avg[iTsat],2))+'\t'+str(np.round(rhol_95[iTsat],2))+'\t'+str(np.round(rhov_avg[iTsat],2))+'\t'+str(np.round(rhov_95[iTsat],2))+'\t'+str(np.round(Psat_avg[iTsat]/10.,4))+'\t'+str(np.round(Psat_95[iTsat]/10.,4))+'\n')
+        
+    f0.close()
+    logPsat_avg = np.log10(Psat_avg)
+        
+    He_fit = VLE(Tsat,rhol,rhov,Psat,Mw_He)
     
     invTsat = He_fit.invTsat/100 #For Helium it makes more sense to have 10/T
     logPsat = He_fit.logPsat
@@ -97,6 +132,7 @@ for system in systems:
     Tc = He_fit.Tc
     Pc = He_fit.Pc
     rhoc = He_fit.rhoc
+    Zc = He_fit.Zc
     
     Tplot = np.linspace(min(Tsat),Tc,1000)
     invTplot = 10./Tplot
@@ -110,29 +146,40 @@ for system in systems:
     Psatsmoothed = He_fit.PsatHat(Tsat)
     rholsmoothed = He_fit.rholHat(Tsat)
     
-    urhoc, uTc, uPc = He_fit.bootstrapCriticals()
+    urhoc, uTc, uPc, uZc = He_fit.bootstrapCriticals()
     ulogPc = (np.log10(Pc+uPc) - np.log10(Pc-uPc))/2.
     uinvTc = (10./(Tc-uTc)-10./(Tc+uTc))/2.
     
-    print('Critical temperature = '+str(np.round(Tc,2))+r'$ \pm$ '+str(np.round(uTc,2))+' K, Critical Pressure = '+str(np.round(Pc/10.,3))+r'$ \pm$ '+str(np.round(uPc/10.,3))+' MPa, Critical Density = '+str(np.round(rhoc,1))+' $\pm$ '+str(np.round(urhoc,2))+' (kg/m$^3$).')
-        
-    ax0[0].plot(rhol,Tsat,color+shape,mfc='None',label=system_label+', GEMC')
-    ax0[0].plot(rhov,Tsat,color+shape,mfc='None')
-    ax0[0].plot(rhor,Tsat,color+shape,mfc='None')
+    print('Critical temperature = '+str(np.round(Tc,2))+r'$ \pm$ '+str(np.round(uTc,2))+' K, Critical Pressure = '+str(np.round(Pc/10.,3))+r'$ \pm$ '+str(np.round(uPc/10.,3))+' MPa, Critical Density = '+str(np.round(rhoc,1))+' $\pm$ '+str(np.round(urhoc,2))+' (kg/m$^3$), Critical Compressibility = '+str(np.round(Zc,4))+r'$ \pm$ '+str(np.round(uZc,4)))
+       
+    ax0[0].errorbar(rhol_avg,Tsat_avg,xerr=rhol_95,fmt=color+shape,mfc='None',markersize=10,label=system_label+', GEMC',capsize=6)
+    ax0[0].errorbar(rhov_avg,Tsat_avg,xerr=rhov_95,fmt=color+shape,mfc='None',markersize=10,capsize=6)
+    ax0[0].errorbar(rhor_avg,Tsat_avg,xerr=rhor_95,fmt=color+shape,mfc='None',markersize=10,capsize=6)
+#    ax0[0].plot(rhol,Tsat,color+shape,mfc='None',label=system_label+', GEMC')
+#    ax0[0].plot(rhov,Tsat,color+shape,mfc='None')
+#    ax0[0].plot(rhor,Tsat,color+shape,mfc='None')
     ax0[0].plot(rhorplot,Tplot,'k'+line,label=system_label+', Fit, GEMC')
     ax0[0].plot(rholRSplot,Tplot,'k'+line)
     ax0[0].plot(rhovRSplot,Tplot,'k'+line)
-    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+'*',markersize=10,mfc='None',label=system_label+', Critical, GEMC')
+#    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+'*',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
+    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+shape,markersize=10,mfc=color,label=system_label+', Critical, GEMC',capsize=6)
     
-    ax0[1].plot(invTsat,logPsat-1,color+shape,mfc='None',label=system_label+', GEMC')
-    ax0[1].plot(invTplot,logPsatplot-1,'k'+line,label=system_label+', Fit, GEMC')
-    ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+'*',markersize=10,mfc='None',label=system_label+', Critical, GEMC')
+    ax0[1].errorbar(invTsat_avg,logPsat_avg-1,yerr=logPsat_95,fmt=color+shape,mfc='None',markersize=10,capsize=6)#,label=system_label+', GEMC')
+#    ax0[1].plot(invTsat,logPsat-1,color+shape,mfc='None',label=system_label+', GEMC')
+    ax0[1].plot(invTplot,logPsatplot-1,'k'+line)#,label=system_label+', Fit, GEMC')
+#    ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+'*',markersize=14,mfc='None')#,label=system_label+', Critical, GEMC')
+    ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+shape,markersize=10,mfc=color,capsize=6)#,label=system_label+', Critical, GEMC')
         
-ax0[0].errorbar(rhoc_Kofke,Tc_Kofke,xerr=urhoc_Kofke,yerr=uTc_Kofke,fmt='gv',markersize=10,mfc='None',label='Critical, VEOS')
+    ax0[1].plot([],[],color+shape,mfc='None',label=system_label+', GEMC',markersize=10)
+#    ax0[1].plot([],[],color+'*',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
+    ax0[1].plot([],[],color+shape,markersize=12,mfc=color,label=system_label+', Critical, GEMC')
+    
+ax0[0].errorbar(rhoc_Kofke,Tc_Kofke,xerr=urhoc_Kofke,yerr=uTc_Kofke,fmt='gv',markersize=10,mfc='g',label='Critical, VEOS',capsize=6)
 ax0[0].set_xlabel(r'$\rho$ (kg/m$^3$)',fontsize=28)
 ax0[0].set_ylabel('$T$ (K)',fontsize=28)
 
-ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,mfc='None',fmt='gv',markersize=10,label='2-Body, Critical, VEOS')
+ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,mfc='g',fmt='gv',markersize=10,capsize=6)#,label='2-Body, Critical, VEOS')
+ax0[1].plot([],[],'gv',mfc='g',markersize=10,label='2-Body, Critical, VEOS')
 ax0[1].set_xlabel('10/T (K)',fontsize=28)
 ax0[1].set_ylabel(r'$\log_{10}$($P$/MPa)',fontsize=28)
 ax0[1].legend()

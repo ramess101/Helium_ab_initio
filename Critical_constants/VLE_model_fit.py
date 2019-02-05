@@ -10,9 +10,11 @@ from scipy.optimize import minimize
 font = {'size' : '24'}
 plt.rc('font',**font)
 
+Rg = 8.3144598e-5 #[m3 bar / K / mol]
+
 class VLE(object):
     
-    def __init__(self, Tsat, rhol, rhov, Psat):
+    def __init__(self, Tsat, rhol, rhov, Psat, Mw=None):
         
         # Ensures that the lowest density IC corresponds to maximum temperature 
         rhol = rhol[np.argmax(Tsat):]
@@ -32,14 +34,16 @@ class VLE(object):
         self.Psat = Psat
         self.logPsat = np.log10(Psat)
         self.invTsat = 1000./Tsat
-        self.beta = 0.326
+        self.beta = 0.325
+        self.Mw = Mw
         self.guessTc()
         self.fitRectScale()
         self.fitrhol()
         self.fitrhov()
         self.fitAntoine()
         self.Pc = self.PsatHat(self.Tc)
-        
+        self.Zc = self.computeZc(self.rhoc,self.Pc,self.Tc)
+                
     def SSE(self,data,model):
         SE = (data - model)**2
         SSE = np.sum(SE)
@@ -249,6 +253,7 @@ class VLE(object):
         rhocBoots = np.zeros(nBoots)
         TcBoots = np.zeros(nBoots)
         PcBoots = np.zeros(nBoots)
+        ZcBoots = np.zeros(nBoots)
         
         for iBoot in range(nBoots):
         
@@ -303,11 +308,16 @@ class VLE(object):
             
             PcBoots[iBoot] = PcBoot
                    
+            ZcBoot = self.computeZc(rhocBoots[iBoot],PcBoots[iBoot],TcBoots[iBoot])
+                   
+            ZcBoots[iBoot] = ZcBoot
+                   
         ### Removes outliers that might arise for poor bootstrapping
                    
         rhocBoots = self.rejectOutliers(rhocBoots)
         TcBoots = self.rejectOutliers(TcBoots)
         PcBoots = self.rejectOutliers(PcBoots)
+        ZcBoots = self.rejectOutliers(ZcBoots)
         
         if plothist:
             plt.hist(rhocBoots,bins=50,color='k')
@@ -321,12 +331,17 @@ class VLE(object):
             plt.hist(PcBoots,bins=50,color='k')
             plt.xlabel(r'$P_{\rm c}$ (bar)')
             plt.show()
+            
+            plt.hist(ZcBoots,bins=50,color='k')
+            plt.xlabel(r'$Z_{\rm c}$')
+            plt.show()
                     
         urhoc = self.compute95CI(rhocBoots)
         uTc = self.compute95CI(TcBoots)
         uPc = self.compute95CI(PcBoots)
+        uZc = self.compute95CI(ZcBoots)
                 
-        return urhoc, uTc, uPc
+        return urhoc, uTc, uPc, uZc
     
     def compute95CI(self,data):
         dataSorted = np.sort(data)
@@ -337,8 +352,15 @@ class VLE(object):
 #        dataAvg = np.mean(data95)
 #        dataError = (data95[-1] - data95[0])/(2*dataAvg)
         return u95CI
+    
+    def computeZc(self,rhoc,Pc,Tc):
+        Vc = self.Mw / rhoc / 1000. #[m3/mol]
+        Zc = Pc * Vc / Rg / Tc
+        return Zc
 
 def main():
+    
+    #### This is deprecated now that VLE requires passing the molecular weight to compute Zc
     
     # My Helium results:
     # Towhee
