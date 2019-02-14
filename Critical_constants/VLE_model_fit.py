@@ -14,7 +14,7 @@ Rg = 8.3144598e-5 #[m3 bar / K / mol]
 
 class VLE(object):
     
-    def __init__(self, Tsat, rhol, rhov, Psat, Mw=None):
+    def __init__(self, Tsat, rhol, rhov, Psat, Mw=None, beta = 0.355):
         
         # Ensures that the lowest density IC corresponds to maximum temperature 
         rhol = rhol[np.argmax(Tsat):]
@@ -34,7 +34,7 @@ class VLE(object):
         self.Psat = Psat
         self.logPsat = np.log10(Psat)
         self.invTsat = 1000./Tsat
-        self.beta = 0.325
+        self.beta = beta
         self.Mw = Mw
         self.guessTc()
         self.fitRectScale()
@@ -259,7 +259,7 @@ class VLE(object):
         
             ### First fit Tc and rhoc
             
-            randbeta = np.random.uniform(0.3,0.35)
+            randbeta = np.random.uniform(0.325,0.385)
             
             randint = np.random.randint(0, len(self.Tsat),len(self.Tsat))
             Tfit = self.Tsat[randint]
