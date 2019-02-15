@@ -39,7 +39,7 @@ shape_dic = {'Towhee_2800_14':'^','Towhee_2800_18':'s','Cassandra_1400_10':'d','
 
 tail_path_dic = {'Towhee_2800_14':'Towhee/Results/2800_14/','Towhee_2800_18':'Towhee/Results/2800_18/','Cassandra_1400_10':'Cassandra/Results/1400_10_md1/','Cassandra_2800_14':'Cassandra/Results/Helium_2800_14/','Cassandra_800_10':'Cassandra/Results/3Body/800_10_all/'}
 
-label_dic = {'Towhee_2800_14':r'$N = 2800$, $r_{\rm c} = 1.4$ nm','Towhee_2800_18':r'$N = 2800$, $r_{\rm c} = 1.8$ nm','Cassandra_1400_10':r'$N = 1400$, $r_{\rm c} = 1.0$ nm','Cassandra_2800_14':r'$N = 2800$, $r_{\rm c} = 1.4$ nm','Cassandra_800_10':r'$N = 800$, $r_{\rm c} = 1.0$ nm'}
+label_dic = {'Towhee_2800_14':r'$N = 2800$, $r_{\rm cut} = 1.4$ nm','Towhee_2800_18':r'$N = 2800$, $r_{\rm cut} = 1.8$ nm','Cassandra_1400_10':r'$N = 1400$, $r_{\rm cut} = 1.0$ nm','Cassandra_2800_14':r'$N = 2800$, $r_{\rm cut} = 1.4$ nm','Cassandra_800_10':r'$N = 800$, $r_{\rm cut} = 1.0$ nm'}
 
 ##    #### Limit the range of data included in the fit
 TsatLow = 7

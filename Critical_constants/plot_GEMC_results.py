@@ -123,7 +123,8 @@ for system in systems:
     f0.write('T (K)'+'\t'+'rhol (kg/m3)'+'\t'+'rhov (kg/m3)'+'\t'+'Psat (MPa)'+'\n')
     
     f1 = open('H:/Helium_ab_initio/Critical_constants/'+system+'_GEMC_molar.txt','w')
-    f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\n')
+#    f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\n')
+    f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\t'+'Zvap'+'\n')
     
     for iTsat, Tsat_i in enumerate(Tsat_avg):
         Psat_avg[iTsat] = np.mean(Psat[Tsat == Tsat_i])
@@ -140,7 +141,8 @@ for system in systems:
         Zv_95[iTsat] = 3.18 * np.std(Zv[Tsat == Tsat_i]) / len(Tsat[Tsat == Tsat_i])
         
         f0.write(str(Tsat_i)+'\t'+str(np.round(rhol_avg[iTsat],2))+'\t'+str(np.round(rhol_95[iTsat],2))+'\t'+str(np.round(rhov_avg[iTsat],2))+'\t'+str(np.round(rhov_95[iTsat],2))+'\t'+str(np.round(Psat_avg[iTsat]/10.,4))+'\t'+str(np.round(Psat_95[iTsat]/10.,4))+'\n')
-        f1.write(str(Tsat_i)+'\t'+str(np.round(rhol_avg[iTsat]/Mw_He,3))+'\t'+str(np.round(rhol_95[iTsat]/Mw_He,3))+'\t'+str(np.round(rhov_avg[iTsat]/Mw_He,3))+'\t'+str(np.round(rhov_95[iTsat]/Mw_He,3))+'\t'+str(np.round(Psat_avg[iTsat]/10.,4))+'\t'+str(np.round(Psat_95[iTsat]/10.,4))+'\n')
+#        f1.write(str(Tsat_i)+'\t'+str(np.round(rhol_avg[iTsat]/Mw_He,3))+'\t'+str(np.round(rhol_95[iTsat]/Mw_He,3))+'\t'+str(np.round(rhov_avg[iTsat]/Mw_He,3))+'\t'+str(np.round(rhov_95[iTsat]/Mw_He,3))+'\t'+str(np.round(Psat_avg[iTsat]/10.,4))+'\t'+str(np.round(Psat_95[iTsat]/10.,4))+'\n')
+        f1.write(str(Tsat_i)+' & '+str(np.round(rhol_avg[iTsat]/Mw_He,3))+' $\pm$ '+str(np.round(rhol_95[iTsat]/Mw_He,3))+' & '+str(np.round(rhov_avg[iTsat]/Mw_He,4))+' $\pm$ '+str(np.round(rhov_95[iTsat]/Mw_He,4))+' & '+str(np.round(Psat_avg[iTsat]/10.,5))+' $\pm$ '+str(np.round(Psat_95[iTsat]/10.,5))+' & '+str(np.round(Zv_avg[iTsat],4))+' $\pm$ '+str(np.round(Zv_95[iTsat],4))+'\n')
         
     f0.close()    
     f1.close()
