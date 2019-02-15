@@ -1,0 +1,251 @@
+inputformat
+'Towhee'
+random_number_generator
+'DX-1597-2-7'
+random_seed
+     1302003
+random_allow_restart
+T
+ensemble
+'nvt                           '
+temperature
+   11.000000000000000     
+nmolty
+           1
+nmolectyp
+        2800
+numboxes
+           2
+stepstyle
+'cycles  '
+nstep
+      100000
+printfreq
+        1000
+blocksize
+        5000
+moviefreq
+           0
+backupfreq
+        5000
+restartfreq
+           0
+runoutput
+'full                '
+pdb_output_freq
+       50000
+loutdft
+ F
+loutlammps
+ F
+loutdlpoly
+ F
+pressure_virial_freq
+          10
+pressure_thermo_freq
+           0
+pressure_thermo_style
+'range               '
+pressure_thermo_range
+   1.0000000000000000        1.0000000000000000     
+trmaxdispfreq
+          40
+volmaxdispfreq
+          40
+chempotperstep
+           0
+potentialstyle
+'internal                      '
+ffnumber
+           1
+ff_filename
+../towhee_ff                                                                                                            
+classical_potential
+'Tabulated Pair                '
+interpolatestyle
+'linear              '
+electrostatic_form
+'none                                              '
+max_bond_length
+   3.0000000000000000     
+nfield
+           0
+solvation_style
+'none                '
+linit
+ F
+initboxtype
+'number density      '
+initstyle
+ 'full cbmc           ' 
+ 'full cbmc           ' 
+initlattice
+'simple cubic        '
+'simple cubic        '
+initmol
+        2400
+         400
+inix iniy iniz
+          24          24          24
+           8           8           8
+box_number_density
+   34.843960109999998     
+   2.8948280280000001     
+pmvol
+0.0020
+          pmvlpr
+          .10000E+01
+          rmvol
+          .10000E+00
+          tavol
+          .50000E+00
+pmcell
+0.0000
+          pmcellpr
+          .10000E+01
+          pmcellpt
+          .50000E+00
+          rmcell
+          .10000E+01
+          tacell
+          .50000E+00
+pm2boxrbswap
+0.0000
+          pm2rbswmt
+          .10000E+01
+          pm2rbswpr
+          .10000E+01
+pm2boxcbswap
+0.0100
+          pm2cbswmt
+          .10000E+01
+          pm2cbswpr
+          .10000E+01
+pm1boxcbswap
+0.0000
+          pm1cbswmt
+          .10000E+01
+pmavb1
+0.0000
+          pmavb1in
+          .50000E+00
+          pmavb1mt
+          .10000E+01
+          pmavb1ct
+          .10000E+01
+          avb1rad
+           8.0000
+pmavb2
+0.0000
+          pmavb2in
+          .50000E+00
+          pmavb2mt
+          .10000E+01
+          pmavb2ct
+          .10000E+01
+          avb2rad
+           0.1000
+pmavb3
+0.0000
+          pmavb3mt
+          .10000E+01
+          pmavb3ct
+          .10000E+01
+          avb3rad
+           0.1000
+pmcb
+0.0000
+          pmcbmt
+          .10000E+01
+          pmall
+          .00000E+00
+pmback
+0.0000
+          pmbkmt
+          .10000E+01
+pmcbside
+0.0000
+          pmcbsidemt
+          .10000E+01
+pmpivot
+0.0000
+          pmpivmt
+          .10000E+01
+pmconrot
+0.0000
+          pmcrmt
+          .10000E+01
+pmcrback
+0.0000
+          pmcrbmt
+          .10000E+01
+pmplane
+0.0000
+          pmplanebox
+          .10000E+01 .10000E+01
+          planewidth
+          .10000E+01
+pmrow
+0.0000
+          pmrowbox
+          .10000E+01 .10000E+01
+          rowwidth
+          .10000E+01
+pmtraat
+0.0000
+          pmtamt
+          .10000E+01
+          rmtraa
+          .50000E+00
+          tatraa
+          .50000E+00
+pmcomposite
+          .00000E+00
+pmcomt
+          .10000E+01
+rmcomtra
+          .50000E+00
+rmcomrot
+          .50000E+00
+pmtracm
+1.0000
+          pmtcmt
+          .10000E+01
+          rmtrac
+          .50000E+00
+          tatrac
+          .50000E+00
+pmrotate
+0.0000
+          pmromt
+          .10000E+01
+          rmrot
+          .50000E+00
+          tarot
+          .50000E+00
+cbmc_analysis
+'normal                        '
+cbmc_formulation      
+'Martin and Frischknecht 2006                                '
+cbmc_setting_style
+'Martin and Frischknecht       '
+input_style
+explicit
+nunit
+           1
+nmaxcbmc
+           1
+lpdbnames
+ F
+unit ntype qqatom
+           1           1   0.0000000000000000     
+vibration
+           0
+bending
+           0
+torsion
+           0
+angle-angle
+           0
+improper torsion
+           0

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#/users/ram9/bin/towhee > Output_0 2> Error
+
+#cp towhee_final towhee_initial
+
+sed -i '/linit   $/N;s/linit   \n.true./linit   \n.false./' towhee_input
+sed -i '/pmvol$/N;s/pmvol\n.*/pmvol\n0.002d0/' ./towhee_input
+sed -i '/pm2boxcbswap$/N;s/pm2boxcbswap\n.*/pm2boxcbswap\n0.01d0/' ./towhee_input
+
+sed -i '/nstep$/N;s/nstep\n.*/nstep\n20000/' ./towhee_input
+sed -i '/pressure_virial_freq$/N;s/pressure_virial_freq\n.*/pressure_virial_freq\n10/' ./towhee_input
+
+/users/ram9/bin/towhee > Output_1 2> Error
+
+cp towhee_final towhee_initial
+
+sed -i '/nstep$/N;s/nstep\n.*/nstep\n100000/' ./towhee_input
+
+/users/ram9/bin/towhee > Output_2 2> Error
+
+exit 0

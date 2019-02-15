@@ -1,0 +1,118 @@
+inputformat
+'Towhee'
+random_seed
+1302003
+ensemble
+'nvt'
+temperature
+11
+nmolty
+1
+nmolectyp
+2800
+numboxes
+2
+stepstyle
+'cycles'
+nstep
+100000
+printfreq 
+1000   
+blocksize 
+5000
+moviefreq
+0
+backupfreq  
+5000
+runoutput
+'full'
+pdb_output_freq
+50000
+pressure_virial_freq
+10
+trmaxdispfreq
+40
+volmaxdispfreq
+40
+potentialstyle
+'internal'
+ffnumber
+1
+ff_filename
+../towhee_ff
+classical_potential
+'Tabulated Pair'       
+interpolatestyle
+'linear' 
+electrostatic_form
+'none'
+linit   
+.false.
+initboxtype
+'number density'
+initstyle
+'full cbmc'
+'full cbmc'
+initlattice
+'simple cubic'
+'simple cubic'
+initmol
+2400
+400
+inix iniy iniz
+24 24 24
+8 8 8
+box_number_density
+34.84396011
+2.894828028
+
+pmvol
+0.002d0
+          pmvlpr
+          1.0d0
+          rmvol
+          0.1d0
+          tavol
+          0.5d0
+pm2boxcbswap
+0.01d0
+          pm2cbswmt
+          1.0d0
+          pm2cbswpr
+          1.0d0
+pmavb1
+0.00d0
+          pmavb1in
+          0.5d0
+          pmavb1mt
+          1.0d0
+          pmavb1ct
+          1.0d0
+          avb1rad
+          8.0d0 
+pmtracm
+1.0d0	  
+          pmtcmt
+          1.0d0
+          rmtrac
+          0.5d0 
+          tatrac
+          0.5d0
+input_style
+'basic connectivity map'
+nunit
+1
+nmaxcbmc
+1
+lpdbnames
+F
+forcefield
+'TwoBody'
+charge_assignment
+'bond increment'
+unit ntype
+1    'He'
+vibration
+0
+improper torsion
+0
