@@ -14,7 +14,17 @@ plt.rc('font',**font)
 
 Mw_He = 4.0026 #[gm/mol]
 Rg = 8.3144598e-5 #[m3 bar / K / mol]
-         
+
+### Old values        
+#Pc_Kofke = 0.95*10. #[bar]
+#rhoc_Kofke = 27.5 * Mw_He #[kg/m3]
+#Tc_Kofke = 13.05 #[K]
+#
+#uPc_Kofke = 0.2*10. #[bar]
+#urhoc_Kofke = 2.5 * Mw_He #[kg/m3]
+#uTc_Kofke = 0.05 #[K]    
+
+### New values         
 Pc_Kofke = 0.928*10. #[bar]
 rhoc_Kofke = 28.3 * Mw_He #[kg/m3]
 Tc_Kofke = 13.00 #[K]
@@ -31,14 +41,14 @@ Zc_Kofke = Pc_Kofke * Vc_Kofke / Rg / Tc_Kofke
 
 uZc_Kofke = Zc_Kofke * np.sqrt((uPc_Kofke/Pc_Kofke)**2. + (urhoc_Kofke/rhoc_Kofke)**2. + (uTc_Kofke/Tc_Kofke)**2.)
                
-systems = ['1400_10_2Body','3Body_800_10']#'3Body_1400_10']#'3Body_800_10'] #,'2800_14_2Body']
+systems = ['1400_10_2Body','3Body_1400_10']#'3Body_1400_10']#'3Body_800_10'] #,'2800_14_2Body']
 path_dic = {'1400_10_2Body':'1400_10_md1/','2800_14_2Body':'Helium_2800_14/','3Body_800_10':'3Body/800_10_all/','3Body_1400_10':'3Body/1400_10_all/'}
 label_dic = {'1400_10_2Body':'2-body','2800_14_2Body':'2-body','3Body_800_10':'(2+3)-body','3Body_1400_10':'(2+3)-body'}
 color_dic = {'1400_10_2Body':'r','2800_14_2Body':'b','3Body_800_10':'b','3Body_1400_10':'b'}
 shape_dic = {'1400_10_2Body':'o','2800_14_2Body':'s','3Body_800_10':'s','3Body_1400_10':'s'}
 line_dic = {'1400_10_2Body':'-','2800_14_2Body':'--','3Body_800_10':'--','3Body_1400_10':'--'}
 
-path_root = 'C:/Users/rmesserl/Documents/Helium_ab_initio/Cassandra/Results/'
+path_root = 'C:/Users/rmesserl/Documents/NIST_projects/Helium_ab_initio/Cassandra/Results/'
 
 ##    #### Limit the range of data included in the fit
 TsatLow = 9
@@ -119,10 +129,10 @@ for system in systems:
     rhor_95 = np.zeros(len(Tsat_avg))
     Zv_95 = np.zeros(len(Tsat_avg))
 
-    f0 = open('C:/Users/rmesserl/Documents/Helium_ab_initio/Critical_constants/'+system+'_GEMC.txt','w')
+    f0 = open('C:/Users/rmesserl/Documents/NIST_projects/Helium_ab_initio/Critical_constants/'+system+'_GEMC.txt','w')
     f0.write('T (K)'+'\t'+'rhol (kg/m3)'+'\t'+'rhov (kg/m3)'+'\t'+'Psat (MPa)'+'\n')
     
-    f1 = open('C:/Users/rmesserl/Documents/Helium_ab_initio/Critical_constants/'+system+'_GEMC_molar.txt','w')
+    f1 = open('C:/Users/rmesserl/Documents/NIST_projects/Helium_ab_initio/Critical_constants/'+system+'_GEMC_molar.txt','w')
 #    f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\n')
     f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\t'+'Zvap'+'\n')
     
