@@ -27,7 +27,7 @@ def compile_VLCC(root_path,Temps,nreps):
             
     f0.close()
 
-root_path = 'H:/Helium_ab_initio/'
+root_path = 'C:/Users/rmesserl/Documents/Helium_ab_initio/'
 
 system_list = ['Towhee_2800_18','Cassandra_2800_14','Cassandra_1400_10','Cassandra_800_10']
 
@@ -107,11 +107,11 @@ ax0.set_ylim([8.9,11.1])
 ax0.set_yticks([9.0,9.5,10.0,10.5,11.0])
 #ax0.set_ylim([5.5,11.1])
 #ax0.set_yticks([7,8,9,10,11])
-ax0.set_xlabel(r'$\rho$ (kmol/m$^3$)',fontsize=28)    
+ax0.set_xlabel(r'$\rho$ (mol$\cdot$L$^{-1}$)',fontsize=28)    
 ax0.set_ylabel('$T$ (K)',fontsize=28)
 #ax0.legend()
 
-lgd = ax0.legend(loc='lower center', bbox_to_anchor=(0.43,-0.27),
+lgd = ax0.legend(loc='lower center', bbox_to_anchor=(0.43,-0.35),
           ncol=2,numpoints=1,handlelength=2,handletextpad=0.2,columnspacing=0.5,frameon=True,borderaxespad=0)
 
 plt.tight_layout()
