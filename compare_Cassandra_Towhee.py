@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 font = {'size' : '24'}
 plt.rc('font',**font)
 
-root_path = 'H:/Helium_ab_initio/'
+root_path = 'C:/Users/rmesserl/Documents/Helium_ab_initio/'
 
 Nmol = 2800
 rcut = 14 #[Ang]
@@ -109,7 +109,7 @@ for pack in packages:
 #ax0.set_yticks([7,8,9,10,11])
 ax0.set_ylim([8.9,11.1])
 ax0.set_yticks([9,10,11])
-ax0.set_xlabel(r'$\rho$ (kmol/m$^3$)',fontsize=28)    
+ax0.set_xlabel(r'$\rho$ (mol$\cdot$L$^{-1}$)',fontsize=28)    
 ax0.set_ylabel('$T$ (K)',fontsize=28)
 
 #ax0.legend()
@@ -117,7 +117,7 @@ plt.tight_layout()
 #
 #fig0.savefig(root_path+'VLCC_Cassandra_Towhee.pdf')
 
-lgd = ax0.legend(loc='lower center', bbox_to_anchor=(0.5,-0.2),
+lgd = ax0.legend(loc='lower center', bbox_to_anchor=(0.5,-0.22),
           ncol=2,numpoints=1,handlelength=2,handletextpad=0.2,columnspacing=0.5,frameon=True,borderaxespad=0)
 
 plt.tight_layout()
