@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 font = {'size' : '24'}
 plt.rc('font',**font)
 
-root_path = 'C:/Users/rmesserl/Documents/Helium_ab_initio/'
+root_path = 'C:/Users/rmesserl/Documents/NIST_projects/Helium_ab_initio/'
 
 Nmol = 2800
 rcut = 14 #[Ang]

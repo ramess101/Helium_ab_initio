@@ -27,7 +27,7 @@ def compile_VLCC(root_path,Temps,nreps):
             
     f0.close()
 
-root_path = 'C:/Users/rmesserl/Documents/Helium_ab_initio/'
+root_path = 'C:/Users/rmesserl/Documents/NIST_projects/Helium_ab_initio/'
 
 system_list = ['Towhee_2800_18','Cassandra_2800_14','Cassandra_1400_10','Cassandra_800_10']
 
@@ -43,7 +43,7 @@ label_dic = {'Towhee_2800_14':r'$N = 2800$, $r_{\rm cut} = 1.4$ nm','Towhee_2800
 
 ##    #### Limit the range of data included in the fit
 TsatLow = 7
-TsatHigh = 11.1
+TsatHigh = 11.6
 Tplot_low = 9
 
 Mw_He = 4.0026 #[gm/mol]
@@ -103,8 +103,8 @@ for system in system_list:
     ax0.errorbar(rhov_avg[Tsat_avg >= Tplot_low]/Mw_He,Tsat_avg[Tsat_avg >= Tplot_low],xerr=rhov_95[Tsat_avg >= Tplot_low]/Mw_He,fmt=color+shape,mfc='None',markersize=10,capsize=6)
     ax0.errorbar(rhor_avg[Tsat_avg >= Tplot_low]/Mw_He,Tsat_avg[Tsat_avg >= Tplot_low],xerr=rhor_95[Tsat_avg >= Tplot_low]/Mw_He,fmt=color+shape,mfc='None',markersize=10,capsize=6)  
     
-ax0.set_ylim([8.9,11.1])
-ax0.set_yticks([9.0,9.5,10.0,10.5,11.0])
+ax0.set_ylim([8.9,11.6])
+ax0.set_yticks([9.0,9.5,10.0,10.5,11.0,11.5])
 #ax0.set_ylim([5.5,11.1])
 #ax0.set_yticks([7,8,9,10,11])
 ax0.set_xlabel(r'$\rho$ (mol$\cdot$L$^{-1}$)',fontsize=28)    
