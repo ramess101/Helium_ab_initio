@@ -15,13 +15,13 @@ plt.rc('font',**font)
 Mw_He = 4.0026 #[gm/mol]
 Rg = 8.3144598e-5 #[m3 bar / K / mol]
          
-Pc_Kofke = 0.95*10. #[bar]
-rhoc_Kofke = 27.5 * Mw_He #[kg/m3]
-Tc_Kofke = 13.05 #[K]
+Pc_Kofke = 0.928*10. #[bar]
+rhoc_Kofke = 28.3 * Mw_He #[kg/m3]
+Tc_Kofke = 13.00 #[K]
 
-uPc_Kofke = 0.2*10. #[bar]
-urhoc_Kofke = 2.5 * Mw_He #[kg/m3]
-uTc_Kofke = 0.05 #[K]    
+uPc_Kofke = 0.013*10. #[bar]
+urhoc_Kofke = 0.4 * Mw_He #[kg/m3]
+uTc_Kofke = 0.04 #[K]    
 
 ulogPc_Kofke = (np.log10(Pc_Kofke+uPc_Kofke) - np.log10(Pc_Kofke-uPc_Kofke))/2.
 uinvTc_Kofke = (10./(Tc_Kofke-uTc_Kofke)-10./(Tc_Kofke+uTc_Kofke))/2. 
@@ -33,12 +33,12 @@ uZc_Kofke = Zc_Kofke * np.sqrt((uPc_Kofke/Pc_Kofke)**2. + (urhoc_Kofke/rhoc_Kofk
                
 systems = ['1400_10_2Body','3Body_800_10']#'3Body_1400_10']#'3Body_800_10'] #,'2800_14_2Body']
 path_dic = {'1400_10_2Body':'1400_10_md1/','2800_14_2Body':'Helium_2800_14/','3Body_800_10':'3Body/800_10_all/','3Body_1400_10':'3Body/1400_10_all/'}
-label_dic = {'1400_10_2Body':'2-Body','2800_14_2Body':'2-Body','3Body_800_10':'3-Body','3Body_1400_10':'3-Body'}
+label_dic = {'1400_10_2Body':'2-body','2800_14_2Body':'2-body','3Body_800_10':'(2+3)-body','3Body_1400_10':'(2+3)-body'}
 color_dic = {'1400_10_2Body':'r','2800_14_2Body':'b','3Body_800_10':'b','3Body_1400_10':'b'}
 shape_dic = {'1400_10_2Body':'o','2800_14_2Body':'s','3Body_800_10':'s','3Body_1400_10':'s'}
 line_dic = {'1400_10_2Body':'-','2800_14_2Body':'--','3Body_800_10':'--','3Body_1400_10':'--'}
 
-path_root = 'H:/Helium_ab_initio/Cassandra/Results/'
+path_root = 'C:/Users/rmesserl/Documents/Helium_ab_initio/Cassandra/Results/'
 
 ##    #### Limit the range of data included in the fit
 TsatLow = 9
@@ -46,7 +46,7 @@ TsatHigh = 15
 
 fig0,ax0 = plt.subplots(ncols=1,nrows=2,figsize=[10,20])
 
-ax0[0].set_xlabel(r'$\rho$ (kmol/m$^3$)',fontsize=28)    
+ax0[0].set_xlabel(r'$\rho$ (mol$\cdot$L$^{-1}$)',fontsize=28)    
 ax0[0].set_ylabel('$T$ (K)',fontsize=28)
 ax0[1].set_xlabel(r'10/$T$ (1/K)',fontsize=28)
 ax0[1].set_ylabel(r'$\log_{10}$($P$/MPa)',fontsize=28)
@@ -119,10 +119,10 @@ for system in systems:
     rhor_95 = np.zeros(len(Tsat_avg))
     Zv_95 = np.zeros(len(Tsat_avg))
 
-    f0 = open('H:/Helium_ab_initio/Critical_constants/'+system+'_GEMC.txt','w')
+    f0 = open('C:/Users/rmesserl/Documents/Helium_ab_initio/Critical_constants/'+system+'_GEMC.txt','w')
     f0.write('T (K)'+'\t'+'rhol (kg/m3)'+'\t'+'rhov (kg/m3)'+'\t'+'Psat (MPa)'+'\n')
     
-    f1 = open('H:/Helium_ab_initio/Critical_constants/'+system+'_GEMC_molar.txt','w')
+    f1 = open('C:/Users/rmesserl/Documents/Helium_ab_initio/Critical_constants/'+system+'_GEMC_molar.txt','w')
 #    f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\n')
     f1.write('T (K)'+'\t'+'rhol (kmol/m3)'+'\t'+'rhov (kmol/m3)'+'\t'+'Psat (MPa)'+'\t'+'Zvap'+'\n')
     
@@ -191,9 +191,9 @@ for system in systems:
     ax0[0].errorbar(rhol_avg[Tsat_avg >= Tplot_low]/Mw_He,Tsat_avg[Tsat_avg >= Tplot_low],xerr=rhol_95[Tsat_avg >= Tplot_low]/Mw_He,fmt=color+shape,mfc='None',markersize=10,label=system_label+', GEMC',capsize=6)
     ax0[0].errorbar(rhov_avg[Tsat_avg >= Tplot_low]/Mw_He,Tsat_avg[Tsat_avg >= Tplot_low],xerr=rhov_95[Tsat_avg >= Tplot_low]/Mw_He,fmt=color+shape,mfc='None',markersize=10,capsize=6)
     ax0[0].errorbar(rhor_avg[Tsat_avg >= Tplot_low]/Mw_He,Tsat_avg[Tsat_avg >= Tplot_low],xerr=rhor_95[Tsat_avg >= Tplot_low]/Mw_He,fmt=color+shape,mfc='None',markersize=10,capsize=6)
-    ax0[0].plot(rhorplot[Tplot >= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],'k'+line,label=system_label+', Fit, GEMC')
-    ax0[0].plot(rholRSplot[Tplot >= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],'k'+line)
-    ax0[0].plot(rhovRSplot[Tplot>= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],'k'+line)
+    ax0[0].plot(rhorplot[Tplot >= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],color+line,label=system_label+', Fit, GEMC')
+    ax0[0].plot(rholRSplot[Tplot >= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],color+line)
+    ax0[0].plot(rhovRSplot[Tplot>= Tplot_low]/Mw_He,Tplot[Tplot >= Tplot_low],color+line)
     ax0[0].errorbar(rhoc/Mw_He,Tc,xerr=urhoc/Mw_He,yerr=uTc,fmt=color+shape,markersize=10,mfc=color,label=system_label+', Critical, GEMC',capsize=6)
    
 ### Old, mass basis     
@@ -206,17 +206,17 @@ for system in systems:
 #    ax0[0].plot(rhorplot[Tplot >= Tplot_low],Tplot[Tplot >= Tplot_low],'k'+line,label=system_label+', Fit, GEMC')
 #    ax0[0].plot(rholRSplot[Tplot >= Tplot_low],Tplot[Tplot >= Tplot_low],'k'+line)
 #    ax0[0].plot(rhovRSplot[Tplot>= Tplot_low],Tplot[Tplot >= Tplot_low],'k'+line)
-##    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+'*',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
+##    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+'d',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
 #    ax0[0].errorbar(rhoc,Tc,xerr=urhoc,yerr=uTc,fmt=color+shape,markersize=10,mfc=color,label=system_label+', Critical, GEMC',capsize=6)
     
     ax0[1].errorbar(invTsat_avg[invTsat_avg <= invTplot_low],logPsat_avg[invTsat_avg <= invTplot_low]-1,yerr=logPsat_95[invTsat_avg <= invTplot_low],fmt=color+shape,mfc='None',markersize=10,capsize=6)#,label=system_label+', GEMC')
 #    ax0[1].plot(invTsat,logPsat-1,color+shape,mfc='None',label=system_label+', GEMC')
     ax0[1].plot(invTplot[invTplot <= invTplot_low],logPsatplot[invTplot <= invTplot_low]-1,'k'+line)#,label=system_label+', Fit, GEMC')
-#    ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+'*',markersize=14,mfc='None')#,label=system_label+', Critical, GEMC')
+#    ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+'d',markersize=14,mfc='None')#,label=system_label+', Critical, GEMC')
     ax0[1].errorbar(10./Tc,np.log10(Pc)-1,xerr=uinvTc,yerr=ulogPc,fmt=color+shape,markersize=10,mfc=color,capsize=6)#,label=system_label+', Critical, GEMC')
         
     ax0[1].plot([],[],color+shape,mfc='None',label=system_label+', GEMC',markersize=10)
-#    ax0[1].plot([],[],color+'*',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
+#    ax0[1].plot([],[],color+'d',markersize=12,mfc='None',label=system_label+', Critical, GEMC')
     ax0[1].plot([],[],color+shape,markersize=12,mfc=color,label=system_label+', Critical, GEMC')
     
 #    ax1.plot(Tsat,Zv,color+shape,mfc='None',markersize=10)
@@ -225,28 +225,29 @@ for system in systems:
     ax1.plot([],[],color+shape,mfc='None',label=system_label+', GEMC',markersize=10)
     ax1.plot([],[],color+shape,markersize=10,mfc=color,label=system_label+', Critical, GEMC')
 
-ax0[0].errorbar(rhoc_Kofke/Mw_He,Tc_Kofke,xerr=urhoc_Kofke/Mw_He,yerr=uTc_Kofke,fmt='gv',markersize=10,mfc='g',label='Critical, VEOS',capsize=6)
+ax0[0].errorbar(rhoc_Kofke/Mw_He,Tc_Kofke,xerr=urhoc_Kofke/Mw_He,yerr=uTc_Kofke,color='cyan',marker='d',mfc='cyan',markersize=10,label='Critical, VEOS',capsize=6)
 #ax0[0].set_xlabel(r'$\rho$ (kmol/m$^3$)',fontsize=28)    
 ##ax0[0].errorbar(rhoc_Kofke,Tc_Kofke,xerr=urhoc_Kofke,yerr=uTc_Kofke,fmt='gv',markersize=10,mfc='g',label='Critical, VEOS',capsize=6)
 ##ax0[0].set_xlabel(r'$\rho$ (kg/m$^3$)',fontsize=28)
 #ax0[0].set_ylabel('$T$ (K)',fontsize=28)
 
-ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,mfc='g',fmt='gv',markersize=10,capsize=6)#,label='2-Body, Critical, VEOS')
-ax0[1].plot([],[],'gv',mfc='g',markersize=10,label='2-Body, Critical, VEOS')
+ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,color='cyan',marker='d',mfc='cyan',markersize=10,capsize=6)#,label='2-body, Critical, VEOS')
+ax0[1].plot([],[],color='cyan',marker='d',linestyle='',mfc='cyan',markersize=10,label=r'(2+3)-body, Critical, VEOS$\infty$')
 #ax0[1].set_xlabel(r'10/$T$ (1/K)',fontsize=28)
 #ax0[1].set_ylabel(r'$\log_{10}$($P$/MPa)',fontsize=28)
-ax0[1].legend()
+ax0[1].legend(frameon=False)
 
 #plt.tight_layout()
 
 fig0.savefig('GEMC_results.pdf')
 #plt.show()
 
-ax1.errorbar(Tc_Kofke,Zc_Kofke,xerr=uTc_Kofke,yerr=uZc_Kofke,fmt='gv',markersize=10,mfc='g',label='Critical, VEOS',capsize=6)
+ax1.errorbar(Tc_Kofke,Zc_Kofke,xerr=uTc_Kofke,yerr=uZc_Kofke,color='cyan',marker='d',markersize=10,mfc='cyan',capsize=6)
+ax1.plot([],[],color='cyan',marker='d',linestyle='',markersize=10,mfc='cyan',label=r'(2+3)-body, Critical, VEOS$\infty$')
 
 #ax1.set_ylabel(r'$Z_{\rm vap}^{\rm sat}$')
 #ax1.set_xlabel(r'$T$ (K)')
-ax1.legend()
+ax1.legend(frameon=False)
 
 #plt.tight_layout()
 
