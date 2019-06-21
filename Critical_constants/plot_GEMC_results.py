@@ -235,14 +235,14 @@ for system in systems:
     ax1.plot([],[],color+shape,mfc='None',label=system_label+', GEMC',markersize=10)
     ax1.plot([],[],color+shape,markersize=10,markeredgewidth=2,mfc=color,label=system_label+', Critical, GEMC')
 
-ax0[0].errorbar(rhoc_Kofke/Mw_He,Tc_Kofke,xerr=urhoc_Kofke/Mw_He,yerr=uTc_Kofke,color='cyan',marker='*',mfc='cyan',markersize=12,markeredgewidth=2,label='Critical, VEOS',capsize=6)
+ax0[0].errorbar(rhoc_Kofke/Mw_He,Tc_Kofke,xerr=urhoc_Kofke/Mw_He,yerr=uTc_Kofke,color='cyan',marker='*',mfc='cyan',markersize=14,markeredgewidth=1,markeredgecolor='k',label='Critical, VEOS',capsize=6)
 #ax0[0].set_xlabel(r'$\rho$ (kmol/m$^3$)',fontsize=28)    
 ##ax0[0].errorbar(rhoc_Kofke,Tc_Kofke,xerr=urhoc_Kofke,yerr=uTc_Kofke,fmt='gv',markersize=10,markeredgewidth=2,mfc='g',label='Critical, VEOS',capsize=6)
 ##ax0[0].set_xlabel(r'$\rho$ (kg/m$^3$)',fontsize=28)
 #ax0[0].set_ylabel('$T$ (K)',fontsize=28)
 
-ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,color='cyan',marker='*',mfc='cyan',markersize=12,markeredgewidth=2,capsize=6)#,label='2-body, Critical, VEOS')
-ax0[1].plot([],[],color='cyan',marker='*',linestyle='',mfc='cyan',markersize=12,markeredgewidth=2,label=r'(2+3)-body, Critical, VEOS$\infty$')
+ax0[1].errorbar(10./Tc_Kofke,np.log10(Pc_Kofke)-1,xerr=uinvTc_Kofke,yerr=ulogPc_Kofke,color='cyan',marker='*',mfc='cyan',markersize=14,markeredgewidth=1,markeredgecolor='k',capsize=6)#,label='2-body, Critical, VEOS')
+ax0[1].plot([],[],color='cyan',marker='*',linestyle='',mfc='cyan',markersize=14,markeredgewidth=1,markeredgecolor='k',label=r'(2+3)-body, Critical, VEOS$\infty$')
 #ax0[1].set_xlabel(r'10/$T$ (1/K)',fontsize=28)
 #ax0[1].set_ylabel(r'$\log_{10}$($P$/MPa)',fontsize=28)
 ax0[1].legend(frameon=False)
@@ -252,8 +252,8 @@ ax0[1].legend(frameon=False)
 fig0.savefig('GEMC_results.pdf')
 #plt.show()
 
-ax1.errorbar(Tc_Kofke,Zc_Kofke,xerr=uTc_Kofke,yerr=uZc_Kofke,color='cyan',marker='*',markersize=12,markeredgewidth=2,mfc='cyan',capsize=6)
-ax1.plot([],[],color='cyan',marker='*',linestyle='',markersize=12,markeredgewidth=2,mfc='cyan',label=r'(2+3)-body, Critical, VEOS$\infty$')
+ax1.errorbar(Tc_Kofke,Zc_Kofke,xerr=uTc_Kofke,yerr=uZc_Kofke,color='cyan',marker='*',markersize=14,markeredgewidth=1,markeredgecolor='k',mfc='cyan',capsize=6)
+ax1.plot([],[],color='cyan',marker='*',linestyle='',markersize=14,markeredgewidth=1,markeredgecolor='k',mfc='cyan',label=r'(2+3)-body, Critical, VEOS$\infty$')
 
 #ax1.set_ylabel(r'$Z_{\rm vap}^{\rm sat}$')
 #ax1.set_xlabel(r'$T$ (K)')
